@@ -1,3 +1,9 @@
+@font-face {
+    font-family: "Inter";
+    src: url("Inter-Italic.woff2"),
+    url("/fonts/Inter-Italic.woff2") format("woff2");
+}
+
 body{
     max-width: 1440px;
     margin: auto;
@@ -7,17 +13,39 @@ body{
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+ 
+
+}
+
+header{
+    width: 1440px;
+    height: 744px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    /* padding-top: 20px; */
+    background-color: #E1D4C9;
 
 }
 
 #header-menu{
     width: 1360px;
     height: 60px;
-    padding-top: 20px;
 
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    align-items: center;
+}
+
+#container-nav{
+    width: 1440px;
+    height: 60px;
+    padding: 20px 0 0 0;
+
+    display: flex;
+    justify-content: center;
     align-items: center;
 }
 
@@ -48,7 +76,7 @@ body{
     position: relative;
     text-decoration: none;
     color:#403F3D;
-    
+
 }
 
 #nav-a:hover{
@@ -104,15 +132,94 @@ p{
     color:#403F3D;
 }
 
-#start-screen{
+/* #start-screen{
     width: 1440px;
     height: 724px;
-    margin-top: -120px;
     z-index: -1;
+    margin-top: -120px;
 
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     background-color: #E1D4C9;
+ 
+} */
+
+#hero{
+    width: 1440px;
+    height: 644px;
+    padding: 20px 0 0 0;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+
+#container-coffe{
+    width: 1360px;
+    height: 644px;
+    display: flex;
+    justify-content: flex-start;
+    position: relative;
+}
+
+#img-hero{
+    width: 1360px;
+    height: 643px;
+    border-radius: 40px;
+    position: absolute;
+}
+
+#container-offer{
+    width: 530px;
+    height: 444px;
+    padding: 100px;
+    font-family:  Helvetica;
+    font-weight: 600;
+    font-size: 72px;
+    line-height: 75.6px;
+    z-index: 1;
+    color: #E1D4C9;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+h1{
+    margin: 0;
+}
+
+h5{
+    width: 530px;
+    height: 72px;
+    margin: 43px 0 0 0;
+    font-family:  Helvetica;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+#button-menu{
+
+    width: 200px;
+    height: 64px;
+    background: #B6AEA7;
+    border-radius: 100px;
+    border: solid 2px #B6AEA7;
+    margin: 13px 0 -14px 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+#button-menu:hover{
+    background: #B6AEA7;
+    cursor: pointer;
 }
