@@ -177,11 +177,8 @@ p{
     width: 530px;
     height: 444px;
     padding: 100px;
-    font-family:  Helvetica;
-    font-weight: 600;
-    font-size: 72px;
-    line-height: 75.6px;
     z-index: 1;
+
     color: #E1D4C9;
 
     display: flex;
@@ -191,6 +188,13 @@ p{
 
 h1{
     margin: 0;
+    font-family:  Helvetica;
+    font-weight: 600;
+    font-size: 72px;
+    font-style: italic;
+    line-height: 75.6px;
+    z-index: 1;
+
 }
 
 h5{
@@ -222,4 +226,71 @@ h5{
 #button-menu:hover{
     background: #B6AEA7;
     cursor: pointer;
+}
+
+#favorite-coffe{
+    width: 1440px;
+    height: 799px;
+    padding: 100px 0 0 0;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #E1D4C9;
+}
+
+#container-favorite{
+    width: 1360px;
+    height: 799px;
+}
+
+#title-fav{
+    width: 1360px;
+    height: 75px;
+    margin: 0;
+
+    font-family: Helvetica;
+    font-weight: 600;
+    font-style: italic;
+    font-size: 60px;
+    line-height: 75px;
+    text-align: center;
+
+    color: #403F3D;
+
+}
+
+#container-slider{
+    width: 1360px;
+    height: 684px;
+}
+
+#slider{
+    width: 1360px;
+    height: 640px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#button-arrow{
+    width: 60px;
+    height: 60px;
+
+    box-sizing: border-box;
+    border: 2px solid #665F55;
+    border-radius: 100px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 23px 19px;
+    transform: rotate(180deg);
+    background: #E1D4C9;
+    margin-top: -2px;
 }
