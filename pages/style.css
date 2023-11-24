@@ -270,6 +270,7 @@ h5{
 #slider{
     width: 1360px;
     height: 640px;
+    padding: 41px 0 0 0;
 
     display: flex;
     flex-direction: row;
@@ -294,3 +295,149 @@ h5{
     background: #E1D4C9;
     margin-top: -2px;
 }
+
+#content-slider{
+    width: 1152px;
+    height: 640px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#card-slider{
+    width: 480px;
+    height: 640px;
+}
+
+#frappo{
+    width: 480px;
+    height: 480px;
+}
+
+#subtitle-slider{
+    width: 480px;
+    height: 140px;
+}
+
+#name-coffe{
+    font-family: Helvetica;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 30px;
+    text-align: center;
+    color: #403f3d;
+    margin: 19px 0 0 0;
+}
+
+#description-coffe{
+    width: 480px;
+    height: 48px;
+    font-family: Helvetica;
+    font-size: 17px;
+    line-height: 24px;
+    text-align: center;
+    margin: 13px 0 0 0;
+}
+
+
+#button-arrow-right{
+    width: 60px;
+    height: 60px;
+
+    box-sizing: border-box;
+    border: 2px solid #665F55;
+    border-radius: 100px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 23px 19px;
+    background: #E1D4C9;
+    margin-top: -2px;
+}
+
+#price{
+    font-family: Helvetica;
+    font-weight: 600;
+    font-size: 26px;
+    line-height: 30px;
+    text-align: center;
+    color: #403f3d;
+    margin: 16px 0 0 0;
+
+}
+
+#controls{
+    width: 144px;
+    height: 4px;
+}
+
+#about{
+    width: 1440px;
+    height: 1325px;
+    background: #E1D4C9;
+}
+
+#about{
+    width: 1440px;
+    height: 1325px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 100px 0 0 0;
+}
+
+#container-about{
+    width: 1360px;
+    height: 1325px;
+}
+
+#title-about{
+    width: 1360px;
+    height: 225px;
+    font-family: Helvetica;
+    font-weight: 600;
+    font-size: 60px;
+    line-height: 75px;
+    margin: 0 0 0 6px;
+
+    color: #403F3D;
+}
+
+#images{
+    width: 1360px;
+    height: 1060px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.column{
+    width: 660px;
+    height: 1060px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.heigh{
+    width: 660px;
+    height: 590px;
+    border-radius: 20px;
+}
+
+.width{
+    width: 660px;
+    height: 430px;
+    border-radius: 20px;
+}
+
+
