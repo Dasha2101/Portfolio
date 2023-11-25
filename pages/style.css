@@ -375,11 +375,11 @@ h5{
     height: 4px;
 }
 
-#about{
+/* #about{
     width: 1440px;
     height: 1325px;
     background: #E1D4C9;
-}
+} */
 
 #about{
     width: 1440px;
@@ -390,6 +390,7 @@ h5{
     justify-content: space-around;
     align-items: center;
     padding: 100px 0 0 0;
+    background: #E1D4C9;
 }
 
 #container-about{
@@ -440,4 +441,111 @@ h5{
     border-radius: 20px;
 }
 
+
+#mobile-up{
+    width: 1440px;
+    height: 630px;
+    background: #E1D4C9;
+    padding: 100px 0 0 0;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#container-mobile{
+    width: 1360px;
+    height: 630px;
+
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#ofer{
+    width: 630px;
+    height: 342px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+#download{
+    color: #403F3D;
+    font-family: Helvetica;
+    font-size: 61px;
+    line-height: 75px;
+    font-weight: 600;
+    margin: 0;
+}
+
+#subtitle-download{
+    width: 630px;
+    height: 48px;
+    color: #403F3D;
+    font-family: Helvetica;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+    margin: 0;
+}
+
+#button-download{
+    width: 420px;
+    height: 64px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.but-download{
+    width: 200px;
+    height: 64px;
+    background: #E1D4C9;
+    border-radius: 100px;
+    border: solid 2px #665F55;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    gap: 10px;
+}
+
+.available{
+    font-family: Helvetica;
+    font-weight: 600;
+    font-size: 10px;
+    line-height: 14px;
+    text-align: center;
+    color: #403F3D;
+    margin: 0 0 0 -41px;
+
+    width: 88px;
+    height: 14px;
+}
+
+.magz{
+    font-family: Helvetica;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    color: #403F3D;
+    margin: 2px 0 0 -40px;
+
+    width: 93px;
+    height: 24px;
+
+}
+
+.container-link{
+    width: 78px;
+    height: 40px;
+}
 
