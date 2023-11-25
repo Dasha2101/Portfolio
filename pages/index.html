@@ -9,8 +9,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400&display=swap" rel="stylesheet">
     <link href="../pages/style.css" rel="stylesheet">
-
-
+    <style>
+        .change-word{
+            color: #B0907A;
+            font-style: italic;
+            margin: 0 0 0 -3px;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -18,15 +23,16 @@
             <section id="header-menu">
                 <section id="logo">
                     <img id="logo" src="../images/logo.png" alt="logo">
+                    <!-- <div id="img-hero"></div> -->
                 </section>
                 <nav id="nav-menu">
-                    <a href="#" id="nav-a">Favorite coffee</a>
-                    <a href="#" id="nav-a">About</a>
-                    <a href="#" id="nav-a">Mobile app</a>
-                    <a href="#" id="nav-a">Contact us</a>
+                    <a href="#" class="nav-a">Favorite coffee</a>
+                    <a href="#" class="nav-a">About</a>
+                    <a href="#" class="nav-a">Mobile app</a>
+                    <a href="#" class="nav-a">Contact us</a>
                 </nav>
                 <section id="coffe-menu">
-                    <p>Menu</p>
+                    <a class="nav-a">Menu</a>
                     <img id="cup" src="../images/coffee-cup.png" alt="cup">
                 </section>
             </section>
@@ -35,7 +41,7 @@
             <section id="container-coffe">
                 <img id="img-hero" src="../images/img-hero.jpg" alt="coffe-start">
                 <section id="container-offer">
-                    <h1>Enjoy premium coffee at our charming cafe</h1>
+                    <h1><span class="change-word">Enjoy</span> premium coffee at our charming cafe</h1>
                     <h5>With its inviting atmosphere and delicious coffee options,
                     the Coffee House Resource is a popular destination for coffee lovers and those seeking a warm and inviting 
                     space to enjoy their favorite beverage.</p>
@@ -49,7 +55,7 @@
     </header>
     <section id="favorite-coffe">
         <section id="container-favorite">
-            <h3 id="title-fav">Choose your favorite coffee</h3>
+            <h3 id="title-fav">Choose your <span class="change-word">favorite</span> coffee</h3>
         <section id="container-slider">
             <section id="slider">
                 <button id="button-arrow">
@@ -70,32 +76,31 @@
                     <p>&#10142;</p>
                 </button>
             </section>
-            <!-- <section id="controls">
-                <span></span>
-                <span></span>
-                <span></span>
-            </section> -->
+        </section>
+        <section id="controls">
+            <section class="control"></section>
+            <section class="control"></section>
+            <section class="control"></section>
         </section>
         </section>
     </section>
     <section id="about">
         <section id="container-about">
-            <h2 id="title-about">Resource is the perfect and cozy place where you can enjoy a variety of hot beverages, relax, 
+            <h2 id="title-about">Resource is<span class="change-word"> the perfect and cozy place</span> where you can enjoy a variety of hot beverages, relax, 
             catch up with friends, or get some work done.</h2>
         </section>
         <section id="images">
             <section class="column">
-                <img class="heigh" src="../images/about-1.jpg" alt="woman">
-                <img class="width" src="../images/about-2.jpg" alt="place">
+                <div id="img-about1"></div>
+                <div id="img-about2"></div>
             </section>
             <section class="column">
-                <img class="width" src="../images/about-3.svg" alt="man">
-                <img class="heigh" src="../images/about-4.jpg" alt="lovers">
+                <div id="img-about3"></div>
+                <div id="img-about4"></div>
             </section>
         </section>
     </section>
     <section >
-
     </section>
     <section id="mobile-up">
         <section id="container-mobile">
@@ -103,7 +108,7 @@
             <img  src="../images/mobile-screens.png" alt="phones">
             </section>
             <section id="ofer">
-                <h2 id="download">Download our apps to start ordering</h2>
+                <h2 id="download"><span class="change-word">Download</span> our apps to start ordering</h2>
                 <p id="subtitle-download">Download the Resource app today and experience the comfort of ordering 
                 your favorite coffee from wherever you are</p>
                 <section id="button-download">
@@ -129,7 +134,7 @@
         <section id="container-footer">
             <section id="ofer-footer">
                 <h2 id="title-footer">Sip, Savor, Smile.
-                It’s coffee time!</h2>
+                    <span class="change-word">It’s coffee time!</span></h2>
                 <section id="container-for-button">
                     <button class="but-footer">
                         <img class="icon-footer" src="../images/twitter.svg" alt="twitter">
@@ -145,15 +150,15 @@
             <section id="contact-info">
                 <h4 id="subtitle-footer">Contact us</h4>
                 <section id="other-info">
-                    <a id="street" href="https://www.google.com/maps?q=8558+Green+Rd.,+LA&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIHCAEQIRigATIHCAIQIRigATIHCAMQIRigATIHCAQQIRigATIKCAUQIRgWGB0YHtIBBzY5OWowajeoAgCwAgA&um=1&ie=UTF-8&sa=X&ved=2ahUKEwiP7buGs9-CAxUqHRAIHeN_CgkQ_AUoAXoECAEQAw">
+                    <a id="street" class="a-footer" href="https://www.google.com/maps?q=8558+Green+Rd.,+LA&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIHCAEQIRigATIHCAIQIRigATIHCAMQIRigATIHCAQQIRigATIKCAUQIRgWGB0YHtIBBzY5OWowajeoAgCwAgA&um=1&ie=UTF-8&sa=X&ved=2ahUKEwiP7buGs9-CAxUqHRAIHeN_CgkQ_AUoAXoECAEQAw">
                         <img src="../images/pin-alt.svg" alt="location icon">
                         <h5 class="contacts-text">8558 Green Rd., LA</h5>
                     </a>
-                    <a id="phone" href="tel:136745677554">
+                    <a id="phone" class="a-footer" href="tel:136745677554">
                         <img src="../images/Path.svg" alt="phone icon" class="icon">
                         <h5 class="contacts-text">+1 (603) 555-0123</h5>
                     </a>
-                    <a id="time" href="#">
+                    <a id="time" class="a-footer" href="#">
                         <img src="../images/clock.svg" alt="clock icon" class="icon">
                         <h5 class="contacts-text">Mon-Sat: 9:00 AM – 23:00 PM</h5>
                     </a>

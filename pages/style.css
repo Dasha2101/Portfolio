@@ -7,7 +7,6 @@ body{
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
- 
 
 }
 
@@ -19,7 +18,6 @@ header{
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    /* padding-top: 20px; */
     background-color: #E1D4C9;
 
 }
@@ -66,21 +64,25 @@ header{
 
 }
 
-#nav-a {
+.nav-a {
     position: relative;
     text-decoration: none;
     color:#403F3D;
 
     height: 24px;
-    margin: -2px 3px 0 0;
+    margin: -5px 2px 0 0;
 
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
 }
 
-#nav-a:hover{
+.nav-a:hover{
     color:#403F3D;
 }
 
-#nav-a::before{
+.nav-a::before{
     background-color: #403F3D;
 
     content: "";
@@ -88,7 +90,7 @@ header{
     display: block;
 
     width: 100%;
-    height: 1px;
+    height: 2px;
     bottom: 0;
     left: 0;
 
@@ -96,7 +98,7 @@ header{
     transition: transform 0.3s ease;
 }
 
-#nav-a:hover::before {
+.nav-a:hover::before {
     transform: scaleX(1);
   }
 
@@ -105,6 +107,7 @@ header{
 #coffe-menu{
     width: 72px;
     height: 28px;
+    margin: 0 0 3px 0;
 
     display: flex;
     flex-direction: row;
@@ -115,6 +118,7 @@ header{
 #cup{
     width: 20px;
     height: 20px;
+    margin: -3px 0 0 0;
 }
 
 p{
@@ -128,20 +132,6 @@ p{
     line-height: 24px;
     color:#403F3D;
 }
-
-/* #start-screen{
-    width: 1440px;
-    height: 724px;
-    z-index: -1;
-    margin-top: -120px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #E1D4C9;
- 
-} */
 
 #hero{
     width: 1440px;
@@ -157,7 +147,7 @@ p{
 
 #container-coffe{
     width: 1360px;
-    height: 644px;
+    max-height: 644px;
     display: flex;
     justify-content: flex-start;
     position: relative;
@@ -165,7 +155,7 @@ p{
 
 #img-hero{
     width: 1360px;
-    height: 643px;
+    height: 644px;
     border-radius: 40px;
     position: absolute;
 }
@@ -184,21 +174,21 @@ p{
 }
 
 h1{
-    margin: 0;
-    font-family:  Helvetica;
+    margin:  0 0 0 7px;
+    font-family: 'Inter';
     font-weight: 600;
     font-size: 72px;
-    font-style: italic;
     line-height: 75.6px;
     z-index: 1;
+    letter-spacing: 0.2px
 
 }
 
 h5{
     width: 530px;
     height: 72px;
-    margin: 43px 0 0 0;
-    font-family:  Helvetica;
+    margin: 40px 0 0 0;
+    font-family: 'Inter';
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;
@@ -208,10 +198,10 @@ h5{
 
     width: 200px;
     height: 64px;
-    background: #B6AEA7;
+    background: #E1D4C9;
     border-radius: 100px;
     border: solid 2px #B6AEA7;
-    margin: 13px 0 -14px 0;
+    margin: 16px 0 -14px 0;
 
     display: flex;
     flex-direction: column;
@@ -224,6 +214,7 @@ h5{
     background: #B6AEA7;
     cursor: pointer;
 }
+
 
 #favorite-coffe{
     width: 1440px;
@@ -241,17 +232,21 @@ h5{
 #container-favorite{
     width: 1360px;
     height: 799px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }
 
 #title-fav{
     width: 1360px;
     height: 75px;
-    margin: 0;
+    margin: 0 1px 0 0;
 
-    font-family: Helvetica;
+    font-family: 'Inter';
     font-weight: 600;
-    font-style: italic;
-    font-size: 60px;
+    font-size: 61px;
     line-height: 75px;
     text-align: center;
 
@@ -267,7 +262,7 @@ h5{
 #slider{
     width: 1360px;
     height: 640px;
-    padding: 41px 0 0 0;
+    padding: 22px 0 0 0;
 
     display: flex;
     flex-direction: row;
@@ -290,7 +285,12 @@ h5{
     padding: 23px 19px;
     transform: rotate(180deg);
     background: #E1D4C9;
-    margin-top: -2px;
+    margin: 0 0 0 4px;
+}
+
+#button-arrow:hover{
+    cursor: pointer;
+    background: #665F55;
 }
 
 #content-slider{
@@ -319,23 +319,23 @@ h5{
 }
 
 #name-coffe{
-    font-family: Helvetica;
+    font-family: 'Inter';
     font-weight: 600;
     font-size: 24px;
     line-height: 30px;
     text-align: center;
     color: #403f3d;
-    margin: 19px 0 0 0;
+    margin: 17px 0 0 -1px;
 }
 
 #description-coffe{
     width: 480px;
     height: 48px;
-    font-family: Helvetica;
-    font-size: 17px;
+    font-family: 'Inter';
+    font-size: 16px;
     line-height: 24px;
     text-align: center;
-    margin: 13px 0 0 0;
+    margin: 16px 0 0 1px;
 }
 
 
@@ -353,13 +353,18 @@ h5{
     align-items: center;
     padding: 23px 19px;
     background: #E1D4C9;
-    margin-top: -2px;
+    margin: 0 3px 0 0;
+}
+
+#button-arrow-right:hover{
+    cursor: pointer;
+    background: #665F55;
 }
 
 #price{
-    font-family: Helvetica;
+    font-family: 'Inter';
     font-weight: 600;
-    font-size: 26px;
+    font-size: 25px;
     line-height: 30px;
     text-align: center;
     color: #403f3d;
@@ -370,13 +375,25 @@ h5{
 #controls{
     width: 144px;
     height: 4px;
+    margin: 0 0 0 12px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
-/* #about{
-    width: 1440px;
-    height: 1325px;
-    background: #E1D4C9;
-} */
+.control{
+    width: 40px;
+    height: 4px;
+    margin: 0 10px 0 0;
+
+    display: flex;
+
+    border-radius: 100px;
+    background: var(--border-dark, #665F55);
+
+}
 
 #about{
     width: 1440px;
@@ -398,11 +415,11 @@ h5{
 #title-about{
     width: 1360px;
     height: 225px;
-    font-family: Helvetica;
+    font-family: 'Inter';
     font-weight: 600;
-    font-size: 60px;
+    font-size: 61px;
     line-height: 75px;
-    margin: 0 0 0 6px;
+    margin: 0;
 
     color: #403F3D;
 }
@@ -425,19 +442,33 @@ h5{
     flex-direction: column;
     justify-content: space-between;
 }
-
-.heigh{
+#img-about1{
+    background: url(../images/about-1.jpg), lightgray 50% / cover no-repeat;
     width: 660px;
     height: 590px;
     border-radius: 20px;
 }
 
-.width{
+#img-about2{
+    background: url(../images/about-2.jpg), lightgray 50% / cover no-repeat;
     width: 660px;
     height: 430px;
     border-radius: 20px;
 }
 
+ #img-about3{
+    background: url(../images/about-3.jpg), lightgray 50% / cover no-repeat;
+    width: 660px;
+    height: 430px;
+    border-radius: 20px;
+}
+
+#img-about4{
+    background: url(../images/about-4.jpg), lightgray 50% / cover no-repeat;
+    width: 660px;
+    height: 590px;
+    border-radius: 20px;
+}
 
 #mobile-up{
     width: 1440px;
@@ -473,18 +504,18 @@ h5{
 
 #download{
     color: #403F3D;
-    font-family: Helvetica;
-    font-size: 61px;
+    font-family: 'Inter';
+    font-size: 62px;
     line-height: 75px;
     font-weight: 600;
-    margin: 0;
+    margin: 0 0 0 -3px;
 }
 
 #subtitle-download{
     width: 630px;
     height: 48px;
     color: #403F3D;
-    font-family: Helvetica;
+    font-family: 'Inter';
     font-size: 16px;
     line-height: 24px;
     font-weight: 400;
@@ -515,26 +546,26 @@ h5{
 }
 
 .available{
-    font-family: Helvetica;
+    font-family: 'Inter';
     font-weight: 600;
     font-size: 10px;
     line-height: 14px;
     text-align: center;
     color: #403F3D;
-    margin: 0 0 0 -41px;
+    margin: 0 0 0 -31px;
 
     width: 88px;
     height: 14px;
 }
 
 .magz{
-    font-family: Helvetica;
+    font-family: 'Inter';
     font-weight: 600;
     font-size: 16px;
     line-height: 24px;
     text-align: center;
     color: #403F3D;
-    margin: 2px 0 0 -40px;
+    margin: 2px 0 0 -31px;
 
     width: 93px;
     height: 24px;
@@ -542,7 +573,7 @@ h5{
 }
 
 .container-link{
-    width: 78px;
+    width: 90px;
     height: 40px;
 }
 
@@ -576,6 +607,11 @@ footer{
     background-color: #665F55;
 }
 
+.but-footer:hover{
+    cursor: pointer;
+    background: #E1D4C9;
+}
+
 #ofer-footer{
     width: 530px;
     height: 250px;
@@ -607,16 +643,16 @@ footer{
 }
 
 #title-footer{
-    font-family: Helvetica;
+    font-family: 'Inter';
     font-weight: 600;
-    font-size: 60px;
+    font-size: 61px;
     line-height: 75px;
-    margin: 2px 0 0 0;
+    margin: 0 0 0 1px;
     color: #E1D4C9;
 }
 
 #subtitle-footer{
-    font-family: Helvetica;
+    font-family: 'Inter';
     font-weight: 600;
     font-size: 24px;
     line-height: 30px;
@@ -666,7 +702,35 @@ footer{
     color: #E1D4C9;
 }
 
-a {
+.a-footer{
     text-decoration: none;
+    position: relative;
+    color:#E1D4C9;
+
 }
+
+.a-footer:hover{
+    color:#E1D4C9;
+}
+
+.a-footer::before{
+    background-color: #E1D4C9;
+
+    content: "";
+    position: absolute;
+    display: block;
+
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.a-footer:hover::before {
+    transform: scaleX(1);
+  }
+
 
