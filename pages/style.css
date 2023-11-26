@@ -173,7 +173,7 @@ p{
     justify-content: flex-start;
 }
 
-h1{
+h2{
     margin:  0 0 0 7px;
     font-family: 'Inter';
     font-weight: 600;
@@ -195,7 +195,6 @@ h5{
 }
 
 #button-menu{
-
     width: 200px;
     height: 64px;
     background: #E1D4C9;
@@ -208,6 +207,12 @@ h5{
     justify-content: center;
     align-items: center;
     gap: 10px;
+
+    font-family: 'Inter';
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    color:#403F3D;
 }
 
 #button-menu:hover{
@@ -286,6 +291,12 @@ h5{
     transform: rotate(180deg);
     background: #E1D4C9;
     margin: 0 0 0 4px;
+
+    font-family: 'Inter';
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    color:#403F3D;
 }
 
 #button-arrow:hover{
@@ -354,6 +365,12 @@ h5{
     padding: 23px 19px;
     background: #E1D4C9;
     margin: 0 3px 0 0;
+
+    font-family: 'Inter';
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    color:#403F3D;
 }
 
 #button-arrow-right:hover{
@@ -552,9 +569,9 @@ h5{
     line-height: 14px;
     text-align: center;
     color: #403F3D;
-    margin: 0 0 0 -31px;
+    margin: -26px 0 0 -23px;
 
-    width: 88px;
+    width: 106px;
     height: 14px;
 }
 
@@ -565,16 +582,15 @@ h5{
     line-height: 24px;
     text-align: center;
     color: #403F3D;
-    margin: 2px 0 0 -31px;
+    margin: 13px 0 0 -151px;
 
-    width: 93px;
-    height: 24px;
+    width: 169px;
+    height: 21px;
 
 }
 
-.container-link{
-    width: 90px;
-    height: 40px;
+.icon{
+    margin: 0 0 0 -1px;
 }
 
 footer{
@@ -693,7 +709,7 @@ footer{
 .contacts-text{
     width: 234px;
     height: 24px;
-    margin: 5px 0 0 11px;
+    margin: 5px 0 0 3px;
 
     font-family: Helvetica;
     font-weight: 600;
