@@ -2,6 +2,7 @@ body{
     max-width: 1440px;
     margin: auto;
     position: relative;
+    box-sizing: border-box;
 
     display: flex;
     flex-direction: column;
@@ -128,6 +129,8 @@ header{
 
     display: flex;
     justify-content: center;
+    flex-direction: column;
+    align-items: center;
 
     background-color: #E1D4C9;
 }
@@ -176,7 +179,7 @@ h1{
 
 }
 
-#container-for-button{
+#container-button{
     width: 361px;
     height: 46px;
 
@@ -184,6 +187,20 @@ h1{
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
+}
+
+#button-menu-coffe{
+    width: 115px;
+    height: 46px;
+    border-radius: 100px;
+    border: solid 2px #c1b6ad;
+    background-color: #665F55;
+
+    display: flex;
+    padding: 8px 16px 8px 8px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
 }
 
 
@@ -200,3 +217,237 @@ h1{
     align-items: center;
     gap: 8px;
 }
+
+#card-menu{
+    width: 1360px;
+    height: 1052px;
+    padding: 38px 0 0 0;
+
+    display: flex;
+    max-width: 1360px;
+    justify-content: center;
+    align-items: flex-start;
+    align-content: flex-start;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.cards{
+    box-sizing: border-box;
+    height: 506px;
+    width: 310px;
+    border-radius: 40px;
+    border: 1px solid var(--border-light, #C1B6AD);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.img-card{
+    width: 310px;
+    height: 310px;
+    border-radius: 40px;
+}
+
+.container-for-text{
+    width: 310px;
+    height: 196px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    padding: 0 0 0 40px;
+}
+
+.sub-title-card{
+    color: var(--text-dark, #403F3D);
+    font-family: 'Inter';
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 125%;
+    margin: 7px 0 0 2px;
+}
+
+p{
+    width: 270px;
+    height: 72px;
+
+    color: var(--text-dark, #403F3D);
+    font-family: 'Inter';
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
+    margin: 0
+}
+
+.price-card{
+    color: var(--text-dark, #403F3D);
+    font-family: 'Inter';
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 125%;
+    margin: 0 0 4px 2px;
+}
+
+footer{
+    width: 1440px;
+    height: 450px;
+    background: #E1D4C9;
+    padding: 100px 0 0 0;
+
+    display: flex;
+    justify-content: center;
+}
+
+#container-footer{
+    width: 1360px;
+    height: 450px;
+    border-radius: 20px;
+    background: #665F55;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.but-footer{
+    width: 60px;
+    height: 60px;
+    border-radius: 100px;
+    border: solid 1px #C1B6AD;
+    background-color: #665F55;
+}
+
+.but-footer:hover{
+    cursor: pointer;
+    background: #E1D4C9;
+}
+
+#ofer-footer{
+    width: 530px;
+    height: 250px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#container-for-button{
+    width: 204px;
+    height: 60px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 40px 0 0 0;
+
+}
+
+#contact-info{
+    width: 530px;
+    height: 186px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+
+#title-footer{
+    font-family: 'Inter';
+    font-weight: 600;
+    font-size: 61px;
+    line-height: 75px;
+    margin: 0 0 0 1px;
+    color: #E1D4C9;
+}
+
+#subtitle-footer{
+    font-family: 'Inter';
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 30px;
+    margin: -4px 0 0 2px;
+
+    color: #E1D4C9;
+}
+
+#street{
+    display: flex;
+    width: 182px;
+    height: 28px;
+}
+
+#phone{
+    display: flex;
+    width: 175px;
+    height: 28px;
+}
+
+#time{
+    display:flex;
+    width: 262px;
+    height: 28px;
+}
+
+#other-info{
+    width: 262px;
+    height: 116px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 26px 0 0 0;
+
+}
+
+.contacts-text{
+    width: 234px;
+    height: 24px;
+    margin: 5px 0 0 3px;
+
+    font-family: Helvetica;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    color: #E1D4C9;
+}
+
+.a-footer{
+    text-decoration: none;
+    position: relative;
+    color:#E1D4C9;
+
+}
+
+.a-footer:hover{
+    color:#E1D4C9;
+}
+
+.a-footer::before{
+    background-color: #E1D4C9;
+
+    content: "";
+    position: absolute;
+    display: block;
+
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.a-footer:hover::before {
+    transform: scaleX(1);
+  }
+
+
