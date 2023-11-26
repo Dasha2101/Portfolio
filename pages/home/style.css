@@ -460,28 +460,28 @@ h5{
     justify-content: space-between;
 }
 #img-about1{
-    background: url(../images/about-1.jpg), lightgray 50% / cover no-repeat;
+    background: url(../../images/about-1.jpg), lightgray 50% / cover no-repeat;
     width: 660px;
     height: 590px;
     border-radius: 20px;
 }
 
 #img-about2{
-    background: url(../images/about-2.jpg), lightgray 50% / cover no-repeat;
+    background: url(../../images/about-2.jpg), lightgray 50% / cover no-repeat;
     width: 660px;
     height: 430px;
     border-radius: 20px;
 }
 
  #img-about3{
-    background: url(../images/about-3.jpg), lightgray 50% / cover no-repeat;
+    background: url(../../images/about-3.jpg), lightgray 50% / cover no-repeat;
     width: 660px;
     height: 430px;
     border-radius: 20px;
 }
 
 #img-about4{
-    background: url(../images/about-4.jpg), lightgray 50% / cover no-repeat;
+    background: url(../../images/about-4.jpg), lightgray 50% / cover no-repeat;
     width: 660px;
     height: 590px;
     border-radius: 20px;
