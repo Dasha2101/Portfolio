@@ -12,6 +12,7 @@ body{
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+    background-color: #E1D4C9;
 }
 
 header{
@@ -408,7 +409,7 @@ p{
     margin: 0 0 4px 2px;
 }
 
-footer{
+#contact{
     width: 1440px;
     height: 450px;
     background: #E1D4C9;
