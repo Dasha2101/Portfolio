@@ -177,15 +177,23 @@ h1{
     align-items: center;
     gap: 8px;
 
+    font-family: 'Inter';
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 150%; 
+
 }
+
 
 #container-button{
     width: 361px;
     height: 46px;
+    margin: 0 8px 0 0;
 
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -201,10 +209,55 @@ h1{
     justify-content: center;
     align-items: center;
     gap: 8px;
+
+    color: var(--text-light, #E1D4C9);
+    font-family: 'Inter';
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 150%;
+
+    margin: 0 0 0 3px;
+}
+
+#circule-tea{
+    height: 24px;
+    width: 30px;
+    padding: 3px 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 100px;
+    background: var(--background-body, #E1D4C9);
+}
+
+#circule-kettle{
+    height: 24px;
+    width: 30px;
+    padding: 3px 7px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 100px;
+    background: var(--background-body, #C1B6AD);
+}
+
+#circule-cake{
+    height: 24px;
+    width: 30px;
+    padding: 3px 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 100px;
+    background: var(--background-body, #C1B6AD);
 }
 
 
-#button-menu-tea{
+.button-menu-tea{
     width: 90px;
     height: 46px;
     border-radius: 100px;
@@ -216,7 +269,43 @@ h1{
     justify-content: center;
     align-items: center;
     gap: 8px;
+
+    color: var(--text-dark, #403F3D);
+
+    font-family: 'Inter';
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 150%; 
 }
+
+.button-menu-tea:hover{
+    cursor: pointer;
+    background-color: #665F55;
+}
+
+.button-menu-tea:hover #circule-kettle{
+    background-color: #E1D4C9;
+}
+
+.button-menu:hover span{
+    color: #E1D4C9;
+}
+
+.button-menu:hover{
+    cursor: pointer;
+    background-color: #665F55;
+}
+
+.button-menu:hover #circule-cake{
+    background-color: #E1D4C9;
+}
+
+.button-menu-tea:hover span{
+    color: #E1D4C9;
+}
+
+
 
 #card-menu{
     width: 1360px;
