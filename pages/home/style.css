@@ -1,7 +1,14 @@
+html {
+    scroll-behavior: smooth;
+
+  }
+
+
 body{
     max-width: 1440px;
     margin: auto;
     position: relative;
+    background-size: 100%; 
 
     display: flex;
     flex-direction: column;
@@ -118,7 +125,7 @@ header{
 #cup{
     width: 20px;
     height: 20px;
-    margin: -3px 0 0 0;
+    margin: 0 0 0 3px;
 }
 
 p{
@@ -126,7 +133,7 @@ p{
     width: 44px;
     height: 24px;
 
-    font-family: Inter;
+    font-family: 'Inter';
     font-weight: 600;
     font-size: 16px;
     line-height: 24px;
@@ -151,6 +158,7 @@ p{
     display: flex;
     justify-content: flex-start;
     position: relative;
+
 }
 
 #img-hero{
@@ -158,6 +166,7 @@ p{
     height: 644px;
     border-radius: 40px;
     position: absolute;
+
 }
 
 #container-offer{
@@ -174,10 +183,10 @@ p{
 }
 
 h2{
-    margin:  0 0 0 7px;
+    margin:  0 0 0 2px;
     font-family: 'Inter';
     font-weight: 600;
-    font-size: 72px;
+    font-size: 73px;
     line-height: 75.6px;
     z-index: 1;
     letter-spacing: 0.2px
@@ -194,32 +203,55 @@ h5{
     line-height: 24px;
 }
 
-#button-menu{
+.button-menu{
+    position: relative;
+    /* width: 100%; */
     width: 200px;
     height: 64px;
     background: #E1D4C9;
     border-radius: 100px;
     border: solid 2px #B6AEA7;
-    margin: 16px 0 -14px 0;
+    margin: 40px 0 -10px 0;
 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 10px;
+    transition: 0.5s;
+}
 
+.text{
+    transition: 0.5s;
+    position: absolute;
     font-family: 'Inter';
     font-weight: 600;
     font-size: 16px;
     line-height: 24px;
     color:#403F3D;
+    text-align: center;
 }
 
-#button-menu:hover{
-    background: #B6AEA7;
-    cursor: pointer;
+
+.icon-coffe{
+    padding: 0 0 0 76px;
+    transition: 0.6s;
 }
 
+.button-menu:hover{
+    text-align: center;
+    transition: 0.6s;
+
+}
+
+.button-menu:hover .text{
+    padding: 0 9px 0 0;
+    transition: 0.6s;
+}
+.button-menu:hover svg path{
+    stroke: #403F3D;
+    transition: 0.6s;
+}
 
 #favorite-coffe{
     width: 1440px;
@@ -287,7 +319,7 @@ h5{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 23px 19px;
+    padding: 17px 19px;
     transform: rotate(180deg);
     background: #E1D4C9;
     margin: 0 0 0 4px;
@@ -299,9 +331,15 @@ h5{
     color:#403F3D;
 }
 
+
 #button-arrow:hover{
     cursor: pointer;
     background: #665F55;
+}
+
+
+#button-arrow:hover svg path{
+    stroke: #C1B6AD;
 }
 
 #content-slider{
@@ -351,31 +389,34 @@ h5{
 
 
 #button-arrow-right{
-    width: 60px;
-    height: 60px;
-
     box-sizing: border-box;
     border: 2px solid #665F55;
-    border-radius: 100px;
+    border-radius: 100px; 
 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 23px 19px;
+    padding: 17px 19px;
     background: #E1D4C9;
-    margin: 0 3px 0 0;
+    margin: 0 0 0 4px;
 
     font-family: 'Inter';
     font-weight: 600;
     font-size: 16px;
     line-height: 24px;
     color:#403F3D;
+    width: 60px;
+    height: 60px; 
 }
 
 #button-arrow-right:hover{
     cursor: pointer;
     background: #665F55;
+}
+
+#button-arrow-right:hover svg path{
+    stroke: #C1B6AD;
 }
 
 #price{
@@ -562,6 +603,26 @@ h5{
     gap: 10px;
 }
 
+.but-download:hover{
+    cursor: pointer;
+    background: #665F55;
+
+}
+
+.but-download:hover .available{
+    color: #E1D4C9;
+}
+
+.but-download:hover .magz{
+    color: #E1D4C9;
+}
+
+.but-download:hover svg path{
+    stroke: #E1D4C9;
+    fill: #E1D4C9;
+}
+
+
 .available{
     font-family: 'Inter';
     font-weight: 600;
@@ -582,15 +643,19 @@ h5{
     line-height: 24px;
     text-align: center;
     color: #403F3D;
-    margin: 13px 0 0 -151px;
+    margin: 13px 0 0 -147px;
 
     width: 169px;
     height: 21px;
 
 }
 
+#mag{
+    margin: 14px 0 0 -158px;
+}
+
 .icon{
-    margin: 0 0 0 -1px;
+    margin: 0 0 0 9px;
 }
 
 footer{
@@ -626,6 +691,11 @@ footer{
 .but-footer:hover{
     cursor: pointer;
     background: #E1D4C9;
+}
+
+.but-footer:hover svg path{
+    stroke: #403F3D;
+    transition: 0.6s;
 }
 
 #ofer-footer{

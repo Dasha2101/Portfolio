@@ -238,10 +238,18 @@ h1{
     width: 310px;
     border-radius: 40px;
     border: 1px solid var(--border-light, #C1B6AD);
+    transition: box-shadow 0.4s ease;
 
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.cards:hover{
+    box-shadow: 1rem 1.2rem 2.1rem 0rem rgba(0, 0, 0, 0.33);
+    -webkit-box-shadow: 1rem 1.2rem 2.1rem 0rem rgba(9, 9, 9, 0.33);
+    -moz-box-shadow: 1rem 1.2rem 2.1rem 0 rgba(42, 42, 42, 0.33);
+    cursor: pointer;
 }
 
 .img-card{
