@@ -1,8 +1,6 @@
 html {
     scroll-behavior: smooth;
-
   }
-
 
 body{
     max-width: 1440px;
@@ -14,7 +12,6 @@ body{
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-
 }
 
 header{
@@ -26,7 +23,6 @@ header{
     justify-content: space-between;
     align-items: center;
     background-color: #E1D4C9;
-
 }
 
 #header-menu{
@@ -68,7 +64,6 @@ header{
     font-size: 16px;
     line-height: 24px;
     color:#403F3D;
-
 }
 
 .nav-a {
@@ -102,14 +97,12 @@ header{
     left: 0;
 
     transform: scaleX(0);
-    transition: transform 0.3s ease;
+    transition: transform 0.5s ease;
 }
 
 .nav-a:hover::before {
     transform: scaleX(1);
-  }
-
-
+}
 
 #coffe-menu{
     width: 72px;
@@ -151,22 +144,22 @@ p{
     align-items: center;
 }
 
-
 #container-coffe{
     width: 1360px;
     max-height: 644px;
     display: flex;
     justify-content: flex-start;
     position: relative;
-
+    padding: 0px 40px;
 }
 
-#img-hero{
+#hero-img{
+    background: url(../../images/img-hero.jpg), lightgray 50% / cover no-repeat;
     width: 1360px;
     height: 644px;
-    border-radius: 40px;
     position: absolute;
-
+    border-radius: 40px;
+    background-position: -67px -34px;
 }
 
 #container-offer{
@@ -190,7 +183,6 @@ h2{
     line-height: 75.6px;
     z-index: 1;
     letter-spacing: 0.2px
-
 }
 
 h5{
@@ -205,7 +197,6 @@ h5{
 
 .button-menu{
     position: relative;
-    /* width: 100%; */
     width: 200px;
     height: 64px;
     background: #E1D4C9;
@@ -232,7 +223,6 @@ h5{
     text-align: center;
 }
 
-
 .icon-coffe{
     padding: 0 0 0 76px;
     transition: 0.6s;
@@ -241,7 +231,6 @@ h5{
 .button-menu:hover{
     text-align: center;
     transition: 0.6s;
-
 }
 
 .button-menu:hover .text{
@@ -288,7 +277,6 @@ h5{
     text-align: center;
 
     color: #403F3D;
-
 }
 
 #container-slider{
@@ -331,15 +319,15 @@ h5{
     color:#403F3D;
 }
 
-
 #button-arrow:hover{
     cursor: pointer;
     background: #665F55;
+    transition: 0.6s;
 }
-
 
 #button-arrow:hover svg path{
     stroke: #C1B6AD;
+    transition: 0.6s;
 }
 
 #content-slider{
@@ -387,7 +375,6 @@ h5{
     margin: 16px 0 0 1px;
 }
 
-
 #button-arrow-right{
     box-sizing: border-box;
     border: 2px solid #665F55;
@@ -413,10 +400,12 @@ h5{
 #button-arrow-right:hover{
     cursor: pointer;
     background: #665F55;
+    transition: 0.6s;
 }
 
 #button-arrow-right:hover svg path{
     stroke: #C1B6AD;
+    transition: 0.6s;
 }
 
 #price{
@@ -427,7 +416,6 @@ h5{
     text-align: center;
     color: #403f3d;
     margin: 16px 0 0 0;
-
 }
 
 #controls{
@@ -441,6 +429,15 @@ h5{
     align-items: center;
 }
 
+#control-first{
+    background: var(--border-dark, #665F55);
+    width: 40px;
+    height: 4px;
+    margin: 0 10px 0 0;
+    border-radius: 100px;
+    display: flex;
+}
+
 .control{
     width: 40px;
     height: 4px;
@@ -449,8 +446,7 @@ h5{
     display: flex;
 
     border-radius: 100px;
-    background: var(--border-dark, #665F55);
-
+    background: var(--border-dark, #C1B6AD);
 }
 
 #about{
@@ -475,9 +471,9 @@ h5{
     height: 225px;
     font-family: 'Inter';
     font-weight: 600;
-    font-size: 61px;
+    font-size: 60px;
     line-height: 75px;
-    margin: 0;
+    margin: -1px 0 0 5px;
 
     color: #403F3D;
 }
@@ -500,6 +496,7 @@ h5{
     flex-direction: column;
     justify-content: space-between;
 }
+
 #img-about1{
     background: url(../../images/about-1.jpg), lightgray 50% / cover no-repeat;
     width: 660px;
@@ -606,20 +603,23 @@ h5{
 .but-download:hover{
     cursor: pointer;
     background: #665F55;
-
+    transition: 0.6s;
 }
 
 .but-download:hover .available{
     color: #E1D4C9;
+    transition: 0.6s;
 }
 
 .but-download:hover .magz{
     color: #E1D4C9;
+    transition: 0.6s;
 }
 
 .but-download:hover svg path{
     stroke: #E1D4C9;
     fill: #E1D4C9;
+    transition: 0.6s;
 }
 
 
@@ -655,7 +655,7 @@ h5{
 }
 
 .icon{
-    margin: 0 0 0 9px;
+    margin: 0 0 0 2px;
 }
 
 footer{
@@ -671,7 +671,7 @@ footer{
 #container-footer{
     width: 1360px;
     height: 450px;
-    border-radius: 20px;
+    border-radius: 40px;
     background: #665F55;
 
     display: flex;
@@ -691,6 +691,7 @@ footer{
 .but-footer:hover{
     cursor: pointer;
     background: #E1D4C9;
+    transition: 0.6s;
 }
 
 .but-footer:hover svg path{
@@ -715,7 +716,6 @@ footer{
     flex-direction: row;
     justify-content: space-between;
     margin: 40px 0 0 0;
-
 }
 
 #contact-info{
@@ -773,15 +773,14 @@ footer{
     flex-direction: column;
     justify-content: space-between;
     margin: 26px 0 0 0;
-
 }
 
 .contacts-text{
     width: 234px;
     height: 24px;
-    margin: 5px 0 0 3px;
+    margin: 5px 0 0 8px;
 
-    font-family: Helvetica;
+    font-family: 'Inter';
     font-weight: 600;
     font-size: 16px;
     line-height: 24px;
@@ -792,7 +791,6 @@ footer{
     text-decoration: none;
     position: relative;
     color:#E1D4C9;
-
 }
 
 .a-footer:hover{
@@ -812,11 +810,11 @@ footer{
     left: 0;
 
     transform: scaleX(0);
-    transition: transform 0.3s ease;
+    transition: transform 0.5s ease;
 }
 
 .a-footer:hover::before {
     transform: scaleX(1);
-  }
+}
 
 

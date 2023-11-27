@@ -1,3 +1,7 @@
+html{
+    scroll-behavior: smooth;
+}
+
 body{
     max-width: 1440px;
     margin: auto;
@@ -8,19 +12,16 @@ body{
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-
 }
 
 header{
     width: 1440px;
-    /* height: 60px; */
 
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     background-color: #E1D4C9;
-
 }
 
 #header-menu{
@@ -62,7 +63,6 @@ header{
     font-size: 16px;
     line-height: 24px;
     color:#403F3D;
-
 }
 
 .nav-a {
@@ -81,6 +81,7 @@ header{
 
 .nav-a:hover{
     color:#403F3D;
+    transition: 0.6s;
 }
 
 .nav-a::before{
@@ -101,9 +102,23 @@ header{
 
 .nav-a:hover::before {
     transform: scaleX(1);
-  }
+    transition: 0.6s;
+}
 
+#nav-a-first{
+    text-decoration: none;
+    color:#403F3D;
+    transition: 0.6s;
 
+    height: 24px;
+    margin: -5px 2px 0 0;
+
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    border-bottom: solid 3px #403F3D;
+}
 
 #coffe-menu{
     width: 72px;
@@ -148,8 +163,7 @@ header{
 #container-title-menu{
     width: 800px;
     height: 150px;
-
-    margin: 0 -3px 0 0;
+    margin: 0 -23px 0 0;
 }
 
 h1{
@@ -181,7 +195,7 @@ h1{
     font-size: 16px;
     font-style: normal;
     font-weight: 600;
-    line-height: 150%; 
+    line-height: 150%;
 
 }
 
@@ -256,7 +270,6 @@ h1{
     background: var(--background-body, #C1B6AD);
 }
 
-
 .button-menu-tea{
     width: 90px;
     height: 46px;
@@ -282,30 +295,34 @@ h1{
 .button-menu-tea:hover{
     cursor: pointer;
     background-color: #665F55;
+    transition: 0.6s;
 }
 
 .button-menu-tea:hover #circule-kettle{
     background-color: #E1D4C9;
+    transition: 0.6s;
 }
 
 .button-menu:hover span{
     color: #E1D4C9;
+    transition: 0.6s;
 }
 
 .button-menu:hover{
     cursor: pointer;
     background-color: #665F55;
+    transition: 0.6s;
 }
 
 .button-menu:hover #circule-cake{
     background-color: #E1D4C9;
+    transition: 0.6s;
 }
 
 .button-menu-tea:hover span{
     color: #E1D4C9;
+    transition: 0.6s;
 }
-
-
 
 #card-menu{
     width: 1360px;
@@ -404,7 +421,7 @@ footer{
 #container-footer{
     width: 1360px;
     height: 450px;
-    border-radius: 20px;
+    border-radius: 40px;
     background: #665F55;
 
     display: flex;
@@ -424,6 +441,12 @@ footer{
 .but-footer:hover{
     cursor: pointer;
     background: #E1D4C9;
+    transition: 0.6s;
+}
+
+.but-footer:hover svg path{
+    stroke: #403F3D;
+    transition: 0.6s;
 }
 
 #ofer-footer{
@@ -443,7 +466,6 @@ footer{
     flex-direction: row;
     justify-content: space-between;
     margin: 40px 0 0 0;
-
 }
 
 #contact-info{
@@ -461,7 +483,7 @@ footer{
     font-weight: 600;
     font-size: 61px;
     line-height: 75px;
-    margin: 0 0 0 1px;
+    margin: 0 0 0 -41px;
     color: #E1D4C9;
 }
 
@@ -501,15 +523,14 @@ footer{
     flex-direction: column;
     justify-content: space-between;
     margin: 26px 0 0 0;
-
 }
 
 .contacts-text{
     width: 234px;
     height: 24px;
-    margin: 5px 0 0 3px;
+    margin: 5px 0 0 8px;
 
-    font-family: Helvetica;
+    font-family: 'Inter';
     font-weight: 600;
     font-size: 16px;
     line-height: 24px;
@@ -520,7 +541,6 @@ footer{
     text-decoration: none;
     position: relative;
     color:#E1D4C9;
-
 }
 
 .a-footer:hover{
@@ -540,11 +560,11 @@ footer{
     left: 0;
 
     transform: scaleX(0);
-    transition: transform 0.3s ease;
+    transition: transform 0.5s ease;
 }
 
 .a-footer:hover::before {
     transform: scaleX(1);
-  }
+}
 
 
