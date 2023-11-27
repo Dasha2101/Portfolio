@@ -135,7 +135,7 @@ header{
 #cup{
     width: 20px;
     height: 20px;
-    margin: -3px 0 0 0;
+    margin: 0px 0 0 1;
 }
 
 #menu{
@@ -162,7 +162,7 @@ header{
 }
 
 #container-title-menu{
-    width: 800px;
+    width: 820px;
     height: 150px;
     margin: 0 -23px 0 0;
 }
@@ -171,7 +171,7 @@ h1{
     color: #403F3D;
     text-align: center;
     font-family: 'Inter';
-    font-size: 61px;
+    font-size: 60px;
     font-style: normal;
     font-weight: 600;
     line-height: 125%;
@@ -500,19 +500,19 @@ p{
 
 #street{
     display: flex;
-    width: 182px;
+    width: 200px;
     height: 28px;
 }
 
 #phone{
     display: flex;
-    width: 175px;
+    width: 200px;
     height: 28px;
 }
 
 #time{
     display:flex;
-    width: 262px;
+    width: 280px;
     height: 28px;
 }
 
@@ -533,7 +533,7 @@ p{
 
     font-family: 'Inter';
     font-weight: 600;
-    font-size: 16px;
+    font-size: 15px;
     line-height: 24px;
     color: #E1D4C9;
 }
