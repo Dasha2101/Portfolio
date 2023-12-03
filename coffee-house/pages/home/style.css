@@ -2,6 +2,8 @@ html {
     scroll-behavior: smooth;
   }
 
+@media screen and (min-width: 1440px){
+
 body{
     max-width: 1440px;
     margin: auto;
@@ -33,9 +35,10 @@ header{
     display: flex;
     flex-direction: row;
     align-items: center;
+    padding: 13px 40px 15px 40px;
 }
 
-#container-nav{
+/* #container-nav{
     width: 1440px;
     height: 60px;
     padding: 20px 0 0 0;
@@ -43,11 +46,20 @@ header{
     display: flex;
     justify-content: center;
     align-items: center;
-}
+} */
 
 #logo{
     width: 100px;
     height: 60px;
+}
+
+
+.burger-menu{
+    display: none;;
+}
+
+.button-adaptive{
+    display: none;
 }
 
 #nav-menu{
@@ -817,5 +829,126 @@ h5{
 .a-footer:hover::before {
     transform: scaleX(1);
 }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1439px){
+body{
+    margin: auto;
+    position: relative;
+    background-size: 100%; 
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #E1D4C9;
+    }
+
+    header{
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #E1D4C9;
+    }
+
+    #header-menu{
+        display: flex;
+        width: 688px;
+        height: 60px;
+
+        justify-content: space-between;
+        align-items: center;
+        padding: 13px 40px 15px 40px;
+    }
+
+/* 
+    #container-nav{
+        height: 60px;
+        width: 100%;
+        padding: 0px 40px 0px 40px;
 
 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    } */
+
+    #nav-menu{
+        display: none;
+    }
+
+    #burmenu{
+        display: none;
+    }
+
+    .nav-a {
+        position: relative;
+        text-decoration: none;
+        color:#403F3D;
+
+        height: 24px;
+        margin: -5px 2px 0 0;
+
+        font-family: 'Inter', sans-serif;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 24px;
+    }
+
+    .nav-a:hover{
+        color:#403F3D;
+    }
+
+    .nav-a::before{
+        background-color: #403F3D;
+
+        content: "";
+        position: absolute;
+        display: block;
+
+        width: 100%;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+
+        transform: scaleX(0);
+        transition: transform 0.5s ease;
+    }
+
+    .nav-a:hover::before {
+        transform: scaleX(1);
+    }
+
+    #coffe-menu{
+        display: none;
+    }
+
+    .button-adaptive{
+        width: 44px;
+        height: 44px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        flex-direction: column;
+
+        border-radius: 100px;
+        background-color: #E1D4C9;;
+        border: 1px solid var(--border-dark, #665F55);
+    }
+
+    .vector{
+        width: 16px;
+        height: 2px;
+        stroke-width: 1.5px;
+        content: "";
+        display: inline-block;
+        stroke-width: 1.5px;
+        stroke: var(--text-dark, #403F3D);
+        padding: 4px 0 4px 0;
+    }
+
+
+}
