@@ -243,6 +243,21 @@ body{
     line-height: 125%;
 }
 
+.menu__button_rotate{
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+    width: 60px;
+    height: 60px;
+
+    border: 2px solid #665F55;
+    border-radius: 50%;
+
+    background: #E1D4C9;
+
+}
+
 .footer{
     padding: 125px 0 40px 0;
 }
@@ -336,6 +351,74 @@ body{
 .footer__link:hover::before {
     transform: scaleX(1);
 }
+
+@media (max-width: 768px){
+.container{
+    max-width: 688px;
+}
+
+.nav__menu{
+    display: none;
+}
+
+.coffe__menu{
+    display: none;
+}
+
+.button__adaptive{
+    display: flex;
+}
+
+.menu__cards{
+    justify-content: center;
+    margin: 0 0 40px 0;
+}
+
+.menu__card_none{
+    display: none;
+}
+
+.menu__button_rotate{
+    display: flex;
+}
+
+.footer{
+    padding: 100px 0 40px 0;
+}
+
+.footer__title{
+    margin: 0 0 40px 0;
+    color: #E1D4C9;
+
+}
+
+.footer__container{
+    flex-direction: column;
+    padding: 90px 60px 90px 60px;
+}
+
+.footer__ofer{
+    padding: 5px 0 0 0;
+}
+
+.footer__subtitle{
+    margin: 0 0 35px 0;
+}
+
+.footer__link{
+    margin: 0 0 20px 0;
+}
+
+.footer__contanct-info{
+    padding: 5px 0 0 0;
+}
+
+
+
+
+
+}
+
 
 
 
