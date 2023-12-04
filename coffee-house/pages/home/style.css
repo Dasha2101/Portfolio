@@ -631,6 +631,10 @@ body{
     padding: 100px 60px 90px 60px;
 }
 
+.footer__title{
+    color: #E1D4C9;
+}
+
 .footer__subtitle{
     margin: 0 0 35px 0;
 }

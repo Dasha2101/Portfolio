@@ -412,9 +412,58 @@ body{
 .footer__contanct-info{
     padding: 5px 0 0 0;
 }
+}
+@media (max-width: 380px){
+.container {
+    max-width: 348px;
+}
+.nav__menu{
+    display: none;
+}
 
+.coffe__menu{
+    display: none;
+}
 
+.button__adaptive{
+    display: flex;
+}
 
+.ofer__title{
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 125%;
+}
+
+.container__buttons{
+    gap: 8px;
+}
+
+.footer{
+    padding: 100px 0 40px 0;
+}
+
+.footer__title{
+    font-size: 32px;
+    color: var(--text-light, #E1D4C9);
+}
+
+.footer__container{
+    padding: 55px 16px 35px 16px;
+    display: block;
+}
+
+.footer__ofer{
+    margin: 0 0 30px 0;
+}
+
+.footer__subtitle{
+    margin: 0 0 35px 0;
+}
+
+.footer__contanct-info{
+    padding: 10px 0 0 0;
+}
 
 
 }
