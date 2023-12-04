@@ -101,10 +101,6 @@ body{
     color:#403F3D;
 }
 
-.nav-a:hover{
-    color:#403F3D;
-}
-
 .nav-a::before{
     background-color: #403F3D;
 
@@ -119,10 +115,6 @@ body{
 
     transform: scaleX(0);
     transition: transform 0.5s ease;
-}
-
-.nav-a:hover::before {
-    transform: scaleX(1);
 }
 
 .button__adaptive{
@@ -211,14 +203,6 @@ body{
 
 .hero__icon{
     display: none;
-}
-
-.button-menu:hover{
-    transition: 0.6s;
-}
-
-.button-menu:hover .hero__icon{
-    display: block;
 }
 
 .enjoy-title{
@@ -318,17 +302,6 @@ body{
     transform: rotate(180deg);
 }
 
-.slider__button:hover{
-    cursor: pointer;
-    background: #665F55;
-    transition: 0.6s;
-}
-
-.slider__button:hover svg path{
-    stroke: #C1B6AD;
-    transition: 0.6s;
-}
-
 .controls{
     width: 144px;
 
@@ -423,27 +396,6 @@ body{
     border: solid 2px #665F55;
 }
 
-.mobile-app__button:hover{
-    background: #665F55;
-    transition: 0.6s;
-}
-
-.mobile-app__button:hover .available{
-    color: #E1D4C9;
-    transition: 0.6s;
-}
-
-.mobile-app__button:hover .magz{
-    color: #E1D4C9;
-    transition: 0.6s;
-}
-
-.mobile-app__button:hover svg path{
-    stroke: #E1D4C9;
-    fill: #E1D4C9;
-    transition: 0.6s;
-}
-
 .available{
     display: block;
     font-size: 10px;
@@ -483,17 +435,6 @@ body{
     background-color: #665F55;
 }
 
-.footer__button:hover{
-    cursor: pointer;
-    background: #E1D4C9;
-    transition: 0.6s;
-}
-
-.footer__button:hover svg path{
-    stroke: #403F3D;
-    transition: 0.6s;
-}
-
 .footer__ofer{
     display: flex;
     flex-direction: column;
@@ -527,10 +468,6 @@ body{
     color:#E1D4C9;
 }
 
-.footer__link:hover{
-    color:#E1D4C9;
-}
-
 .footer__link::before{
     background-color: #E1D4C9;
 
@@ -547,8 +484,81 @@ body{
     transition: transform 0.5s ease;
 }
 
+
+@media (hover:hover) and (pointer: fine){
+.nav-a:hover{
+    color:#403F3D;
+}
+
+.nav-a:hover::before {
+    transform: scaleX(1);
+}
+
+.button-menu:hover{
+    transition: 0.6s;
+}
+
+.button-menu:hover .hero__icon{
+    display: block;
+}
+
+.slider__button:hover{
+    cursor: pointer;
+    background: #665F55;
+    transition: 0.6s;
+}
+
+.slider__button:hover svg path{
+    stroke: #C1B6AD;
+    transition: 0.6s;
+}
+
+.mobile-app__button:hover{
+    background: #665F55;
+    transition: 0.6s;
+}
+
+.mobile-app__button:hover .available{
+    color: #E1D4C9;
+    transition: 0.6s;
+}
+
+.mobile-app__button:hover .magz{
+    color: #E1D4C9;
+    transition: 0.6s;
+}
+
+.mobile-app__button:hover svg path{
+    stroke: #E1D4C9;
+    fill: #E1D4C9;
+    transition: 0.6s;
+}
+
+.footer__button:hover{
+    cursor: pointer;
+    background: #E1D4C9;
+    transition: 0.6s;
+}
+
+.footer__button:hover svg path{
+    stroke: #403F3D;
+    transition: 0.6s;
+}
+
+.button-menu:hover{
+    transition: 0.6s;
+}
+
+.button-menu:hover .hero__icon{
+    display: block;
+}
 .footer__link:hover::before {
     transform: scaleX(1);
+}
+
+.footer__link:hover{
+    color:#E1D4C9;
+}
 }
 
 @media (max-width: 768px){
@@ -575,15 +585,6 @@ body{
 .hero__icon{
     display: none;
 }
-
-.button-menu:hover{
-    transition: 0.6s;
-}
-
-.button-menu:hover .hero__icon{
-    display: block;
-}
-
 .favorite-coffee{
     padding: 45px 0 50px 0;
 }
