@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400&display=swap" rel="stylesheet">
     <link href="../menu/style.css" rel="stylesheet">
-    <script src="../menu/script.js" type="module"></script>
+    <script src="./index.js"></script>
     <script>
         window.onbeforeunload = function () {
         window.scrollTo(0, 0);
@@ -36,14 +36,34 @@
                         <img id="cup" src="../../images/coffee-cup.png" alt="cup">
                         </a>
                     </div>
-                    <button class="button__adaptive">
+                    <!-- <button class="button__adaptive">
                         <svg class="vector" xmlns="http://www.w3.org/2000/svg" width="18" height="2" viewBox="0 0 18 2" fill="none">
                             <path d="M1 1H17" stroke="#403F3D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                         <svg class="vector" xmlns="http://www.w3.org/2000/svg" width="18" height="2" viewBox="0 0 18 2" fill="none">
                             <path d="M1 1H17" stroke="#403F3D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
-                    </button>
+                    </button> -->
+                    <div class="burger__menu open">
+                        <div class="button__adaptive">
+                            <!-- <svg class="vector" xmlns="http://www.w3.org/2000/svg" width="18" height="2" viewBox="0 0 18 2" fill="none">
+                                <path d="M1 1H17" stroke="#403F3D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <svg class="vector" xmlns="http://www.w3.org/2000/svg" width="18" height="2" viewBox="0 0 18 2" fill="none">
+                                <path d="M1 1H17" stroke="#403F3D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg> -->
+                                <span></span>
+                                <span></span>
+                        </div>
+                        <nav id="burmenu" class="nav__menu_hide">
+                            <section class="nav__container">
+                                <a href="#favorite-coffe" class="nav-a">Favorite coffee</a>
+                                <a href="#about" class="nav-a">About</a>
+                                <a href="#mobile-up" class="nav-a">Mobile app</a>
+                                <a href="#contacts" class="nav-a">Contact us</a>
+                            </section>
+                        </nav>
+                    </div>
                 </div>
             </div>
         </header>
@@ -51,7 +71,7 @@
             <div class="container">
                 <div class="menu">
                     <h1 class="ofer__title primary-title">Behind each of our cups hides an <span class="primary-title_italic">amazing surprise</span></h1>
-                    <div class="container__buttons">
+                    <!-- <div class="container__buttons">
                         <button disabled class="container__button container__button_active">
                             <span class="circule">
                                 <img class="icon-menu" src="../../images/tea.svg" alt="mug">
@@ -142,9 +162,11 @@
                             <path d="M21.8883 13.5C21.1645 18.3113 17.013 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C16.1006 2 19.6248 4.46819 21.1679 8" stroke="#403F3D" stroke-linecap="round" stroke-linejoin="round"/>
                             <path d="M17 8H21.4C21.7314 8 22 7.73137 22 7.4V3" stroke="#403F3D" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
-                    </button>
+                    </button> -->
+                
                 </div>
             </div>
+           
         </main>
     
     <footer class="footer">
@@ -191,5 +213,6 @@
         </div>
     </footer>
 </div>
+<script src="./script.js" type="module"></script>
 </body>
 </html>

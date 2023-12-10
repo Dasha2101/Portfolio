@@ -1,2 +1,6 @@
+const menu = document.querySelector('.menu')
+import product from "./product.mjs"
 
-import data from "../menu/products.json"
+import menuPage from './menu.js'
+
+const value = new menuPage (menu, product)
