@@ -73,8 +73,10 @@ cardFiller(e){
     cardPrice.classList.add('card__price')
     cardPrice.textContent = e.price
 
+    cardDescr.append(cardPrice)
 
-    cardBox.append(cardImg, cardName, cardDescr, cardPrice)
+
+    cardBox.append(cardImg, cardName, cardDescr)
     return cardBox
 }
 
@@ -83,7 +85,7 @@ createButtons(){
     buttonsWrapper.classList.add('container__buttons')
 
     const menuButtonCoffee = document.createElement('button')
-    menuButtonCoffee.classList.add('container__button')
+    menuButtonCoffee.classList.add('container__button', "innective")
     menuButtonCoffee.textContent = 'Coffee'
 
     const iconMenuButtonCoffee = document.createElement('img')
@@ -93,6 +95,8 @@ createButtons(){
         this.category = "coffee"
         this.visibleProductCount = this.countProduct
         this.filtrCard()
+        this.changeActiveButton()
+        menuButtonCoffee.classList.add("innective")
     })
 
     menuButtonCoffee.append(iconMenuButtonCoffee)
@@ -108,9 +112,12 @@ createButtons(){
         this.category = "tea"
         this.visibleProductCount = this.countProduct
         this.filtrCard()
+        this.changeActiveButton()
+        menuButtonTea.classList.add("innective")
+
     })
 
-    menuButtonCoffee.append(iconMenuButtonTea)
+    menuButtonTea.append(iconMenuButtonTea)
 
     const menuButtonCake = document.createElement('button')
     menuButtonCake.classList.add('container__button')
@@ -120,10 +127,12 @@ createButtons(){
         this.category = "dessert"
         this.visibleProductCount = this.countProduct
         this.filtrCard()
+        this.changeActiveButton()
+        menuButtonCake.classList.add("innective")
     })
 
     const iconMenuButtonCake = document.createElement('img')
-    iconMenuButtonCake.src = '../../images/kettle.svg'
+    iconMenuButtonCake.src = '../../images/cake.png'
 
     menuButtonCake.append(iconMenuButtonCake)
 
@@ -137,7 +146,10 @@ createButtonMore(){
     }
     const buttonMore = document.createElement('button')
     buttonMore.classList.add('button__more')
-    buttonMore.innerHTML = 'More'
+
+    const iconButtonMore = document.createElement("img")
+    iconButtonMore.src = '../../images/refresh.svg'
+    buttonMore.append(iconButtonMore)
     buttonMore.addEventListener("click" , () => {
         this.visibleProductCount += this.countProduct
         this.visibleProduct = this.product.slice(0, this.visibleProductCount)
@@ -147,6 +159,15 @@ createButtonMore(){
     })
     return buttonMore
 
+}
+
+changeActiveButton(){
+    const buttons = document.querySelectorAll(".container__button");
+    for (const b of buttons){
+        if (b.classList.contains("innective")){
+            b.classList.remove("innective")
+        }
+    }
 }
 
 }

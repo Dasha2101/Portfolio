@@ -3,7 +3,7 @@ const product = [
       "img": '../../images/coffee-1.jpg',
       "name": "Irish coffee",
       "description": "Fragrant black coffee with Jameson Irish whiskey and whipped milk",
-      "price": "7.00",
+      "price": "$7.00",
       "category": "coffee",
       "sizes": {
         "s": {
@@ -39,7 +39,7 @@ const product = [
       "img": '../../images/coffee-2.jpg',
       "name": "Kahlua coffee",
       "description": "Classic coffee with milk and Kahlua liqueur under a cap of frothed milk",
-      "price": "7.00",
+      "price": "$7.00",
       "category": "coffee",
       "sizes": {
         "s": {
@@ -74,7 +74,7 @@ const product = [
     { "img": '../../images/coffee-3.png',
       "name": "Honey raf",
       "description": "Espresso with frothed milk, cream and aromatic honey",
-      "price": "5.50",
+      "price": "$5.50",
       "category": "coffee",
       "sizes": {
         "s": {
@@ -109,7 +109,7 @@ const product = [
     { "img": '../../images/coffee-4.png',
       "name": "Ice cappuccino",
       "description": "Cappuccino with soft thick foam in summer version with ice",
-      "price": "5.00",
+      "price": "$5.00",
       "category": "coffee",
       "sizes": {
         "s": {
@@ -145,7 +145,7 @@ const product = [
       "img": '../../images/coffee-5.jpg',
       "name": "Espresso",
       "description": "Classic black coffee",
-      "price": "4.50",
+      "price": "$4.50",
       "category": "coffee",
       "sizes": {
         "s": {
@@ -180,7 +180,7 @@ const product = [
     { "img": '../../images/coffee-6.jpg',
       "name": "Latte",
       "description": "Espresso coffee with the addition of steamed milk and dense milk foam",
-      "price": "5.50",
+      "price": "$5.50",
       "category": "coffee",
       "sizes": {
         "s": {
@@ -215,7 +215,7 @@ const product = [
     { "img": '../../images/coffee-7.jpg',
       "name": "Latte macchiato",
       "description": "Espresso with frothed milk and chocolate",
-      "price": "5.50",
+      "price": "$5.50",
       "category": "coffee",
       "sizes": {
         "s": {
@@ -250,7 +250,7 @@ const product = [
     { "img": '../../images/coffee-8.jpg',
       "name": "Coffee with cognac",
       "description": "Fragrant black coffee with cognac and whipped cream",
-      "price": "6.50",
+      "price": "$6.50",
       "category": "coffee",
       "sizes": {
         "s": {
@@ -285,7 +285,7 @@ const product = [
     { "img": '../../images/tea-1.jpg',
       "name": "Moroccan",
       "description": "Fragrant black tea with the addition of tangerine, cinnamon, honey, lemon and mint",
-      "price": "4.50",
+      "price": "$4.50",
       "category": "tea",
       "sizes": {
         "s": {
@@ -320,7 +320,7 @@ const product = [
     { "img": '../../images/tea-2.jpg',
       "name": "Ginger",
       "description": "Original black tea with fresh ginger, lemon and honey",
-      "price": "5.00",
+      "price": "$5.00",
       "category": "tea",
       "sizes": {
         "s": {
@@ -355,7 +355,7 @@ const product = [
     { "img": '../../images/tea-3.jpg',
       "name": "Cranberry",
       "description": "Invigorating black tea with cranberry and honey",
-      "price": "5.00",
+      "price": "$5.00",
       "category": "tea",
       "sizes": {
         "s": {
@@ -390,7 +390,7 @@ const product = [
     { "img": '../../images/tea-4.jpg',
       "name": "Sea buckthorn",
       "description": "Toning sweet black tea with sea buckthorn, fresh thyme and cinnamon",
-      "price": "5.50",
+      "price": "$5.50",
       "category": "tea",
       "sizes": {
         "s": {
@@ -425,7 +425,7 @@ const product = [
     {"img": '../../images/dessert-1.jpg',
       "name": "Marble cheesecake",
       "description": "Philadelphia cheese with lemon zest on a light sponge cake and red currant jam",
-      "price": "3.50",
+      "price": "$3.50",
       "category": "dessert",
       "sizes": {
         "s": {
@@ -460,7 +460,7 @@ const product = [
     { "img": '../../images/dessert-2.jpg',
       "name": "Red velvet",
       "description": "Layer cake with cream cheese frosting",
-      "price": "4.00",
+      "price": "$4.00",
       "category": "dessert",
       "sizes": {
         "s": {
@@ -495,7 +495,7 @@ const product = [
     { "img": '../../images/dessert-3.jpg',
       "name": "Cheesecakes",
       "description": "Soft cottage cheese pancakes with sour cream and fresh berries and sprinkled with powdered sugar",
-      "price": "4.50",
+      "price": "$4.50",
       "category": "dessert",
       "sizes": {
         "s": {
@@ -530,7 +530,7 @@ const product = [
     { "img": '../../images/dessert-4.jpg',
       "name": "Creme brulee",
       "description": "Delicate creamy dessert in a caramel basket with wild berries",
-      "price": "4.00",
+      "price": "$4.00",
       "category": "dessert",
       "sizes": {
         "s": {
@@ -565,7 +565,7 @@ const product = [
     { "img": '../../images/dessert-5.jpg',
       "name": "Pancakes",
       "description": "Tender pancakes with strawberry jam and fresh strawberries",
-      "price": "4.50",
+      "price": "$4.50",
       "category": "dessert",
       "sizes": {
         "s": {
@@ -600,7 +600,7 @@ const product = [
     { "img": '../../images/dessert-6.jpg',
       "name": "Honey cake",
       "description": "Classic honey cake with delicate custard",
-      "price": "4.50",
+      "price": "$4.50",
       "category": "dessert",
       "sizes": {
         "s": {
@@ -635,7 +635,7 @@ const product = [
     { "img": '../../images/dessert-7.jpg',
       "name": "Chocolate cake",
       "description": "Cake with hot chocolate filling and nuts with dried apricots",
-      "price": "5.50",
+      "price": "$5.50",
       "category": "dessert",
       "sizes": {
         "s": {
@@ -670,7 +670,7 @@ const product = [
     { "img": '../../images/dessert-8.jpg',
       "name": "Black forest",
       "description": "A combination of thin sponge cake with cherry jam and light chocolate mousse",
-      "price": "6.50",
+      "price": "$6.50",
       "category": "dessert",
       "sizes": {
         "s": {

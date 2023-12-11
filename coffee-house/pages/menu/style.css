@@ -187,6 +187,7 @@ body{
     align-items: center;
 }
 
+
 .ofer__title{
     text-align: center;
     max-width: 800px;
@@ -204,8 +205,20 @@ body{
     border-radius: 100px;
     background-color: #E1D4C9;
     display: flex;
+    flex-direction: row-reverse;
     gap: 10px;
 }
+
+.innective{
+    padding: 11px 17px 11px 17px;
+    border: solid 2px #c1b6ad;
+    border-radius: 100px;
+    background-color: #665F55;
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 10px;
+}
+
 
 .container__button_active{
     background: var(--background-container, #665F55);
@@ -215,6 +228,17 @@ body{
 
 .container__button{
     cursor: pointer;
+}
+
+.button__more{
+    display: flex;
+    width: 60px;
+    height: 60px;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 100px;
+    border: 1px solid var(--border-dark, #665F55);
 }
 
 .circule{
@@ -252,7 +276,7 @@ body{
     margin: 0 0 20px 0;
 }
 
-.card__info{
+.card__desc{
     height: 140px;
     padding: 0 20px 20px 20px;
     display: flex;

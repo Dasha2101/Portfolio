@@ -9,8 +9,6 @@ function init(){
     boxBurger = document.querySelector('.burger__menu');
     slideMenu = document.getElementById('burmenu');
     burgerButton  = document.querySelector('.button__adaptive');
-    // overlay = document.createElement("section");
-    document.body.append(overlay);
 
     links = document.querySelectorAll(".nav-a-burger");
     for (let i = 0; i < links.length; i++){
