@@ -181,17 +181,6 @@ body{
     border: 1px solid var(--border-dark, #665F55);
 }
 
-
-.vector{
-    min-width: 16px;
-    height: 10px;
-    stroke-width: 1.5px;
-    content: "";
-    display: inline-block;
-    stroke-width: 1.5px;
-    stroke: var(--text-dark, #403F3D);
-}
-
 .menu{
     display: flex;
     flex-direction: column;
