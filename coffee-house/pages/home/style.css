@@ -182,22 +182,21 @@ body{
 
 .hero{
     padding: 0 0 50px 0;
+    position: relative;
 }
 
-.img__hero{
-    padding: 100px 100px 100px 100px;
+.video__hero{
+    max-width: 1360px;
     border-radius: 40px;
-    background: url(../../images/img-hero.jpg) no-repeat center/cover;
+    object-fit: cover;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    align-self: stretch;
 }
 
 .hero__content{
     max-width: 530px;
+    margin: 100px 0 0 100px;
+    position: absolute;
+    z-index: 1;
 
 }
 
@@ -700,7 +699,12 @@ body{
     align-items: center;
 }
 
+.hero__content{
+    max-width: 530px;
+    margin: 100px 0 0 60px;
+    z-index: 0;
 
+}
 
 #cup-burger{
     height: 40px;
@@ -758,6 +762,12 @@ body{
 .nav__menu{
     display: none;
 }
+
+.video__hero{
+    max-width: 688px;
+    height: 644px;
+}
+
 
 .coffe__menu{
     display: none;
@@ -868,6 +878,16 @@ body{
     width: 380px;
 
     cursor: pointer;
+}
+
+.hero__content{
+    margin: 60px 0 0 22px;
+    z-index: 0;
+}
+
+.video__hero{
+    max-width: 348px;
+    height: 552px;
 }
 
 .nav__menu_show{

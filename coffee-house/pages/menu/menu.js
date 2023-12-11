@@ -1,15 +1,21 @@
-let countProduct
+
 class menuPage{
     constructor(parent, product){
         this.product = product
+        this.changeValue()
         this.parent = parent
         this.wrapperContent = this.createWrapperContent()
         this.renderContent()
     }
+countProduct
+visibleProductCount
+
+category = "coffee"
 
 createWrapperContent(){
     const wrapperContent = document.createElement('div')
     wrapperContent.classList.add('menu__cards')
+    wrapperContent.append(this.createButtonMore())
     return wrapperContent
 }
 
@@ -17,28 +23,31 @@ clearCardsFiller(){
     this.wrapperContent.innerHTML = ''
 }
 
-filtrCard(e){
+filtrCard(){
     this.clearCardsFiller()
-    this.product.forEach(element => {
-        if (element.category === e){
-            this.wrapperContent.append(this.cardFiller(element))
-        }
+    this.product.filter(element => element.category === this.category).slice(0, this.visibleProductCount).forEach(element => {
+        console.log(element)
+        this.wrapperContent.append(this.cardFiller(element))
     });
+    this.wrapperContent.append(this.createButtonMore())
 }
 
 renderContent(){
     this.parent.append(this.createButtons())
     this.parent.append(this.wrapperContent)
-    this.filtrCard('coffee')
+    this.filtrCard()
 }
 
 changeValue(){
     if (window.screen.width > 1440) {
-        countProduct = 8;
+        this.countProduct = 8;
+        this.visibleProductCount = 8
     } else if ((window.screen.width >= 768) && (window.screen.width < 1440)) {
-        countProduct = 4;
+        this.countProduct = 4;
+        this.visibleProductCount = 4
     } else {
-        countProduct = 4;
+        this.countProduct = 4;
+        this.visibleProductCount = 4
     }
 }
 
@@ -64,6 +73,7 @@ cardFiller(e){
     cardPrice.classList.add('card__price')
     cardPrice.textContent = e.price
 
+
     cardBox.append(cardImg, cardName, cardDescr, cardPrice)
     return cardBox
 }
@@ -80,7 +90,9 @@ createButtons(){
     iconMenuButtonCoffee.src = '../../images/tea.svg'
 
     menuButtonCoffee.addEventListener('click', () => {
-        this.filtrCard('coffee')
+        this.category = "coffee"
+        this.visibleProductCount = this.countProduct
+        this.filtrCard()
     })
 
     menuButtonCoffee.append(iconMenuButtonCoffee)
@@ -93,7 +105,9 @@ createButtons(){
     iconMenuButtonTea.src = '../../images/kettle.svg'
 
     menuButtonTea.addEventListener('click', () => {
-        this.filtrCard('tea')
+        this.category = "tea"
+        this.visibleProductCount = this.countProduct
+        this.filtrCard()
     })
 
     menuButtonCoffee.append(iconMenuButtonTea)
@@ -103,7 +117,9 @@ createButtons(){
     menuButtonCake.textContent = 'Cake'
 
     menuButtonCake.addEventListener('click', () => {
-        this.filtrCard('dessert')
+        this.category = "dessert"
+        this.visibleProductCount = this.countProduct
+        this.filtrCard()
     })
 
     const iconMenuButtonCake = document.createElement('img')
@@ -114,5 +130,24 @@ createButtons(){
     buttonsWrapper.append(menuButtonCoffee, menuButtonTea, menuButtonCake)
     return buttonsWrapper
 }
+
+createButtonMore(){
+    if (this.visibleProductCount >= this.product.filter(element => element.category === this.category).length){
+        return ""
+    }
+    const buttonMore = document.createElement('button')
+    buttonMore.classList.add('button__more')
+    buttonMore.innerHTML = 'More'
+    buttonMore.addEventListener("click" , () => {
+        this.visibleProductCount += this.countProduct
+        this.visibleProduct = this.product.slice(0, this.visibleProductCount)
+        console.log(this.visibleProduct)
+        this.filtrCard()
+
+    })
+    return buttonMore
+
+}
+
 }
 export default menuPage
