@@ -209,7 +209,7 @@ body{
     max-width: 530px;
 }
 
-.favorite-coffee{
+#favorite-coffee{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -332,7 +332,7 @@ body{
 }
 
 
-.about{
+#about{
     padding: 50px 0 50px 0;
     display: flex;
     flex-direction: column;
@@ -360,7 +360,7 @@ body{
     border-radius: 20px;
 }
 
-.mobile-app{
+#mobile-app{
     padding: 190px 0 120px 0;
     background-image: url(../../images/mobile-screens.png);
     background-repeat: no-repeat;
@@ -408,7 +408,7 @@ body{
     color: #403F3D;
 }
 
-.footer{
+#footer{
     padding: 125px 0 40px 0;
 }
 
@@ -585,7 +585,7 @@ body{
 .hero__icon{
     display: none;
 }
-.favorite-coffee{
+#favorite-coffee{
     padding: 45px 0 50px 0;
 }
 
@@ -620,7 +620,7 @@ body{
 }
 
 
-.mobile-app{
+#mobile-app{
     padding: 50px 0 700px 0;
     background-size: 90%;
     background-position: top+500px center;
@@ -705,7 +705,7 @@ body{
     display: none;
 }
 
-.favorite-coffee{
+#favorite-coffee{
     padding: 50px 0 50px 0;
 }
 
@@ -737,7 +737,7 @@ body{
     font-size: 32px;
 }
 
-.mobile-app{
+#mobile-app{
     padding: 55px 0 380px 0;
 }
 
@@ -759,7 +759,7 @@ body{
     background-position: top+473px center;
 }
 
-.footer{
+#footer{
     padding: 105px 0 40px 0; 
 }
 

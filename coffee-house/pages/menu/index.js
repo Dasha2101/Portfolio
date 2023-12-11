@@ -12,14 +12,10 @@ function init(){
     // overlay = document.createElement("section");
     document.body.append(overlay);
 
-    links = document.querySelectorAll(".nav__menu");
+    links = document.querySelectorAll(".nav-a-burger");
     for (let i = 0; i < links.length; i++){
         links[i].addEventListener("click", removeBurger)
     }
-
-    //Burger overlay
-    // overlay.addEventListener("click", showWorkBurger);
-
     console.log(burgerButton)
     burgerButton.addEventListener("click", showWorkBurger);
 }
@@ -42,7 +38,9 @@ function showWorkBurger(){
 }
 
 function removeBurger(){
-    slideMenu.classList.remove("nav__menu_show")
+    burgerButton.classList.remove('button__adaptive_open')
+    slideMenu.classList.add("return")
+    sleep(450).then(() => slideMenu.classList.remove("nav__menu_show"))
 }
 
 
