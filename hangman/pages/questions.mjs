@@ -1,4 +1,4 @@
-let questions = [{
+export let questions = [{
   "question": "What animal lives only in China?",
   "answer": "Panda"
 },
