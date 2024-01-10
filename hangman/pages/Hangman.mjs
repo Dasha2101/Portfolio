@@ -27,6 +27,8 @@ export class Hangman {
 //     boxHangman.append(imgHangman, hangmanTitle)
 //     gameContainer.append(boxHangman)
 // }
+
+
 // Game block
   gameBlock(gameContainer){
     let boxGame = document.createElement('section');
