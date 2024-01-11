@@ -1,10 +1,10 @@
 class Questions {
-  constructor(questions, position){
+  constructor(data, position){
     this.position = position
-    this.questions = questions
+    this.data = data
     this.question = null
     this.answer = null
-
+    
     this.init()
   }
 
@@ -15,20 +15,22 @@ init(){
   this.answer = document.createElement('div')
   this.answer.classList.add('game__answer')
 
+  this.restartGame()
 
 }
 
 restartGame(){
-  const question = this.question[0]
-  this.position.answer = question.answer
+  const data = this.data[Math.floor(Math.random() * this.data.length)]
+  this.position.answer = data.answer
 
-  this.question.innerHTML = question.question
-  question.answer.split('').forEach(e => {
+  this.question.innerHTML = data.question
+  data.answer.split('').forEach(e => {
     const letter = document.createElement('h5')
     letter.classList.add('game__letters')
 
     this.answer.append(letter)
   });
+  // this.showRandom()
 }
 
 showHTML(){
@@ -36,10 +38,6 @@ showHTML(){
   questContainer.append(this.question, this.answer)
 
   return questContainer
-}
-
-showRandom(){
-  
 }
 
 }

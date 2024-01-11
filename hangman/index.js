@@ -1,5 +1,5 @@
-import { questions } from "./pages/data.mjs";
-import { Hangman } from "./pages/Hangman.mjs";
+import  data  from "./pages/data.js";
+import  Hangman  from "./pages/Hangman.js";
 
 const body = document.body
-const game = new Hangman(body, questions);
+const game = new Hangman(body, data);

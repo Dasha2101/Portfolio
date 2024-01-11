@@ -1,4 +1,4 @@
-export let questions = [{
+const data = [{
   "question": "What animal lives only in China?",
   "answer": "Panda"
 },
@@ -39,3 +39,5 @@ export let questions = [{
   "answer": "Vatican"
 }
 ]
+
+export default data

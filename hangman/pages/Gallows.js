@@ -10,13 +10,17 @@ init() {
   const gibbetContainer = document.createElement('div')
   gibbetContainer.classList.add('gibbet__container');
 
-  const gibbet = document.createElement('h3')
+  const gibbet = document.createElement('div')
   gibbet.classList.add('gibbet__game')
-  gibbet.innerHTML = this.scorer
+
+  const showScor = document.createElement('h3')
+  showScor.innerHTML = this.scorer
 
   this.gibbet = gibbet
 
-  this.gibbetBlock()
+  gibbetContainer.append(showScor)
+  this.gibbetBlock(gibbetContainer)
+  this.gibbet.append(gibbetContainer)
 
   document.addEventListener('incorrect', this.incorrectAnswerEvent.bind(this))
 
@@ -37,6 +41,7 @@ gibbetBlock(gibbetContainer){
 
   boxGibbet.append(imgGibbet, gibbetTitle)
   gibbetContainer.append(boxGibbet)
+
 }
 
 incorrectAnswerEvent(){
@@ -46,6 +51,7 @@ incorrectAnswerEvent(){
 
 showInHTML(){
   return this.gibbet
+
 }
 
 }
