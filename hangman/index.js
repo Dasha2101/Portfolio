@@ -1,4 +1,4 @@
-import { questions } from "./pages/questions.mjs";
+import { questions } from "./pages/data.mjs";
 import { Hangman } from "./pages/Hangman.mjs";
 
 const body = document.body

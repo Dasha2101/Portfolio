@@ -44,6 +44,10 @@ incorrectAnswerEvent(){
   this.gibbet.innerHTML = this.scorer
 }
 
+showInHTML(){
+  return this.gibbet
+}
+
 }
 
 export default Gibbet
