@@ -1,5 +1,6 @@
 import Gibbet from "./Gallows.js";
 import Questions from "./questions.js";
+import Keyboard from "./Keyboard.js";
 
 class Hangman {
   constructor(parent, data){
@@ -9,6 +10,7 @@ class Hangman {
 
     this.gibbet = null
     this.qast = null
+    this.buttonContainer = null
     this.position = {
       answer: ''
     }
@@ -27,8 +29,12 @@ class Hangman {
     const qasts = new Questions(this.data, this.position)
     this.qast = qasts
 
+    const buttonContainer = new Keyboard()
+    this.buttonContainer = buttonContainer
+
     this.gameContainer.append(gibbets)
     this.gameContainer.append(this.qast.showHTML())
+    this.gameContainer.append(this.buttonContainer.showHTML())
     this.parent.append(this.gameContainer)
 
     document.addEventListener('keyup', this.eventHandler.bind(this))
@@ -40,12 +46,13 @@ class Hangman {
     console.log(char, this.position)
 
     if (!this.position.answer.includes(char)){
-      const event = new Event('inccorect')
-      document.dispatchEvent(event)
+      const inccorectEvent = new Event('incorrect')
+      document.dispatchEvent(inccorectEvent)
+      console.log('sdf')
     }
-    else{
+    // else{
 
-    }
+    // }
   }
 
 // Game block

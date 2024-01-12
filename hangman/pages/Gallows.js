@@ -2,7 +2,7 @@ class Gibbet {
   constructor() {
     this.scorer = 0
     this.gibbet = null
-
+    this.showScor = null
     this.init()
   }
 
@@ -14,15 +14,13 @@ init() {
   gibbet.classList.add('gibbet__game')
 
   const showScor = document.createElement('h3')
-  showScor.innerHTML = this.scorer
-
-  this.gibbet = gibbet
-
+  this.showScor = showScor
+  this.showScor.innerHTML = this.scorer
   gibbetContainer.append(showScor)
   this.gibbetBlock(gibbetContainer)
-  this.gibbet.append(gibbetContainer)
+  this.gibbet = gibbetContainer
 
-  document.addEventListener('incorrect', this.incorrectAnswerEvent.bind(this))
+  document.addEventListener('incorrect', () => {this.incorrectAnswerEvent()})
 
 }
 
@@ -46,7 +44,8 @@ gibbetBlock(gibbetContainer){
 
 incorrectAnswerEvent(){
   this.scorer++
-  this.gibbet.innerHTML = this.scorer
+  this.showScor.innerHTML = this.scorer
+  console.log(this.scorer)
 }
 
 showInHTML(){

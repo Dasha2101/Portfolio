@@ -30,7 +30,6 @@ restartGame(){
 
     this.answer.append(letter)
   });
-  // this.showRandom()
 }
 
 showHTML(){
