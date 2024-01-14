@@ -26,3 +26,22 @@
 .hidden{
   display: none;
 }
+
+.modal-win{
+  display: none;
+}
+
+.show{
+  display: flex;
+  flex-direction: column;
+
+  background-color: antiquewhite;
+
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 350px;
+  height: 250px;
+  /* pointer-events: none; */
+  z-index: 100;
+}

@@ -1,58 +1,80 @@
-class Gibbet {
+class Gallows {
   constructor() {
-    this.scorer = 0
-    this.gibbet = null
-    this.showScor = null
-    this.init()
+    this.cnv = document.createElement('canvas');
+    this.ctx = this.cnv.getContext('2d');
+    this.cnv.height = 200;
+    this.cnv.width = 200;
   }
 
-init() {
-  const gibbetContainer = document.createElement('div')
-  gibbetContainer.classList.add('gibbet__container');
+  render(step = 0)
+  {
+      // gallows
+      this.ctx.beginPath();
+      this.ctx.strokeStyle = 'black';
+      this.ctx.moveTo(50, 200);
+      this.ctx.lineTo(50, 50);
+      this.ctx.lineTo(125, 50);
+      this.ctx.lineTo(125, 75);
+      this.ctx.moveTo(50, 75);
+      this.ctx.lineTo(75, 50);
+      this.ctx.stroke();
+      this.ctx.closePath();
 
-  const gibbet = document.createElement('div')
-  gibbet.classList.add('gibbet__game')
+      // step 1 - head
+      if (step >= 1) {
+        this.ctx.beginPath();
+        this.ctx.arc(125, 85, 10, 0, Math.PI * 2);
+        this.ctx.stroke();
+        this.ctx.closePath();
+      }
 
-  const showScor = document.createElement('h3')
-  this.showScor = showScor
-  this.showScor.innerHTML = this.scorer
-  gibbetContainer.append(showScor)
-  this.gibbetBlock(gibbetContainer)
-  this.gibbet = gibbetContainer
+      // step 2 - body
+      if (step >= 2) {
+        this.ctx.beginPath();
+      this.ctx.ellipse(125, 115, 10, 20, 0, 0, Math.PI * 2);
+      this.ctx.stroke();
+      this.ctx.closePath();
+      }
+      // step 3 - right arm
+      if (step >= 3) {
 
-  document.addEventListener('incorrect', () => {this.incorrectAnswerEvent()})
+      this.ctx.beginPath();
+      this.ctx.moveTo(130, 97);
+      this.ctx.lineTo(145, 115)
+      this.ctx.stroke();
+      this.ctx.closePath();
+      }
+      // step 4 - left arm
+      if (step >= 4) {
+
+      this.ctx.beginPath();
+      this.ctx.moveTo(120, 97);
+      this.ctx.lineTo(105, 115)
+      this.ctx.stroke();
+      this.ctx.closePath();
+      }
+      // step 5 - right leg
+      if (step >= 5) {
+
+      this.ctx.beginPath();
+      this.ctx.moveTo(130, 133);
+      this.ctx.lineTo(135, 155)
+      this.ctx.stroke();
+      this.ctx.closePath();
+      }
+      // step 6 - left leg
+      if (step >= 6) {
+
+      this.ctx.beginPath();
+      this.ctx.moveTo(120, 133);
+      this.ctx.lineTo(115, 155)
+      this.ctx.stroke();
+      this.ctx.closePath();
+      }
+
+      return this.cnv;
+  }
 
 }
 
-//gibbetBlock
-gibbetBlock(gibbetContainer){
-  let boxGibbet = document.createElement('div');
-  boxGibbet.classList.add('gibbet-box');
-
-  let imgGibbet = document.createElement('img');
-  imgGibbet.classList.add('gibbet-box__img');
-  imgGibbet.src = '../assets/gallows.svg'
-
-  let gibbetTitle = document.createElement('h1');
-  gibbetTitle.classList.add('primary-title', 'gibbet-box__title');
-  gibbetTitle.innerText = 'Hangman Game';
-
-  boxGibbet.append(imgGibbet, gibbetTitle)
-  gibbetContainer.append(boxGibbet)
-
-}
-
-incorrectAnswerEvent(){
-  this.scorer++
-  this.showScor.innerHTML = this.scorer
-  console.log(this.scorer)
-}
-
-showInHTML(){
-  return this.gibbet
-
-}
-
-}
-
-export default Gibbet
+export default Gallows
