@@ -4,7 +4,7 @@ class Questions {
     this.data = data
     this.question = null
     this.answer = null
-    
+    this.letter = null
     this.init()
   }
 
@@ -24,16 +24,25 @@ restartGame(){
   this.position.answer = data.answer
 
   this.question.innerHTML = data.question
-  data.answer.split('').forEach(e => {
+  data.answer.split('').forEach((e, index) => {
+    const containerLetter = document.createElement('div')
+    containerLetter.classList.add('container__letter')
+
     const letter = document.createElement('h5')
     letter.classList.add('game__letters')
+    letter.textContent = e
 
-    this.answer.append(letter)
+    containerLetter.append(letter)
+    this.position.letter = letter
+
+
+    this.answer.append(containerLetter)
   });
 }
 
 showHTML(){
   const questContainer = document.createElement('div')
+  questContainer.classList.add('quest__container')
   questContainer.append(this.question, this.answer)
 
   return questContainer

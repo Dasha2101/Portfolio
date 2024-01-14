@@ -1,6 +1,10 @@
 class Keyboard {
-  constructor(){
+  constructor(position){
     this.buttonContainer = null
+    this.position = position
+    // this.letter = letter
+    // this.answer = answer
+
 
     this.init()
   }
@@ -18,6 +22,22 @@ class Keyboard {
       keyboardButton.innerText = String.fromCharCode(i);
       keyboardButton.classList.add('keyboard__button')
       this.buttonContainer.append(keyboardButton)
+      keyboardButton.addEventListener('click', this.clickHandler.bind(this))
+    }
+  }
+
+
+  clickHandler(event){
+    const target = event.target
+    console.log(target.innerText)
+
+    if(!this.position.answer.includes(target.innerText)){
+      const inccorectEvent = new Event('incorrect')
+      document.dispatchEvent(inccorectEvent)
+    } else{
+        const indexes = []
+        this.position.letter.classList.remove('game__letters')
+
     }
   }
 

@@ -12,8 +12,10 @@ class Hangman {
     this.qast = null
     this.buttonContainer = null
     this.position = {
-      answer: ''
+      answer: '',
+      letter: ''
     }
+    // this.letter = null
 
 
     this.init()
@@ -29,7 +31,7 @@ class Hangman {
     const qasts = new Questions(this.data, this.position)
     this.qast = qasts
 
-    const buttonContainer = new Keyboard()
+    const buttonContainer = new Keyboard(this.position,)
     this.buttonContainer = buttonContainer
 
     this.gameContainer.append(gibbets)
@@ -50,30 +52,9 @@ class Hangman {
       document.dispatchEvent(inccorectEvent)
       console.log('sdf')
     }
-    // else{
 
-    // }
   }
-
-// Game block
-//   gameBlock(gameContainer){
-//     let boxGame = document.createElement('section');
-//     boxGame.classList.add('game-box');
-
-//     let displayWords = document.createElement('ul');
-//     displayWords.classList.add('game-box__word-display');
-//     //??
-//     let letter = document.createElement('li');
-//     letter.classList.add('letter');
-
-//     displayWords.append(letter);
-
-//     let textHint = document.createElement('h4')
-//     textHint.classList.add('hint-text')
-//     boxGame.append(displayWords, letter, textHint)
-//     gameContainer.append(boxGame)
-
-// }
 }
+
 
 export default Hangman
