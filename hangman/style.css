@@ -129,6 +129,8 @@ body{
 
   .container__button{
     margin: 15px 0 0 0;
+    /* max-width: 867px; */
+    width: 100%;
   }
 }
 
@@ -162,6 +164,12 @@ body{
 @media (max-width: 500px){
   .game__container{
     width: 400px;
+  }
+}
+
+@media (max-width: 400px){
+  .game__container{
+    width: 350px;
   }
 }
 
