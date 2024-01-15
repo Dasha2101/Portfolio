@@ -20,17 +20,23 @@ class Word {
     this.container.innerHTML = ''
     this.container.innerHTML = `<div class="question">${this.question}</div>`
     const letters = this.answer.split('')
+    const containerLetter = document.createElement('div')
+    containerLetter.classList.add('container__letter')
     letters.map((l) => {
       if (this.visible.includes(l)){
         const letter = document.createElement('div')
         letter.classList.add('letter')
         letter.innerHTML = l;
-        this.container.append(letter)
+
+        containerLetter.append(letter)
+        this.container.append(containerLetter)
       } else {
         const letter = document.createElement('div')
         letter.classList.add('letter')
-        letter.innerHTML = '_'
-        this.container.append(letter)
+        letter.innerHTML = '__'
+
+        containerLetter.append(letter)
+        this.container.append(containerLetter)
       }
     })
     return this.container

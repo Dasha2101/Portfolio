@@ -11,7 +11,9 @@ class Hangman {
     this.gibbet = null
     this.qast = null
     this.buttonContainer = null
+    this.gameTitle = null
 
+    this.containerError = null
     this.errors = 0;
     this.checkArr = []
     this.index = 0
@@ -26,29 +28,8 @@ class Hangman {
   }
 
   init(){
-    // const data = this.data[Math.floor(Math.random() * this.data.length)];
-
     this.gameContainer = document.createElement('div')
     this.gameContainer.classList.add('hangman');
-
-    // this.gibbet = new Gallows()
-
-    // this.word = new Word(data)
-
-    // this.Keyboard = new Keyboard(this.guess.bind(this))
-    // this.buttonContainer = this.Keyboard.showHTML()
-
-    // const modalWin = document.createElement('div')
-    // modalWin.classList.add('modal-win')
-    // this.modalWin = modalWin
-    // this.gameContainer.append(this.modalWin)
-    // this.gameContainer.append(this.gibbet.render())
-    // this.gameContainer.append(this.word.toHtml())
-    // this.gameContainer.append(this.buttonContainer)
-    // this.parent.append(this.gameContainer)
-
-
-    // this.parent.addEventListener('keyup', this.eventHandler.bind(this))
     this.start()
   }
 
@@ -64,13 +45,29 @@ class Hangman {
 
     this.errors = 0;
 
+    const gameTitle = document.createElement('h2')
+    gameTitle.innerText = 'Hangman'
+    this.gameTitle = gameTitle
+
+    const containerError = document.createElement('div')
+    containerError.innerHTML = `${this.errors} / 6`
+    this.containerError = containerError
+    containerError.classList.add('container__error')
+    containerError.append(this.gameTitle)
+
     const modalWin = document.createElement('div')
     modalWin.classList.add('modal-win')
     this.modalWin = modalWin
+    this.gameContainer.classList.add('game__container')
     this.gameContainer.append(this.modalWin)
+    this.gameContainer.append(containerError)
     this.gameContainer.append(this.gibbet.render())
-    this.gameContainer.append(this.word.toHtml())
-    this.gameContainer.append(this.buttonContainer)
+
+    const containerVictor = document.createElement('div')
+    containerVictor.classList.add('game__victor')
+    containerVictor.append(this.word.toHtml(), this.buttonContainer)
+
+    this.gameContainer.append(containerVictor)
     this.parent.append(this.gameContainer)
 
 
@@ -96,7 +93,8 @@ class Hangman {
     if (this.word.visible.includes(l)) return
     if (!this.word.answer.toLowerCase().split('').includes(l)) {
       this.errors++;
-      console.log(this.errors)
+      this.containerError.innerHTML = `${this.errors} / 6`
+      this.containerError.append(this.gameTitle)
     }
     this.word.setVisible(l)
     this.Keyboard.block(l)

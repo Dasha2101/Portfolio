@@ -1,9 +1,10 @@
 class Gallows {
   constructor() {
     this.cnv = document.createElement('canvas');
+    this.cnv.classList.add('canvas')
     this.ctx = this.cnv.getContext('2d');
-    this.cnv.height = 200;
-    this.cnv.width = 200;
+    this.cnv.height = 250;
+    this.cnv.width = 180;
   }
 
   render(step = 0)
