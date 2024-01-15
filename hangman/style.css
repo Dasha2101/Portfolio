@@ -124,13 +124,32 @@ body{
 
 @media (max-width: 867px){
   .game__container{
-    width: 700px;
+    width: 750px;
   }
 
   .container__button{
     margin: 15px 0 0 0;
   }
 }
+
+@media (max-width: 790px){
+  .game__container{
+    width: 690px;
+}
+}
+
+@media (max-width: 730px){
+  .game__container{
+    width: 650px;
+}
+}
+
+@media (max-width: 665px){
+  .game__container{
+    width: 590px;
+}
+}
+
 
 @media (max-width: 600px){
   .game__container{

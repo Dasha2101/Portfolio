@@ -47,13 +47,6 @@ class Keyboard {
   showHTML(){
     return this.buttonContainer
   }
-
-//   gameOverHandler(){
-//     const arr = document.getElementsByClassName('keyboard__button')
-//     arr.split('').forEach(element => {
-//       element.disabled = true
-//     })
-// }
 }
 
 export default Keyboard

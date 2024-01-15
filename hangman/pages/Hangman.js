@@ -101,17 +101,13 @@ class Hangman {
     this.gibbet.render(this.errors)
     if (this.errors >= 6){
       this.endGameNoWinner()
-      // this.Keyboard.block()
     }
     this.checkArr = this.word.answer.split('')
     this.filterArr = this.checkArr.filter(letter => !this.word.visible.includes(letter))
 
     if (this.filterArr.length === 0){
      this.endGameWinner()
-    //  this.Keyboard.block()
-
     }
-
   }
 
   gameOverHandler(){
