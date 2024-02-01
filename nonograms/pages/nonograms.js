@@ -3,6 +3,7 @@ import Table from "./table.js";
 class Nonogramms{
   constructor(parent, data){
     this.data = data;
+    console.log(data)
     this.parent = parent;
 
     this.gameContainer = null;
@@ -19,9 +20,15 @@ class Nonogramms{
 
   }
 
+  getRandom(){
+    const randomIndex = Math.floor(Math.random() * this.data.length);
+    this.data = this.data[randomIndex].matrix
+  }
+
   start(){
     // const data = this.data
     // console.log(data);
+    this.getRandom()
     this.tableContainer = new Table(this.data);
     this.gameContainer.append(this.tableContainer.cnv)
     this.parent.append(this.gameContainer);

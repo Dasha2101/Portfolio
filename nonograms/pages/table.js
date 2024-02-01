@@ -1,17 +1,24 @@
 class Table {
   constructor(data){
-    this.matrix = data[0].matrix;
-    this.createCanvas()
+    this.matrix = data;
+    this.createCanvas();
+    this.findEvent();
   }
+
   createCanvas(){
   this.cnv = document.createElement('canvas');
   this.cnv.classList.add('canvas')
   this.ctx = this.cnv.getContext('2d');
 
-  this.cnv.height = 250;
-  this.cnv.width = 180;
+  this.cnv.height = 300;
+  this.cnv.width = 300;
   this.tableContainer = null;
   this.tableNonogram()
+  }
+
+  findEvent(){
+    this.cnv.addEventListener('mousedown', (e) => this.handleEvent(e));
+    this.cnv.addEventListener('contextmenu', (e) => this.handleContextMenu(e));
   }
 
   tableNonogram(){
@@ -23,18 +30,119 @@ class Table {
     const celsHeight = (this.cnv.height - (rows - 1) * gap / rows);
     const celsSize = Math.min(celsWidth, celsHeight);
 
+    this.ctx.clearRect(0, 0, this.cnv.width, this.cnv.height);
+
+
     for (let i = 0; i < rows; i++){
       for (let j = 0; j < cels; j++){
           const x = j * (celsSize + gap);
           const y = i * (celsSize + gap);
 
-          if (this.matrix[i][j] === 1){
+          this.ctx.strokeStyle = 'black';
+          this.ctx.lineWidth = 2;
+
+          const hints = this.matrix[i][j];
+          if (typeof hints  === 'string') {
+            this.ctx.strokeStyle = 'blue';
+            this.ctx.lineWidth = 3;
+            this.ctx.strokeRect(x, y, celsSize, celsSize);
+
             this.ctx.fillStyle = 'black';
-            this.ctx.fillRect(x, y, celsSize, celsSize);
+            this.ctx.font = 'bold 15px Arial';
+            this.ctx.textAlign = 'center';
+            this.ctx.textBaseline = 'middle';
+
+            this.ctx.fillText(hints, x + celsSize / 2, y + celsSize / 2);
+          } else {
+            this.ctx.strokeRect(x, y, celsSize, celsSize);
           }
+
       }
     }
+
+  }
+
+  handleEvent(e){
+    e.preventDefault()
+    const button = e.button;
+
+    const index = this.cnv.getBoundingClientRect();
+    const mouseX = e.clientX - index.left;
+    const mouseY = e.clientY - index.top;
+    const gap = 1;
+
+    const rows = this.matrix.length;
+    const cels = this.matrix[0].length;
+
+    const celsWidth = (this.cnv.width - (cels - 1) * gap) / cels;
+    const celsHeight = (this.cnv.height - (rows - 1) * gap / rows);
+
+    const celsSize = Math.min(celsWidth, celsHeight);
+
+    const clickCel = Math.floor(mouseX / (celsSize + gap));
+    const clickRow = Math.floor(mouseY / (celsSize + gap));
+
+    const x = clickCel * (celsSize + gap);
+    const y = clickRow * (celsSize + gap);
+
+    const cellValue = this.matrix[clickRow][clickCel];
+
+    if (button === 2) {
+      this.handleRigthEvent(x, y, clickRow, clickCel, cellValue, celsSize)
+    } else if (button === 0){
+      this.handleLeftEvent(x, y, clickRow, clickCel, cellValue, celsSize)
+    }
+  }
+
+  handleRigthEvent(x, y, clickRow, clickCel, cellValue, celsSize){
+    if (typeof cellValue === 'string') {
+      return;
+    }
+
+    if (cellValue === 0 || cellValue === 1) {
+      this.matrix[clickRow][clickCel] = 2;
+      this.ctx.clearRect(x, y, celsSize, celsSize);
+
+      this.ctx.strokeStyle = 'black';
+      this.ctx.lineWidth = 2;
+      this.ctx.beginPath();
+      this.ctx.moveTo(x, y);
+      this.ctx.lineTo(x + celsSize, y + celsSize);
+      this.ctx.moveTo(x + celsSize, y);
+      this.ctx.lineTo(x, y + celsSize);
+      this.ctx.stroke();
+    } else if (cellValue === 2) {
+      this.matrix[clickRow][clickCel] = 0;
+      this.ctx.clearRect(x, y, celsSize, celsSize);
+      this.ctx.strokeRect(x, y, celsSize, celsSize);
+    }
+
+
+}
+
+  handleLeftEvent(x, y, clickRow, clickCel, cellValue, celsSize){
+    if (typeof cellValue === 'string') {
+      return;
+    }
+    if (cellValue === 0){
+      this.matrix[clickRow][clickCel] = 1;
+      this.ctx.fillStyle = 'black';
+      this.ctx.fillRect(x, y, celsSize, celsSize);
+    } else if (cellValue === 1){
+      this.matrix[clickRow][clickCel] = 0;
+      this.ctx.clearRect(x, y, celsSize, celsSize);
+      this.ctx.strokeRect(x, y, celsSize, celsSize)
+    } else if (cellValue === 2){
+      this.matrix[clickRow][clickCel] = 1;
+      this.ctx.fillStyle = 'black';
+      this.ctx.fillRect(x, y, celsSize, celsSize);
+    }
+  }
+
+  handleContextMenu(e) {
+    e.preventDefault();
   }
 }
 
-export default Table
+  export default Table
+
