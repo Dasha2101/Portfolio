@@ -1,13 +1,15 @@
 import Table from "./table.js";
+import Winner from "./winner.js";
 
 class Nonogramms{
   constructor(parent, data){
     this.data = data;
-    console.log(data)
     this.parent = parent;
 
     this.gameContainer = null;
     this.tableContainer = null;
+    this.winner = null;
+
 
 
     this.init()
@@ -26,14 +28,30 @@ class Nonogramms{
   }
 
   start(){
-    // const data = this.data
-    // console.log(data);
     this.getRandom()
-    this.tableContainer = new Table(this.data);
-    this.gameContainer.append(this.tableContainer.cnv)
+    this.tableContainer = new Table(this.data, this.checkGame.bind(this));
+    this.winner = new Winner(this.data, this.tableContainer.linePlayer, this.tableContainer.matrix, this.checkGame.bind(this));
+
+    const button = document.createElement('button')
+    button.addEventListener('click', this.restart.bind(this))
+    this.gameContainer.append(this.tableContainer.cnv, button)
     this.parent.append(this.gameContainer);
 
   }
+
+  restart() {
+    this.timer = 0;
+    this.tableContainer.linePlayer = this.tableContainer.emptyMatrix();
+    this.tableContainer.tableNonogram();
+  }
+
+  checkGame() {
+    console.log("Game checked in Nonogramms");
+    if (this.winner) {
+      this.winner.checkGame();
+    }
+  }
+
 
 
 }

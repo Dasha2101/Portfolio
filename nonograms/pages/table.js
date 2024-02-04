@@ -1,6 +1,9 @@
 class Table {
-  constructor(data){
+  constructor(data, checkGame){
     this.matrix = data;
+    this.checkGame = checkGame;
+
+    this.linePlayer = this.emptyMatrix();
     this.createCanvas();
     this.findEvent();
   }
@@ -21,7 +24,12 @@ class Table {
     this.cnv.addEventListener('contextmenu', (e) => this.handleContextMenu(e));
   }
 
+  emptyMatrix(){
+    return this.matrix.map(row => row.map(cell => (typeof cell === "number" ? 0 : cell)));
+  }
+
   tableNonogram(){
+    console.log(this.linePlayer)
     const rows = this.matrix.length;
     const cels = this.matrix[0].length;
     const gap = 1;
@@ -92,6 +100,8 @@ class Table {
     } else if (button === 0){
       this.handleLeftEvent(x, y, clickRow, clickCel, cellValue, celsSize)
     }
+
+    this.checkGame();
   }
 
   handleRigthEvent(x, y, clickRow, clickCel, cellValue, celsSize){
@@ -117,6 +127,7 @@ class Table {
       this.ctx.strokeRect(x, y, celsSize, celsSize);
     }
 
+    this.linePlayer[clickRow][clickCel] = this.matrix[clickRow][clickCel];
 
 }
 
@@ -137,6 +148,7 @@ class Table {
       this.ctx.fillStyle = 'black';
       this.ctx.fillRect(x, y, celsSize, celsSize);
     }
+    this.linePlayer[clickRow][clickCel] = this.matrix[clickRow][clickCel];
   }
 
   handleContextMenu(e) {
