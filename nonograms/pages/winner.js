@@ -16,10 +16,7 @@ class Winner {
   winnerGame(){
     console.log(this.linePlayer)
     const lineMatrix = this.data.flat();
-    // const linePlayer = this.currentMatrix.flatMap(row => row.map(cell => (typeof cell === "number" ? 0 : cell)));
     const linePlayer = this.linePlayer.flat()
-    console.log("lineMatrix:", lineMatrix);
-    console.log("linePlayer:", linePlayer);
     return lineMatrix.every((cell, index) => cell === linePlayer[index])
 
   }
@@ -30,7 +27,6 @@ class Winner {
 
   endGamePlay(){
     if (typeof this.endGame === 'function') {
-      console.log("Ending the game...");
       this.endGame();
     }
   }
