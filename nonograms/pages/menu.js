@@ -15,6 +15,19 @@ class Menu{
     this.menuContainer.classList.add('menu');
 
     this.createMenuItem();
+
+    const randomButton = document.createElement('button');
+    randomButton.classList.add('menu__button-random');
+    randomButton.textContent = 'Random game'
+    randomButton.addEventListener('click', this.randomGame.bind(this));
+
+    this.menuContainer.append(randomButton);
+  }
+
+  randomGame(){
+    const randomIndex = Math.floor(Math.random() * this.data.length);
+    const randomMatrix = this.data[randomIndex].matrix;
+    this.startGame(randomMatrix)
   }
 
 

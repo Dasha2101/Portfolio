@@ -41,6 +41,7 @@ class Nonogramms{
 
     const button = document.createElement('button')
     button.addEventListener('click', this.restart.bind(this))
+    button.textContent = 'Reset'
 
     this.gameContainer.innerHTML = '';
     this.gameContainer.append(this.tableContainer.cnv, button)
