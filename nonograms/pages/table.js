@@ -13,8 +13,8 @@ class Table {
   this.cnv.classList.add('canvas')
   this.ctx = this.cnv.getContext('2d');
 
-  this.cnv.height = 300;
-  this.cnv.width = 300;
+  this.cnv.height = 800;
+  this.cnv.width = 800;
   this.tableContainer = null;
   this.tableNonogram()
   }
@@ -59,6 +59,12 @@ class Table {
             this.ctx.font = 'bold 15px Arial';
             this.ctx.textAlign = 'center';
             this.ctx.textBaseline = 'middle';
+
+            const hintWidth = this.ctx.measureText(hints).width;
+            if (hintWidth > celsSize - 10) {
+              const newFontSize = (celsSize - 10) / hintWidth * 15;
+              this.ctx.font = `bold ${newFontSize}px Arial`;
+            }
 
             this.ctx.fillText(hints, x + celsSize / 2, y + celsSize / 2);
           } else {
