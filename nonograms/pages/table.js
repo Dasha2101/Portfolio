@@ -14,8 +14,8 @@ class Table {
   this.cnv.classList.add('canvas')
   this.ctx = this.cnv.getContext('2d');
 
-  this.cnv.height = 800;
-  this.cnv.width = 800;
+  this.cnv.height = 650;
+  this.cnv.width = 650;
   this.tableContainer = null;
   this.tableNonogram()
   }
@@ -101,7 +101,7 @@ class Table {
     const x = clickCel * (celsSize + gap);
     const y = clickRow * (celsSize + gap);
 
-    const cellValue = this.matrix[clickRow][clickCel];
+    const cellValue = this.linePlayer[clickRow][clickCel];
 
     if (button === 2) {
       this.handleRigthEvent(x, y, clickRow, clickCel, cellValue, celsSize)
@@ -118,7 +118,7 @@ class Table {
     }
 
     if (cellValue === 0 || cellValue === 1) {
-      this.matrix[clickRow][clickCel] = 2;
+      this.linePlayer[clickRow][clickCel] = 2;
       this.ctx.clearRect(x, y, celsSize, celsSize);
 
       this.ctx.strokeStyle = 'black';
@@ -129,15 +129,12 @@ class Table {
       this.ctx.moveTo(x + celsSize, y);
       this.ctx.lineTo(x, y + celsSize);
       this.ctx.stroke();
-      this.startTimer();
+      // this.startTimer();
     } else if (cellValue === 2) {
-      this.matrix[clickRow][clickCel] = 0;
+      this.linePlayer[clickRow][clickCel] = 0;
       this.ctx.clearRect(x, y, celsSize, celsSize);
       this.ctx.strokeRect(x, y, celsSize, celsSize);
     }
-
-    this.linePlayer[clickRow][clickCel] = this.matrix[clickRow][clickCel];
-
 }
 
   handleLeftEvent(x, y, clickRow, clickCel, cellValue, celsSize){
@@ -145,21 +142,20 @@ class Table {
       return;
     }
     if (cellValue === 0){
-      this.matrix[clickRow][clickCel] = 1;
+      this.linePlayer[clickRow][clickCel] = 1;
       this.ctx.fillStyle = 'black';
       this.ctx.fillRect(x, y, celsSize, celsSize);
-      this.startTimer();
+      // this.startTimer();
     } else if (cellValue === 1){
-      this.matrix[clickRow][clickCel] = 0;
+      this.linePlayer[clickRow][clickCel] = 0;
       this.ctx.clearRect(x, y, celsSize, celsSize);
       this.ctx.strokeRect(x, y, celsSize, celsSize)
     } else if (cellValue === 2){
-      this.matrix[clickRow][clickCel] = 1;
+      this.linePlayer[clickRow][clickCel] = 1;
       this.ctx.fillStyle = 'black';
       this.ctx.fillRect(x, y, celsSize, celsSize);
-      this.startTimer();
+      // this.startTimer();
     }
-    this.linePlayer[clickRow][clickCel] = this.matrix[clickRow][clickCel];
   }
 
   handleContextMenu(e) {

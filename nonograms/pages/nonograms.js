@@ -48,32 +48,55 @@ class Nonogramms{
 
   start(selectedMatrix){
     this.selectedMatrix = selectedMatrix;
-
-    if (this.selectedMatrix) {
-    this.tableContainer = new Table(this.selectedMatrix, this.checkGame.bind(this), this.startTimer.bind(this));
-    this.winner = new Winner(this.selectedMatrix, this.tableContainer.linePlayer, this.tableContainer.matrix, this.checkGame.bind(this));
+    const titleNonogram = document.createElement('h3');
+    titleNonogram.classList.add('nonogram__title')
+    titleNonogram.innerText = 'Nonogram game'
 
     const button = document.createElement('button')
+    button.classList.add('button__reset')
     button.addEventListener('click', this.restart.bind(this))
     button.textContent = 'Reset'
+
+    if (this.selectedMatrix) {
+    this.startTimer();
+    this.tableContainer = new Table(this.selectedMatrix, this.checkGame.bind(this), this.timer);
+    this.winner = new Winner(this.parent, this.selectedMatrix, this.tableContainer.linePlayer, this.tableContainer.matrix, this.checkGame.bind(this), this.timer);
 
     const yourTime = document.createElement('h3');
     yourTime.classList.add('time')
     yourTime.innerText = 'Your time'
 
+    const contairnerTime = document.createElement('div');
+    contairnerTime.classList.add('container__time');
+    contairnerTime.append(yourTime, this.timeElem);
+
+
+    const containerItem = document.createElement('div');
+    containerItem.classList.add('container__item');
+    containerItem.append(contairnerTime, button)
+
     this.gameContainer.innerHTML = '';
-    this.gameContainer.append(this.tableContainer.cnv, button, yourTime,  this.timeElem)
+    this.gameContainer.append(titleNonogram, this.tableContainer.cnv, containerItem)
     this.parent.append(this.gameContainer);
     }
   }
 
   startTimer() {
+    if (this.timerInterval) {
+      this.stopTimer();
+    }
     if (!this.timerInterval) {
       this.timerInterval = setInterval(() => {
         this.timer += 1;
-        console.log(this.renderTimer());
+        this.renderTimer();
       }, 1000);
     }
+  }
+
+  stopTimer() {
+    clearInterval(this.timerInterval);
+    this.timerInterval = null;
+    this.timer = 0;
   }
 
   renderTimer(){
@@ -91,13 +114,12 @@ class Nonogramms{
       result += '00:';
     }
     result += (s < 10 ? '0' : '') + s;
-    this.gameContainer.append(yourTime)
     this.timeElem.innerHTML = result;
   }
 
 
   restart() {
-    this.timer = 0;
+    this.startTimer();
     this.timerRunning = false;
     this.tableContainer.linePlayer = this.tableContainer.emptyMatrix();
     this.tableContainer.tableNonogram();
@@ -107,11 +129,9 @@ class Nonogramms{
   checkGame() {
     console.log("Game checked in Nonogramms");
     if (this.winner) {
-      this.winner.checkGame();
+      this.winner.checkGame(this.timer, this.stopTimer.bind(this));
     }
   }
-
-
 
 }
 
