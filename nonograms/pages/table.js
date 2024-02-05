@@ -1,7 +1,8 @@
 class Table {
-  constructor(data, checkGame){
+  constructor(data, checkGame, startTimer){
     this.matrix = data;
     this.checkGame = checkGame;
+    this.startTimer = startTimer;
 
     this.linePlayer = this.emptyMatrix();
     this.createCanvas();
@@ -68,6 +69,7 @@ class Table {
 
             this.ctx.fillText(hints, x + celsSize / 2, y + celsSize / 2);
           } else {
+
             this.ctx.strokeRect(x, y, celsSize, celsSize);
           }
 
@@ -127,6 +129,7 @@ class Table {
       this.ctx.moveTo(x + celsSize, y);
       this.ctx.lineTo(x, y + celsSize);
       this.ctx.stroke();
+      this.startTimer();
     } else if (cellValue === 2) {
       this.matrix[clickRow][clickCel] = 0;
       this.ctx.clearRect(x, y, celsSize, celsSize);
@@ -145,6 +148,7 @@ class Table {
       this.matrix[clickRow][clickCel] = 1;
       this.ctx.fillStyle = 'black';
       this.ctx.fillRect(x, y, celsSize, celsSize);
+      this.startTimer();
     } else if (cellValue === 1){
       this.matrix[clickRow][clickCel] = 0;
       this.ctx.clearRect(x, y, celsSize, celsSize);
@@ -153,6 +157,7 @@ class Table {
       this.matrix[clickRow][clickCel] = 1;
       this.ctx.fillStyle = 'black';
       this.ctx.fillRect(x, y, celsSize, celsSize);
+      this.startTimer();
     }
     this.linePlayer[clickRow][clickCel] = this.matrix[clickRow][clickCel];
   }

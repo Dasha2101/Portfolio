@@ -1,10 +1,11 @@
 class Menu{
-  constructor(parent, data, startGame){
+  constructor(parent, data, startGame, showSolution){
     this.parent = parent;
     this.data = data;
     this.startGame = startGame;
 
     this.menuContainer = null;
+    this.showSolutionCall = null;
 
     this.init();
   }
@@ -21,7 +22,18 @@ class Menu{
     randomButton.textContent = 'Random game'
     randomButton.addEventListener('click', this.randomGame.bind(this));
 
-    this.menuContainer.append(randomButton);
+    const solutionButton = document.createElement('button');
+    solutionButton.classList.add('menu__button-solution');
+    solutionButton.textContent = 'Solution';
+    solutionButton.addEventListener('click', this.showSolution.bind(this));
+
+    this.menuContainer.append(randomButton, solutionButton);
+  }
+
+  showSolution(){
+    if (typeof this.showSolutionCall === 'function'){
+      this.showSolutionCall();
+    }
   }
 
   randomGame(){
@@ -48,6 +60,11 @@ class Menu{
 
       this.menuContainer.append(menuItem);
     });
+  }
+
+
+  setShowSolutionCall(callback) {
+    this.showSolutionCall = callback;
   }
 
   showHTML(){
