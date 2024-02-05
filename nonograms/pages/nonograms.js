@@ -26,12 +26,17 @@ class Nonogramms{
     this.gameContainer = document.createElement('div');
     this.gameContainer.classList.add('nonogramms');
 
-    this.menu = new Menu(this.gameContainer, this.data, this.start.bind(this), this.showSolution.bind(this));
+    this.menu = new Menu(this.gameContainer, this.data, this.start.bind(this), this.restart.bind(this), this.updateTimer.bind(this));
     this.menuContainer = this.menu.showHTML();
     this.menu.setShowSolutionCall(this.showSolution.bind(this))
 
     this.parent.append(this.menuContainer);
     this.start();
+  }
+
+  updateTimer(value){
+    this.timer = value;
+    this.renderTimer();
   }
 
   showSolution(){
@@ -54,12 +59,15 @@ class Nonogramms{
 
     const button = document.createElement('button')
     button.classList.add('button__reset')
-    button.addEventListener('click', this.restart.bind(this))
+    button.addEventListener('click', () => {
+      this.restart();
+      this.updateTimer(0);
+    });
     button.textContent = 'Reset'
 
     if (this.selectedMatrix) {
-    this.startTimer();
-    this.tableContainer = new Table(this.selectedMatrix, this.checkGame.bind(this), this.timer);
+    // this.startTimer();
+    this.tableContainer = new Table(this.selectedMatrix, this.checkGame.bind(this), this.startTimer.bind(this));
     this.winner = new Winner(this.parent, this.selectedMatrix, this.tableContainer.linePlayer, this.tableContainer.matrix, this.checkGame.bind(this), this.timer);
 
     const yourTime = document.createElement('h3');
@@ -82,9 +90,6 @@ class Nonogramms{
   }
 
   startTimer() {
-    if (this.timerInterval) {
-      this.stopTimer();
-    }
     if (!this.timerInterval) {
       this.timerInterval = setInterval(() => {
         this.timer += 1;
@@ -93,11 +98,11 @@ class Nonogramms{
     }
   }
 
-  stopTimer() {
-    clearInterval(this.timerInterval);
-    this.timerInterval = null;
-    this.timer = 0;
-  }
+  // stopTimer() {
+  //   clearInterval(this.timerInterval);
+  //   this.timerInterval = null;
+  //   this.timer = 0;
+  // }
 
   renderTimer(){
     const h = Math.floor(this.timer / 3600);
@@ -120,16 +125,21 @@ class Nonogramms{
 
   restart() {
     this.startTimer();
-    this.timerRunning = false;
-    this.tableContainer.linePlayer = this.tableContainer.emptyMatrix();
-    this.tableContainer.tableNonogram();
+    if (this.tableContainer) {
+      this.tableContainer.linePlayer = this.tableContainer.emptyMatrix();
+      this.tableContainer.tableNonogram();
+    }
     this.renderTimer();
+
+    clearInterval(this.timerInterval);
+    this.timerInterval = null;
+    this.timer = 0;
   }
 
   checkGame() {
     console.log("Game checked in Nonogramms");
     if (this.winner) {
-      this.winner.checkGame(this.timer, this.stopTimer.bind(this));
+      this.winner.checkGame(this.timer);
     }
   }
 

@@ -129,7 +129,7 @@ class Table {
       this.ctx.moveTo(x + celsSize, y);
       this.ctx.lineTo(x, y + celsSize);
       this.ctx.stroke();
-      // this.startTimer();
+      this.startTimer();
     } else if (cellValue === 2) {
       this.linePlayer[clickRow][clickCel] = 0;
       this.ctx.clearRect(x, y, celsSize, celsSize);
@@ -145,7 +145,7 @@ class Table {
       this.linePlayer[clickRow][clickCel] = 1;
       this.ctx.fillStyle = 'black';
       this.ctx.fillRect(x, y, celsSize, celsSize);
-      // this.startTimer();
+      this.startTimer();
     } else if (cellValue === 1){
       this.linePlayer[clickRow][clickCel] = 0;
       this.ctx.clearRect(x, y, celsSize, celsSize);
@@ -154,7 +154,7 @@ class Table {
       this.linePlayer[clickRow][clickCel] = 1;
       this.ctx.fillStyle = 'black';
       this.ctx.fillRect(x, y, celsSize, celsSize);
-      // this.startTimer();
+      this.startTimer();
     }
   }
 

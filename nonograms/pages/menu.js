@@ -1,8 +1,10 @@
 class Menu{
-  constructor(parent, data, startGame, showSolution){
+  constructor(parent, data, startGame, restart, updateTimer){
     this.parent = parent;
     this.data = data;
     this.startGame = startGame;
+    this.restart = restart;
+    this.updateTimer = updateTimer;
 
     this.menuContainer = null;
     this.showSolutionCall = null;
@@ -44,10 +46,17 @@ class Menu{
     }
   }
 
+  updateTimer(value){
+    this.timer = value;
+    this.restart();
+}
+
   randomGame(){
     const randomIndex = Math.floor(Math.random() * this.data.length);
     const randomMatrix = this.data[randomIndex].matrix;
-    this.startGame(randomMatrix)
+    this.restart();
+    this.startGame(randomMatrix);
+    this.updateTimer(0);
   }
 
 
@@ -70,6 +79,7 @@ class Menu{
         this.startGame(item.matrix);
         const menu_list = document.getElementById('menu_list');
         menu_list.classList.toggle('show');
+        this.updateTimer(0);
       });
 
       menu_list.append(menuItem);
