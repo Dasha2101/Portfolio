@@ -20,11 +20,11 @@ class Winner {
 }
 
   winnerGame(){
-    console.log(this.linePlayer)
-    const lineMatrix = this.data.flat();
-    const linePlayer = this.linePlayer.flat()
-    return lineMatrix.every((cell, index) => cell === linePlayer[index])
+    const blackSquaresIndices = this.data
+    .flatMap((row, rowIndex) => row.map((cell, colIndex) => (cell === 1 ? { row: rowIndex, col: colIndex } : null)))
+    .filter(cell => cell !== null);
 
+return blackSquaresIndices.every(({ row, col }) => this.linePlayer[row][col] === 1);
   }
 
   showModalWin(timer){
