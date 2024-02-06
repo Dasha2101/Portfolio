@@ -40,8 +40,8 @@ class Nonogramms{
   }
 
   showSolution(){
-    const solution = this.selectedMatrix.map(row => row.map(cell => (cell === 1 ? 1 : 0)));
-    this.tableContainer.linePlayer = solution;
+    this.tableContainer.linePlayer = this.selectedMatrix.map(row => row.map(cell => cell));
+    this.winner.linePlayer = this.tableContainer.linePlayer;
     this.tableContainer.tableNonogram();
     this.checkGame();
   }

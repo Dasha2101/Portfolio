@@ -70,7 +70,9 @@ class Table {
 
             this.ctx.fillText(hints, x + celsSize / 2, y + celsSize / 2);
           } else {
-
+            if (this.linePlayer[i][j] === 1) {
+              this.ctx.fillRect(x, y, celsSize, celsSize);
+            }
             this.ctx.strokeRect(x, y, celsSize, celsSize);
           }
 
