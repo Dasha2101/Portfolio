@@ -1,21 +1,24 @@
 class Winner {
-  constructor(parent, data, linePlayer, endGame, startTimer){
+  constructor(parent, data, linePlayer, endGame, startTimer, playGong){
     this.parent = parent;
     this.data = data
     this.linePlayer = linePlayer;
     this.endGame = endGame;
     this.startTimer = startTimer;
+    this.playGong = playGong;
 
     this.modalWin = null;
+    this.endGameSound = new Audio('./sound/Sound-Gong.mp3');
 
     this.checkGame()
   }
 
-  checkGame(timer, timerStop){
+  checkGame(timer){
     if (this.winnerGame()){
       this.showModalWin(timer);
       this.endGamePlay();
-      timerStop();
+      this.playGongSound();
+
   }
 }
 
@@ -73,12 +76,16 @@ return blackSquaresIndices.every(({ row, col }) => this.linePlayer[row][col] ===
 
   // }
 
+  playGongSound() {
+    this.endGameSound.play();
+  }
+
   endGamePlay(){
     if (typeof this.endGame === 'function') {
       this.endGame();
     }
-  }
-
 }
+}
+
 
 export default Winner

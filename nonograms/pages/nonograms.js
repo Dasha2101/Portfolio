@@ -67,8 +67,11 @@ class Nonogramms{
 
     if (this.selectedMatrix) {
     // this.startTimer();
-    this.tableContainer = new Table(this.selectedMatrix, this.checkGame.bind(this), this.startTimer.bind(this));
+    this.tableContainer = new Table(this.selectedMatrix, this.checkGame.bind(this), this.startTimer.bind(this), this.playClickSound.bind(this));
     this.winner = new Winner(this.parent, this.selectedMatrix, this.tableContainer.linePlayer, this.tableContainer.matrix, this.checkGame.bind(this), this.timer);
+
+    this.clickSound = new Audio('./sound/click.mp3');
+    // this.endGameSound = new Audio('./sound/Sound-Gong.mp3');
 
     const yourTime = document.createElement('h3');
     yourTime.classList.add('time')
@@ -77,7 +80,6 @@ class Nonogramms{
     const contairnerTime = document.createElement('div');
     contairnerTime.classList.add('container__time');
     contairnerTime.append(yourTime, this.timeElem);
-
 
     const containerItem = document.createElement('div');
     containerItem.classList.add('container__item');
@@ -135,6 +137,14 @@ class Nonogramms{
     this.timerInterval = null;
     this.timer = 0;
   }
+
+  playClickSound() {
+    this.clickSound.play();
+}
+
+  // playGongSound(){
+  //   this.endGameSound.play();
+  // }
 
   checkGame() {
     console.log("Game checked in Nonogramms");

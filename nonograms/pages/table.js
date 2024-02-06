@@ -1,8 +1,9 @@
 class Table {
-  constructor(data, checkGame, startTimer){
+  constructor(data, checkGame, startTimer, playSound){
     this.matrix = data;
     this.checkGame = checkGame;
     this.startTimer = startTimer;
+    this.playSound = playSound
 
     this.linePlayer = this.emptyMatrix();
     this.createCanvas();
@@ -118,6 +119,7 @@ class Table {
     }
 
     if (cellValue === 0 || cellValue === 1) {
+      this.playSound();
       this.linePlayer[clickRow][clickCel] = 2;
       this.ctx.clearRect(x, y, celsSize, celsSize);
 
@@ -131,6 +133,7 @@ class Table {
       this.ctx.stroke();
       this.startTimer();
     } else if (cellValue === 2) {
+      this.playSound();
       this.linePlayer[clickRow][clickCel] = 0;
       this.ctx.clearRect(x, y, celsSize, celsSize);
       this.ctx.strokeRect(x, y, celsSize, celsSize);
@@ -142,15 +145,18 @@ class Table {
       return;
     }
     if (cellValue === 0){
+      this.playSound();
       this.linePlayer[clickRow][clickCel] = 1;
       this.ctx.fillStyle = 'black';
       this.ctx.fillRect(x, y, celsSize, celsSize);
       this.startTimer();
     } else if (cellValue === 1){
+      this.playSound();
       this.linePlayer[clickRow][clickCel] = 0;
       this.ctx.clearRect(x, y, celsSize, celsSize);
       this.ctx.strokeRect(x, y, celsSize, celsSize)
     } else if (cellValue === 2){
+      this.playSound();
       this.linePlayer[clickRow][clickCel] = 1;
       this.ctx.fillStyle = 'black';
       this.ctx.fillRect(x, y, celsSize, celsSize);
