@@ -257,7 +257,11 @@ body{
   }
 
   .button__reset {
-    padding: 13px 18px;
+    padding: 8px 5px;
+  }
+
+  .button__sound{
+    padding: 8px 5px;
   }
 }
 
