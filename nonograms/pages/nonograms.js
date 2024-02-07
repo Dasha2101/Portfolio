@@ -19,6 +19,7 @@ class Nonogramms{
     this.timer = 0;
     this.timerInterval = null;
     this.soundEnabled = true;
+    this.gameReset = false;
 
     this.init()
   }
@@ -79,7 +80,7 @@ class Nonogramms{
     if (this.selectedMatrix) {
     // this.startTimer();
     this.tableContainer = new Table(this.selectedMatrix, this.checkGame.bind(this), this.startTimer.bind(this), this.playClickSound.bind(this), this.playClickXSound.bind(this), this.playClickWhiteSound.bind(this));
-    this.winner = new Winner(this.parent, this.selectedMatrix, this.tableContainer.linePlayer, this.tableContainer.matrix, this.checkGame.bind(this), this.timer,  this.soundEnabled, this.restartTimer.bind(this),);
+    this.winner = new Winner(this.parent, this.selectedMatrix, this.tableContainer.linePlayer, this.tableContainer.matrix, this.checkGame.bind(this), this.timer,  this.soundEnabled, this.restartTimer.bind(this), this.setGameReset.bind(this));
 
     this.clickSound = new Audio('./sound/click.mp3');
     // this.endGameSound = new Audio('./sound/Sound-Gong.mp3');
@@ -147,6 +148,7 @@ class Nonogramms{
 
 
   restart() {
+    this.setGameReset(true); 
     this.startTimer();
     if (this.tableContainer) {
       this.tableContainer.linePlayer = this.tableContainer.emptyMatrix();
@@ -158,6 +160,10 @@ class Nonogramms{
     this.timerInterval = null;
     this.timer = 0;
   }
+
+  setGameReset(value) {
+    this.gameReset = value;
+}
 
   restartTimer(){
     clearInterval(this.timerInterval);
