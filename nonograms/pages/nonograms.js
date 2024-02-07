@@ -31,7 +31,9 @@ class Nonogramms{
     this.menu.setShowSolutionCall(this.showSolution.bind(this))
 
     this.parent.append(this.menuContainer);
-    this.start();
+
+    const selectedMatrix = this.selectMatrixStart();
+    this.start(selectedMatrix);
   }
 
   updateTimer(value){
@@ -44,6 +46,13 @@ class Nonogramms{
     this.winner.linePlayer = this.tableContainer.linePlayer;
     this.tableContainer.tableNonogram();
     this.checkGame();
+  }
+
+
+  selectMatrixStart(){
+    const filteredData = this.data.filter(item => item.matrix.length === 6 && item.matrix.every(row => row.length === 6));
+    const randomIndex = Math.floor(Math.random() * filteredData.length);
+    return filteredData[randomIndex].matrix;
   }
 
   getRandom(){
@@ -88,6 +97,7 @@ class Nonogramms{
     this.gameContainer.innerHTML = '';
     this.gameContainer.append(titleNonogram, this.tableContainer.cnv, containerItem)
     this.parent.append(this.gameContainer);
+    this.body.style.overflow = 'scroll';
     }
   }
 
@@ -129,6 +139,7 @@ class Nonogramms{
     this.startTimer();
     if (this.tableContainer) {
       this.tableContainer.linePlayer = this.tableContainer.emptyMatrix();
+      this.winner.linePlayer = this.tableContainer.linePlayer;    
       this.tableContainer.tableNonogram();
     }
     this.renderTimer();
@@ -138,7 +149,12 @@ class Nonogramms{
     this.timer = 0;
   }
 
+  resetClickSound() {
+    this.clickSound.currentTime = 0; 
+}
+
   playClickSound() {
+    this.resetClickSound();
     this.clickSound.play();
 }
 

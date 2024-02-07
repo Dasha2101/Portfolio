@@ -24,10 +24,10 @@ class Winner {
 
   winnerGame(){
     const blackSquaresIndices = this.data
-    .flatMap((row, rowIndex) => row.map((cell, colIndex) => (cell === 1 ? { row: rowIndex, col: colIndex } : null)))
+    .flatMap((row, rowIndex) => row.map((cell, colIndex) => (cell === 1 || cell === 0 ? { row: rowIndex, col: colIndex } : null)))
     .filter(cell => cell !== null);
 
-return blackSquaresIndices.every(({ row, col }) => this.linePlayer[row][col] === 1);
+return blackSquaresIndices.every(({ row, col }) => this.linePlayer[row][col] === this.data[row][col]);
   }
 
   showModalWin(timer){

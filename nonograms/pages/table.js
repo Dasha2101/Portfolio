@@ -53,14 +53,26 @@ class Table {
 
           const hints = this.matrix[i][j];
           if (typeof hints  === 'string') {
-            this.ctx.strokeStyle = 'blue';
-            this.ctx.lineWidth = 3;
-            this.ctx.strokeRect(x, y, celsSize, celsSize);
+            this.ctx.beginPath();
+          this.ctx.moveTo(x, y + celsSize / 2);
+          this.ctx.lineTo(x + celsSize, y + celsSize / 2);
+          this.ctx.stroke();
 
-            this.ctx.fillStyle = 'black';
-            this.ctx.font = 'bold 15px Arial';
-            this.ctx.textAlign = 'center';
-            this.ctx.textBaseline = 'middle';
+          // Устанавливаем цвет фона для подсказок
+          this.ctx.fillStyle = 'lightblue';
+          // Рисуем прямоугольник с выбранным цветом фона
+          this.ctx.fillRect(x, y, celsSize, celsSize);
+
+          // Рисуем границу прямоугольника с жирной линией
+          this.ctx.strokeStyle = 'blue';
+          this.ctx.lineWidth = 10
+          this.ctx.strokeRect(x, y, celsSize, celsSize);
+
+          // Рисуем текст подсказки
+          this.ctx.fillStyle = 'black';
+          this.ctx.font = 'bold 20px Arial';
+          this.ctx.textAlign = 'center';
+          this.ctx.textBaseline = 'middle';
 
             const hintWidth = this.ctx.measureText(hints).width;
             if (hintWidth > celsSize - 10) {
