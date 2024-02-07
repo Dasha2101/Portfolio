@@ -18,6 +18,7 @@ class Nonogramms{
     this.timeElem.classList.add('time');
     this.timer = 0;
     this.timerInterval = null;
+    this.soundEnabled = true;
 
     this.init()
   }
@@ -77,10 +78,17 @@ class Nonogramms{
     if (this.selectedMatrix) {
     // this.startTimer();
     this.tableContainer = new Table(this.selectedMatrix, this.checkGame.bind(this), this.startTimer.bind(this), this.playClickSound.bind(this));
-    this.winner = new Winner(this.parent, this.selectedMatrix, this.tableContainer.linePlayer, this.tableContainer.matrix, this.checkGame.bind(this), this.timer);
+    this.winner = new Winner(this.parent, this.selectedMatrix, this.tableContainer.linePlayer, this.tableContainer.matrix, this.checkGame.bind(this), this.timer,  this.soundEnabled);
 
     this.clickSound = new Audio('./sound/click.mp3');
     // this.endGameSound = new Audio('./sound/Sound-Gong.mp3');
+
+    this.soundToggleButton = document.createElement('button');
+    this.soundToggleButton.textContent = 'Sound On/Off';
+    this.soundToggleButton.classList.add('button__sound');
+    this.soundToggleButton.addEventListener('click', () => {
+      this.toggleSound();
+    });
 
     const yourTime = document.createElement('h3');
     yourTime.classList.add('time')
@@ -92,7 +100,7 @@ class Nonogramms{
 
     const containerItem = document.createElement('div');
     containerItem.classList.add('container__item');
-    containerItem.append(contairnerTime, button)
+    containerItem.append(contairnerTime, button, this.soundToggleButton)
 
     this.gameContainer.innerHTML = '';
     this.gameContainer.append(titleNonogram, this.tableContainer.cnv, containerItem)
@@ -139,7 +147,6 @@ class Nonogramms{
     this.startTimer();
     if (this.tableContainer) {
       this.tableContainer.linePlayer = this.tableContainer.emptyMatrix();
-      this.winner.linePlayer = this.tableContainer.linePlayer;    
       this.tableContainer.tableNonogram();
     }
     this.renderTimer();
@@ -149,13 +156,28 @@ class Nonogramms{
     this.timer = 0;
   }
 
+
+  toggleSound() {
+    this.soundEnabled = !this.soundEnabled;
+    this.updateSoundButton();
+    if (this.winner) {
+      this.winner.toggleSound();
+    }
+  }
+
+  updateSoundButton() {
+    this.soundToggleButton.textContent = this.soundEnabled ? 'Sound On' : 'Sound Off';
+  }
+
   resetClickSound() {
     this.clickSound.currentTime = 0; 
 }
 
   playClickSound() {
-    this.resetClickSound();
+    if (this.soundEnabled) {
+     this.resetClickSound();
     this.clickSound.play();
+  }
 }
 
   // playGongSound(){

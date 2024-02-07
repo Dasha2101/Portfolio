@@ -1,11 +1,12 @@
 class Winner {
-  constructor(parent, data, linePlayer, endGame, startTimer, playGong){
+  constructor(parent, data, linePlayer, endGame, startTimer, playGong, soundEnabled = true){
     this.parent = parent;
     this.data = data
     this.linePlayer = linePlayer;
     this.endGame = endGame;
     this.startTimer = startTimer;
     this.playGong = playGong;
+    this.soundEnabled = soundEnabled;
 
     this.modalWin = null;
     this.endGameSound = new Audio('./sound/Sound-Gong.mp3');
@@ -76,8 +77,15 @@ return blackSquaresIndices.every(({ row, col }) => this.linePlayer[row][col] ===
 
   // }
 
+  toggleSound() {
+    this.soundEnabled = !this.soundEnabled;
+    // this.updateSoundButton();
+  }
+
   playGongSound() {
-    this.endGameSound.play();
+    if (this.soundEnabled) {
+      this.endGameSound.play();
+    }
   }
 
   endGamePlay(){
