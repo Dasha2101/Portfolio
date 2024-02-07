@@ -159,6 +159,15 @@ class Nonogramms{
     clearInterval(this.timerInterval);
     this.timerInterval = null;
     this.timer = 0;
+
+    if (this.winner) {
+      this.winner.gameWon = false;
+    }
+
+    if (this.winner) {
+      this.winner.disableModalWin();
+    }
+    this.start(this.selectedMatrix);
   }
 
   setGameReset(value) {
