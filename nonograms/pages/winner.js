@@ -88,6 +88,12 @@ return blackSquaresIndices.every(({ row, col }) => this.linePlayer[row][col] ===
     }
   }
 
+  disableModalWin() {
+    if (this.modalWin) {
+      this.modalWin.style.display = 'none';
+    }
+  }
+
   endGamePlay(){
     if (typeof this.endGame === 'function') {
       this.endGame();

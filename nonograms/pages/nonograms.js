@@ -47,6 +47,7 @@ class Nonogramms{
     this.winner.linePlayer = this.tableContainer.linePlayer;
     this.tableContainer.tableNonogram();
     this.checkGame();
+    this.winner.disableModalWin();
   }
 
 
@@ -77,11 +78,13 @@ class Nonogramms{
 
     if (this.selectedMatrix) {
     // this.startTimer();
-    this.tableContainer = new Table(this.selectedMatrix, this.checkGame.bind(this), this.startTimer.bind(this), this.playClickSound.bind(this));
+    this.tableContainer = new Table(this.selectedMatrix, this.checkGame.bind(this), this.startTimer.bind(this), this.playClickSound.bind(this), this.playClickXSound.bind(this), this.playClickWhiteSound.bind(this));
     this.winner = new Winner(this.parent, this.selectedMatrix, this.tableContainer.linePlayer, this.tableContainer.matrix, this.checkGame.bind(this), this.timer,  this.soundEnabled);
 
     this.clickSound = new Audio('./sound/click.mp3');
     // this.endGameSound = new Audio('./sound/Sound-Gong.mp3');
+    this.clickX = new Audio('./sound/21.mp3');
+    this.clickWhite =  new Audio('./sound/14.mp3');
 
     this.soundToggleButton = document.createElement('button');
     this.soundToggleButton.textContent = 'Sound On/Off';
@@ -171,6 +174,21 @@ class Nonogramms{
 
   resetClickSound() {
     this.clickSound.currentTime = 0; 
+}
+
+playClickWhiteSound() {
+  if (this.soundEnabled) {
+   this.resetClickSound();
+  this.clickWhite.play();
+}
+}
+
+
+playClickXSound() {
+  if (this.soundEnabled) {
+   this.resetClickSound();
+  this.clickX.play();
+}
 }
 
   playClickSound() {

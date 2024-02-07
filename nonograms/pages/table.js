@@ -1,9 +1,11 @@
 class Table {
-  constructor(data, checkGame, startTimer, playSound){
+  constructor(data, checkGame, startTimer, playSound, playSoundX, playSoundWhite){
     this.matrix = data;
     this.checkGame = checkGame;
     this.startTimer = startTimer;
-    this.playSound = playSound
+    this.playSound = playSound;
+    this.playSoundX = playSoundX;
+    this.playSoundWhite = playSoundWhite;
 
     this.linePlayer = this.emptyMatrix();
     this.createCanvas();
@@ -88,38 +90,29 @@ class Table {
   }
 
   handleEvent(e){
-    e.preventDefault()
+    e.preventDefault();
     const button = e.button;
-
     const index = this.cnv.getBoundingClientRect();
-    const mouseX = e.clientX - index.left;
-    const mouseY = e.clientY - index.top;
+    const mouseX = e.offsetX * (this.cnv.width / index.width);
+    const mouseY = e.offsetY * (this.cnv.height / index.height);
     const gap = 1;
-
     const rows = this.matrix.length;
     const cels = this.matrix[0].length;
-
     const celsWidth = (this.cnv.width - (cels - 1) * gap) / cels;
     const celsHeight = (this.cnv.height - (rows - 1) * gap / rows);
-
     const celsSize = Math.min(celsWidth, celsHeight);
-
     const clickCel = Math.floor(mouseX / (celsSize + gap));
     const clickRow = Math.floor(mouseY / (celsSize + gap));
-
     const x = clickCel * (celsSize + gap);
     const y = clickRow * (celsSize + gap);
-
     const cellValue = this.linePlayer[clickRow][clickCel];
-
     if (button === 2) {
-      this.handleRigthEvent(x, y, clickRow, clickCel, cellValue, celsSize)
-    } else if (button === 0){
-      this.handleLeftEvent(x, y, clickRow, clickCel, cellValue, celsSize)
+      this.handleRigthEvent(x, y, clickRow, clickCel, cellValue, celsSize);
+    } else if (button === 0) {
+      this.handleLeftEvent(x, y, clickRow, clickCel, cellValue, celsSize);
     }
-
-    this.checkGame();
-  }
+      this.checkGame();
+}
 
   handleRigthEvent(x, y, clickRow, clickCel, cellValue, celsSize){
     if (typeof cellValue === 'string') {
@@ -127,7 +120,7 @@ class Table {
     }
 
     if (cellValue === 0 || cellValue === 1) {
-      this.playSound();
+      this.playSoundX()
       this.linePlayer[clickRow][clickCel] = 2;
       this.ctx.clearRect(x, y, celsSize, celsSize);
 
@@ -141,7 +134,7 @@ class Table {
       this.ctx.stroke();
       this.startTimer();
     } else if (cellValue === 2) {
-      this.playSound();
+      this.playSoundWhite();
       this.linePlayer[clickRow][clickCel] = 0;
       this.ctx.clearRect(x, y, celsSize, celsSize);
       this.ctx.strokeRect(x, y, celsSize, celsSize);
@@ -159,7 +152,7 @@ class Table {
       this.ctx.fillRect(x, y, celsSize, celsSize);
       this.startTimer();
     } else if (cellValue === 1){
-      this.playSound();
+      this.playSoundWhite();
       this.linePlayer[clickRow][clickCel] = 0;
       this.ctx.clearRect(x, y, celsSize, celsSize);
       this.ctx.strokeRect(x, y, celsSize, celsSize)
