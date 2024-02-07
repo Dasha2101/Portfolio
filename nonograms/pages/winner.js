@@ -24,12 +24,15 @@ class Winner {
 }
 
   winnerGame(){
-    const blackSquaresIndices = this.data
-    .flatMap((row, rowIndex) => row.map((cell, colIndex) => (cell === 1 || cell === 0 ? { row: rowIndex, col: colIndex } : null)))
-    .filter(cell => cell !== null);
+      const blackSquaresIndices = this.data
+          .flatMap((row, rowIndex) => row.map((cell, colIndex) => (cell === 1 || cell === 0 ? { row: rowIndex, col: colIndex } : null)))
+          .filter(cell => cell !== null);
+      return blackSquaresIndices.every(({ row, col }) => {
+          const cellValue = this.linePlayer[row][col];
+          return cellValue === this.data[row][col] || (cellValue === 2 && this.data[row][col] === 0); 
+      });
+    }
 
-return blackSquaresIndices.every(({ row, col }) => this.linePlayer[row][col] === this.data[row][col]);
-  }
 
   showModalWin(timer){
     console.log("Вы выиграли")
