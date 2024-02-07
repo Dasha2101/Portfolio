@@ -1,5 +1,5 @@
 class Winner {
-  constructor(parent, data, linePlayer, endGame, startTimer, playGong, soundEnabled = true, restart, setGameReset){
+  constructor(parent, data, linePlayer, endGame, startTimer, playGong, soundEnabled = true, restart, setGameReset, tableContainer){
     this.parent = parent;
     this.data = data
     this.linePlayer = linePlayer;
@@ -9,6 +9,7 @@ class Winner {
     this.soundEnabled = soundEnabled;
     this.restart = restart
     this.setGameReset = setGameReset;
+    this.tableContainer = tableContainer;
 
     this.gameWon = false;
 
@@ -20,12 +21,13 @@ class Winner {
 
   checkGame(timer){
     if (this.winnerGame() && !this.gameWon){
-      this.gameWon = true; 
+      this.gameWon = true;
       this.setGameReset(false);
       this.restart()
       this.showModalWin(timer);
       this.endGamePlay();
       this.playGongSound();
+      this.tableContainer.disableCells();
 
   }
 }

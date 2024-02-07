@@ -10,7 +10,10 @@ class Table {
     this.linePlayer = this.emptyMatrix();
     this.createCanvas();
     this.findEvent();
+
+    this.cellStates = this.emptyMatrix().map(row => row.map(() => true));
   }
+
 
   createCanvas(){
   this.cnv = document.createElement('canvas');
@@ -115,6 +118,9 @@ class Table {
 }
 
   handleRigthEvent(x, y, clickRow, clickCel, cellValue, celsSize){
+    if (!this.cellStates[clickRow][clickCel]) {
+      return;
+    }
     if (typeof cellValue === 'string') {
       return;
     }
@@ -142,6 +148,9 @@ class Table {
 }
 
   handleLeftEvent(x, y, clickRow, clickCel, cellValue, celsSize){
+    if (!this.cellStates[clickRow][clickCel]) {
+      return;
+    }
     if (typeof cellValue === 'string') {
       return;
     }
@@ -163,6 +172,11 @@ class Table {
       this.ctx.fillRect(x, y, celsSize, celsSize);
       this.startTimer();
     }
+  }
+
+  
+  disableCells() {
+    this.cellStates = this.cellStates.map(row => row.map(() => false));
   }
 
   handleContextMenu(e) {
