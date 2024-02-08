@@ -54,9 +54,9 @@ class Menu{
   randomGame(){
     const randomIndex = Math.floor(Math.random() * this.data.length);
     const randomMatrix = this.data[randomIndex].matrix;
-    this.restart();
-    this.startGame(randomMatrix);
-    this.updateTimer(0);
+      this.restart();
+      this.startGame(randomMatrix);
+      this.updateTimer(0);
   }
 
 

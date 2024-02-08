@@ -109,7 +109,7 @@ class Nonogramms{
     this.gameContainer.innerHTML = '';
     this.gameContainer.append(titleNonogram, this.tableContainer.cnv, containerItem)
     this.parent.append(this.gameContainer);
-    this.body.style.overflow = 'scroll';
+    // this.body.style.overflow = 'scroll';
     }
   }
 
@@ -148,7 +148,7 @@ class Nonogramms{
 
 
   restart() {
-    this.setGameReset(true); 
+    this.setGameReset(true);
     this.startTimer();
     if (this.tableContainer) {
       this.tableContainer.linePlayer = this.tableContainer.emptyMatrix();
