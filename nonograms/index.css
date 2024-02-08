@@ -219,6 +219,15 @@ body{
   flex-direction: row;
 }
 
+@media (min-width: 1601px) {
+  .nonogramms {
+    width: 55%;
+    padding: 30px;
+    top: 6%;
+    left: 15%;
+  }
+}
+
 @media (max-width: 1600px) {
   .nonogramms {
     width: 55%;
