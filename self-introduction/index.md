@@ -1,4 +1,4 @@
-https://youtu.be/nWI04ZkkTz8
+(https://youtu.be/nWI04ZkkTz8)
 
 Hello, I'm Daria, I'm 22 years old and at the moment I'm a future graduate of the St. Petersburg State University of Telecommunications. Therefore, I have experience with different programming languages, databases such as MySQL, MongoDB and I am quite familiar with UML diagrams and the field of business analytics.
 A year ago I became interested in web development. I became so interested that I decided to develop myself and work in this direction. I want to become a front-end developer in the future, so now I'm taking the RS School Front-end course. I also plan to study modern frameworks and libraries such as React.js, Angular and Node.js to develop efficient and modern web applications.
