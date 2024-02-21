@@ -13,4 +13,5 @@ Here is a collection of badges I earned from completing Microsoft Learn's TypeSc
 8. **Organize Code with Namespaces in TypeScript**: [Badge](https://learn.microsoft.com/en-us/users/18405856/achievements/wa9r7bwn)
 
 ## Reflections
-Each module contained basic information about working with TS. As a result of mastering each module, valuable information was obtained about working with TS. 
+Each module contained basic information about working with TS. As a result of mastering each module, valuable information was obtained about working with TS.
+
