@@ -15,3 +15,4 @@ Here is a collection of badges I earned from completing Microsoft Learn's TypeSc
 ## Reflections
 Each module contained basic information about working with TS. As a result of mastering each module, valuable information was obtained about working with TS.
 
+**Getting Started with TypeScript**
