@@ -12,14 +12,14 @@ class Sources {
                 if (sourceText) {
                     sourceText.textContent = item.name;
                 }
-                const sourceId = sourceClone.querySelector('.source__item');
+                const sourceId: Element | null = sourceClone.querySelector('.source__item');
                 if (sourceId) {
                     sourceId.setAttribute('data-source-id', item.id);
                 }
                 fragment.append(sourceClone);
             });
 
-            const doxs = document.querySelector('.sources');
+            const doxs: Element | null = document.querySelector('.sources');
             if (doxs) {
                 doxs.append(fragment);
             }
