@@ -1,6 +1,10 @@
 {
     "parser": "@typescript-eslint/parser",
-    "plugins": ["prettier", "import", "@typescript-eslint"],
+    "plugins": [
+        "prettier",
+        "import",
+        "@typescript-eslint"
+    ],
     "extends": [
         "plugin:prettier/recommended",
         "prettier",
@@ -17,6 +21,7 @@
         "node": true
     },
     "rules": {
+        "prettier/prettier": 0,
         "no-debugger": "off",
         "no-console": 0,
         "class-methods-use-this": "off",
