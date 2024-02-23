@@ -19,3 +19,8 @@ export interface SourceData {
   language: string;
   country: string;
 }
+
+export interface Source {
+  id: string;
+  name: string;
+}
