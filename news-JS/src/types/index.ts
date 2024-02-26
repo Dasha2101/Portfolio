@@ -29,3 +29,14 @@ export interface NewsData {
   articles: ArticleData[];
   sources: Source[];
 }
+
+export interface BaseLink {
+  url: string;
+
+}
+
+export interface Options {
+  id?: string;
+  [key: string]: string | undefined;
+}
+
