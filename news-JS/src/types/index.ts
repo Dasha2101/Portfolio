@@ -40,3 +40,8 @@ export interface Options {
   [key: string]: string | undefined;
 }
 
+export interface NewsData {
+  articles: ArticleData[];
+  source: string;
+}
+
