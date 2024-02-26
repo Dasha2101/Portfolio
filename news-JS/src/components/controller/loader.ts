@@ -11,7 +11,7 @@ class Loader {
         this.options = options;
     }
 
-    getResp<TData>({ endpoint, options = {} }: { endpoint: string, options?: Options }, callback: Callback<TData> = () => { console.error('No callback for GET response'); }) {
+    getResp<TData>({ endpoint, options = {} }: { endpoint: string, options?: Options }, callback: Callback<TData> = function () { console.error('No callback for GET response'); }) {
         this.load<TData>('GET', endpoint, callback, options);
     }
 
