@@ -3,8 +3,8 @@ import { Options } from '../../types/index.js';
 type Callback<TData> = (data: TData) => void;
 
 class Loader {
-    private baseLink: string;
-    private options: Options;
+    private readonly baseLink: string;
+    private readonly options: Options;
 
     constructor(baseLink: string, options: Options) {
         this.baseLink = baseLink;
