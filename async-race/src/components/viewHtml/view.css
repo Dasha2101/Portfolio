@@ -1,0 +1,7 @@
+.conteiner__add-car,
+.conteiner__change-car,
+.conteiner__button-fun {
+  display: flex;
+  gap: 5px;
+  margin-top: 5px;
+}

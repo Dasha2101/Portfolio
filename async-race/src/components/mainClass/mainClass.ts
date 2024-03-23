@@ -1,19 +1,22 @@
-import ViewHtml from "../viewHtml/view";
-
+import { ViewHtml } from "../viewHtml/view";
+// import { Header } from "../header/header";
 class ConnectMain {
-  parent: HTMLElement
+  parent: HTMLElement;
   viewHtml: ViewHtml;
+  // header: Header | null;
+
 
   constructor(parent: HTMLElement){
     this.parent = parent;
-    this.viewHtml = new ViewHtml();
+    this.viewHtml = new ViewHtml(this.clearMainContent.bind(this))
+    // this.header = new Header(this.viewHtml, this.clearMainContent.bind(this))
 
     this.init()
   }
 
   public async init(): Promise<void> {
     try {
-      const mainPage: HTMLElement = this.viewHtml.createMainPage();
+      const mainPage = this.viewHtml.createMainPage();
       this.parent.append(mainPage);
     }
     catch (error) {
@@ -21,6 +24,13 @@ class ConnectMain {
         console.error(error.message)
       }
 
+    }
+
+  }
+
+  clearMainContent(): void {
+    if (this.viewHtml && this.viewHtml.mainContent) {
+      this.viewHtml.mainContent.innerHTML = '';
     }
   }
 }
