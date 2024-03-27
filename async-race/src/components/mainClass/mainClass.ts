@@ -1,15 +1,11 @@
 import { ViewHtml } from "../viewHtml/view";
-// import { Header } from "../header/header";
 class ConnectMain {
   parent: HTMLElement;
   viewHtml: ViewHtml;
-  // header: Header | null;
-
 
   constructor(parent: HTMLElement){
     this.parent = parent;
     this.viewHtml = new ViewHtml(this.clearMainContent.bind(this))
-    // this.header = new Header(this.viewHtml, this.clearMainContent.bind(this))
 
     this.init()
   }
