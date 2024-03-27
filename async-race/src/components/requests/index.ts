@@ -10,15 +10,17 @@ export default class Garage {
       return json;
   }
 
-  static async updateCars(id: number, newName: string, newColor: string): Promise<[]> {
+  static async updateCars(id: number, newName: string | null, newColor: string | null, currentName: string, currentColor: string): Promise<[]> {
       const data = await fetch(this.garage_url +  `/garage/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          name: newName,
-          color: newColor
+          // name: newName,
+          // color: newColor
+          name: newName !== null ? newName : currentName,
+          color: newColor !== null ? newColor : currentColor
         })
 
       });

@@ -151,16 +151,7 @@ export class ViewHtml {
     buttonGenerateCars.classList.add('button-generate');
     buttonGenerateCars.textContent = 'Generate Cars';
 
-    const buttonDeleteCars = document.createElement('button');
-    buttonDeleteCars.classList.add('button-delete');
-    buttonDeleteCars.textContent = 'Delete Cars';
-
-    //event
-    buttonDeleteCars.addEventListener('click', () => {
-      this.deleteCar();
-  });
-
-    this.conButtonFun.append(buttonRace, buttonReset, buttonGenerateCars, buttonDeleteCars);
+    this.conButtonFun.append(buttonRace, buttonReset, buttonGenerateCars);
     this.mainContent?.append(this.conButtonFun);
 
   }
@@ -183,15 +174,26 @@ export class ViewHtml {
 
         const selectButton = document.createElement('button');
         selectButton.classList.add('select-button');
-        selectButton.textContent = 'Select';
+        selectButton.textContent = 'Update';
+
+        const buttonDeleteCars = document.createElement('button');
+        buttonDeleteCars.classList.add('button-delete');
+        buttonDeleteCars.textContent = 'Delete Cars';
+
+        //event
         selectButton.addEventListener('click', () => {
           this.selectedCar = car;
           this.highlightChooseCar(lot);
         })
+        
+        // buttonDeleteCars.dataset.carId = car.id.toString();
+        buttonDeleteCars.addEventListener('click', () => {
+          this.selectedCar = car;
+          // const carId = parseInt(buttonDeleteCars.dataset.carId || "");
+          this.deleteCar();
+      });
 
-        lot.append(nameCar);
-        lot.append(colorCar);
-        lot.append(selectButton);
+        lot.append(nameCar, colorCar, selectButton, buttonDeleteCars)
 
         this.containerGarage ? this.containerGarage.appendChild(lot) : false;
       })
@@ -215,10 +217,21 @@ export class ViewHtml {
         const newName = (document.querySelector('.input__change-car') as HTMLInputElement).value;
         const newColor = (document.querySelector('.color__change-car') as HTMLInputElement).value;
 
-        const response = await Garage.updateCars(this.selectedCar.id, newName, newColor);
+        const response = await Garage.updateCars(
+          this.selectedCar.id,
+          newName !== "" ? newName : null,
+          newColor !== "" ? newColor : null,
+          this.selectedCar.name,
+          this.selectedCar.color
+      );
         console.log('Обновлены:', response);
-        this.selectedCar.name = newName;
-        this.selectedCar.color = newColor;
+
+        if (newName !== "") {
+          this.selectedCar.name = newName;
+        }
+        if (newColor !== "") {
+          this.selectedCar.color = newColor;
+        }
         this.carList();
       } catch (error) {
         console.error('Ошибка:', error);
@@ -245,8 +258,9 @@ export class ViewHtml {
   public async deleteCar(){
     if (this.selectedCar) {
     try {
+      // console.log(`Попытка удалить машину с ID ${carId}...`);
       const response = await Garage.deleteCars(this.selectedCar.id);
-      console.log('Удалена:', response);
+      console.log(`Машина с ID  успешно удалена:`, response);
 
       this.carList();
     } catch (error) {
