@@ -14,6 +14,9 @@ export class ViewHtml {
   clearMainContent: () => void;
   page: number = 1;
   selectedCar: Car | null;
+  pageNumber: HTMLSpanElement | null;
+  btnNext: HTMLButtonElement | null;
+  btnPrevious: HTMLButtonElement | null;
 
 
   constructor(clearMainContent: () => void) {
@@ -28,6 +31,9 @@ export class ViewHtml {
     this.clearMainContent = clearMainContent;
     this.createMainPage();
     this.selectedCar = null;
+    this.pageNumber = null;
+    this.btnNext = null;
+    this.btnPrevious = null;
   }
 
 
@@ -47,6 +53,7 @@ export class ViewHtml {
     this.generateButtonFunctional();
     this.garage();
     this.carList();
+    this.createPagination();
 
     this.mainPage.append(this.mainContent);
     return mainPage;
@@ -158,7 +165,8 @@ export class ViewHtml {
 
   //Get method
   public carList() {
-    const list = Garage.getCars(this.page);
+    const limit = 7;
+    const list = Garage.getCars(this.page, limit);
     list.then(data => {
       this.containerGarage ? this.containerGarage.innerHTML = '' : false;
       data.map((car: Car) => {
@@ -185,11 +193,8 @@ export class ViewHtml {
           this.selectedCar = car;
           this.highlightChooseCar(lot);
         })
-        
-        // buttonDeleteCars.dataset.carId = car.id.toString();
         buttonDeleteCars.addEventListener('click', () => {
           this.selectedCar = car;
-          // const carId = parseInt(buttonDeleteCars.dataset.carId || "");
           this.deleteCar();
       });
 
@@ -198,16 +203,6 @@ export class ViewHtml {
         this.containerGarage ? this.containerGarage.appendChild(lot) : false;
       })
     });
-  }
-
-  highlightChooseCar(lot: HTMLDivElement){
-
-    const deletehighlight = document.querySelectorAll('.car');
-    deletehighlight.forEach((elem: Element) => {
-      elem.classList.remove('selected')
-    });
-
-    lot.classList.add('selected')
   }
 
   //Update method
@@ -258,16 +253,102 @@ export class ViewHtml {
   public async deleteCar(){
     if (this.selectedCar) {
     try {
-      // console.log(`Попытка удалить машину с ID ${carId}...`);
       const response = await Garage.deleteCars(this.selectedCar.id);
-      console.log(`Машина с ID  успешно удалена:`, response);
-
+      console.log(`Удалена:`, response);
       this.carList();
     } catch (error) {
       console.error('Ошибка:', error);
     }
   }
 }
+
+//pagination
+public createPagination() {
+  const containerPagination: HTMLDivElement = document.createElement('div');
+  containerPagination.classList.add('pagination');
+
+  const btnPreviousPage: HTMLButtonElement = document.createElement('button');
+  btnPreviousPage.classList.add('button_previous-page');
+  btnPreviousPage.disabled = this.page === 1;
+  btnPreviousPage.textContent = 'Previous page';
+  this.btnPrevious = btnPreviousPage;
+
+  const btnNextPage: HTMLButtonElement = document.createElement('button');
+  btnNextPage.classList.add('button_next-page');
+  btnNextPage.textContent = 'Next Page';
+  this.btnNext = btnNextPage;
+
+  const pageNum: HTMLSpanElement = document.createElement('span');
+  pageNum.textContent = `Page ${this.page}`;
+  this.pageNumber = pageNum;
+  //event
+  btnNextPage.addEventListener('click', () => this.nextPage());
+  this.btnPrevious.addEventListener('click', () => this.previousPage());
+
+
+  containerPagination.append(this.btnPrevious, pageNum, this.btnNext);
+  this.mainContent?.appendChild(containerPagination);
+}
+
+public async nextPage() {
+  try {
+    const limit = 7;
+    const list = await Garage.getCars(this.page + 1, limit);
+    if (list.length > 0) {
+      this.page++;
+      this.carList();
+      this.updatePageNumber();
+      this.btnPrevious?.removeAttribute('disabled');
+      if (list.length < limit) {
+        this.btnNext?.setAttribute('disabled', 'true');
+      }
+    } else {
+      this.btnNext?.setAttribute('disabled', 'true');
+    }
+  } catch (error) {
+    console.error('Ошибка:', error);
+  }
+}
+
+public async previousPage(){
+  try {
+    if (this.page > 1) {
+      this.page--;
+      this.carList();
+      this.updatePageNumber();
+      const limit = 7;
+      const list = await Garage.getCars(this.page, limit);
+      if (this.page === 1) {
+        this.btnPrevious?.setAttribute('disabled', 'true');
+      }
+      if (list.length as number === limit) {
+        this.btnNext?.removeAttribute('disabled');
+      }
+    }
+      if (this.page === 1) {
+        this.btnPrevious?.setAttribute('disabled', 'true');
+      }
+  } catch (error) {
+    console.error('Ошибка:', error);
+  }
+}
+
+updatePageNumber(){
+  if (this.pageNumber) {
+    this.pageNumber.textContent = `Page ${this.page}`;
+  }
+}
+
+highlightChooseCar(lot: HTMLDivElement){
+
+  const deletehighlight = document.querySelectorAll('.car');
+  deletehighlight.forEach((elem: Element) => {
+    elem.classList.remove('selected')
+  });
+
+  lot.classList.add('selected')
+}
+
 
   public garagePage(): void {
     this.clearMainContent();
@@ -276,6 +357,7 @@ export class ViewHtml {
     this.generateButtonFunctional();
     this.garage();
     this.carList();
+    this.createPagination();
   }
 
   public winnerPage(): void {
