@@ -10,3 +10,9 @@
   border: 2px solid blue; 
 
 }
+
+.garage__container-btn{
+  display: flex;
+  gap: 10px;
+
+}

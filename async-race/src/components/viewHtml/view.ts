@@ -1,6 +1,7 @@
 import "./view.css";
 import Garage from '../requests/index';
 import {Car} from '../interface/index'
+import { GenerateCar } from "../generateCar/generateFunc";
 
 export class ViewHtml {
   mainPage: HTMLElement | null;
@@ -17,9 +18,9 @@ export class ViewHtml {
   pageNumber: HTMLSpanElement | null;
   btnNext: HTMLButtonElement | null;
   btnPrevious: HTMLButtonElement | null;
+  carGenerator: GenerateCar;
 
-
-  constructor(clearMainContent: () => void) {
+  constructor(clearMainContent: () => void, carGenerator: GenerateCar) {
     this.mainPage = null;
     this.mainContent = null;
     this.buttonGaragePage = null;
@@ -34,8 +35,8 @@ export class ViewHtml {
     this.pageNumber = null;
     this.btnNext = null;
     this.btnPrevious = null;
+    this.carGenerator = carGenerator;
   }
-
 
   createMainPage(): HTMLElement{
     const mainPage = document.createElement('div');
@@ -134,7 +135,7 @@ export class ViewHtml {
     this.mainContent?.append(this.containerChangeCar);
   }
 
-  public garage(): void {
+  public async garage() {
     this.containerGarage = document.createElement('div');
     this.containerGarage.classList.add('garage-container');
     this.mainContent?.append(this.containerGarage);
@@ -158,27 +159,61 @@ export class ViewHtml {
     buttonGenerateCars.classList.add('button-generate');
     buttonGenerateCars.textContent = 'Generate Cars';
 
+    //event
+    buttonGenerateCars.addEventListener('click',  async () => {
+      try {
+        const randomCars = this.carGenerator.generateRandomhundredCars();
+        await Promise.all(randomCars.map(async (car: Car) => {
+          await Garage.createCars(car.name, car.color);
+        }));
+        await this.carList();
+      } catch (error) {
+        console.error('Ошибка:', error);
+      }
+    });
     this.conButtonFun.append(buttonRace, buttonReset, buttonGenerateCars);
     this.mainContent?.append(this.conButtonFun);
 
   }
 
   //Get method
-  public carList() {
+  public async carList() {
     const limit = 7;
-    const list = Garage.getCars(this.page, limit);
-    list.then(data => {
+    try {
+      const data = await Garage.getCars(this.page, limit);
       this.containerGarage ? this.containerGarage.innerHTML = '' : false;
-      data.map((car: Car) => {
+      if (Array.isArray(data)) {
+        data.forEach((car: Car) => {
         const lot = document.createElement('div');
         lot.classList.add('car');
-        lot.style.backgroundColor = car.color;
+        // lot.style.backgroundColor = car.color;
 
         const nameCar = document.createElement('div');
         nameCar.textContent = `Name: ${car.name}`;
 
         const colorCar = document.createElement('div');
         colorCar.textContent = `Color: ${car.color}`;
+
+        const carDistance = document.createElement('div');
+        const distanceDiv = document.createElement('div');
+        distanceDiv.classList.add('distance');
+        distanceDiv.id = `distance_${car.id}`;
+
+        const carDiv = document.createElement('div');
+        carDiv.classList.add('car_image');
+        carDiv.id = `car_${car.id}`;
+
+        const svgString = `<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" fill="${car.color}" viewBox="0 0 256 256" xml:space="preserve">
+        <path d="M212.435 174.994c-13.098 0-23.753-10.655-23.753-23.753s10.655-23.753 23.753-23.753 23.753 10.656 23.753 23.753-10.656 23.753-23.753 23.753zm0-39.076c-8.45 0-15.323 6.874-15.323 15.323s6.873 15.323 15.323 15.323 15.323-6.873 15.323-15.323-6.876-15.323-15.323-15.323zM51.478 174.994c-13.097 0-23.753-10.655-23.753-23.753s10.656-23.753 23.753-23.753 23.753 10.656 23.753 23.753-10.656 23.753-23.753 23.753zm0-39.076c-8.447 0-15.323 6.874-15.323 15.323s6.873 15.323 15.323 15.323 15.323-6.873 15.323-15.323-6.873-15.323-15.323-15.323z"/>
+        <path d="M212.438 159.663a8.459 8.459 0 0 1-5.958-2.473 7.806 7.806 0 0 1-1.067-1.262 9.018 9.018 0 0 1-.76-1.464 6.231 6.231 0 0 1-.477-1.573 8.33 8.33 0 0 1-.171-1.66c0-.532.059-1.097.171-1.628.082-.562.253-1.07.478-1.602.194-.505.478-.986.759-1.433.309-.477.674-.899 1.067-1.292.366-.396.815-.734 1.265-1.04.478-.309.955-.562 1.464-.787a10.073 10.073 0 0 1 1.574-.477 8.236 8.236 0 0 1 3.315 0c.534.112 1.04.28 1.577.477.506.225.983.478 1.433.787.478.306.899.644 1.292 1.04.394.393.731.815 1.04 1.292.31.447.562.928.787 1.433.194.532.365 1.04.478 1.602.112.531.168 1.096.168 1.627 0 .562-.056 1.099-.168 1.66a10.581 10.581 0 0 1-.478 1.574c-.225.506-.478.984-.787 1.464-.309.447-.646.897-1.04 1.262a7.64 7.64 0 0 1-1.292 1.068c-.45.284-.927.562-1.433.761-.534.225-1.04.394-1.577.478a8.553 8.553 0 0 1-1.66.166zM51.48 159.663a8.299 8.299 0 0 1-1.657-.169c-.534-.112-1.068-.253-1.574-.477-.506-.197-.983-.478-1.46-.762a8.718 8.718 0 0 1-1.265-1.068 8.47 8.47 0 0 1-2.473-5.957c0-.53.056-1.096.168-1.627.113-.534.253-1.07.478-1.576.197-.531.478-1.012.759-1.461.309-.478.674-.9 1.068-1.293a8.515 8.515 0 0 1 1.264-1.04c.478-.309.955-.562 1.461-.787.506-.196 1.04-.365 1.574-.477a8.098 8.098 0 0 1 3.288 0c.562.112 1.067.28 1.601.477.506.225.984.478 1.433.787.478.307.9.644 1.293 1.04.393.393.73.815 1.04 1.293.309.446.562.927.786 1.46.197.507.366 1.04.478 1.577.113.531.169 1.096.169 1.627 0 2.22-.9 4.412-2.473 5.957a7.64 7.64 0 0 1-1.293 1.068c-.45.284-.927.562-1.433.762-.506.224-1.04.365-1.601.477a7.83 7.83 0 0 1-1.63.169z"/>
+        <path d="m225.53 116.243-41.322-10.597-19.695-11.428a100.079 100.079 0 0 0-50.164-13.502H84.625c-19.176 0-37.494 7.168-51.578 20.184a10.864 10.864 0 0 1-7.401 2.895h-6.29c-7.637 0-14.086 5.718-15.002 13.302l-2.846 23.64a13.903 13.903 0 0 0 9.09 14.787l12.923 4.693a29.276 29.276 0 0 1-1.416-8.978c0-16.197 13.176-29.373 29.373-29.373s29.373 13.176 29.373 29.373c0 4.442-1.02 8.64-2.793 12.42h107.797c-1.773-3.78-2.793-7.978-2.793-12.42 0-16.197 13.176-29.373 29.373-29.373s29.373 13.176 29.373 29.373c0 3.875-.773 7.567-2.142 10.956l8.192-1.31a7.621 7.621 0 0 0 6.449-7.559c0-17.486-11.836-32.736-28.778-37.083zM77.1 111.457c-3.673 0-7.003-1.714-9.136-4.7-2.135-2.988-2.678-6.694-1.486-10.167l1.843-5.384c5.291-1.313 10.748-2.057 16.307-2.057h6.46l9.458 22.308H77.1zm82.673 0H109.7l-9.458-22.308h14.106a91.628 91.628 0 0 1 45.932 12.361l12.876 7.469c-4.288 1.613-8.77 2.478-13.384 2.478z"/>
+    </svg>`
+
+        carDiv.innerHTML = svgString;
+        carDistance.append(distanceDiv, carDiv);
+        //button
+        const containerBtn = document.createElement('div');
+        containerBtn.classList.add('garage__container-btn');
 
         const selectButton = document.createElement('button');
         selectButton.classList.add('select-button');
@@ -188,22 +223,38 @@ export class ViewHtml {
         buttonDeleteCars.classList.add('button-delete');
         buttonDeleteCars.textContent = 'Delete Cars';
 
+        const startBtn = document.createElement('button');
+        startBtn.classList.add('start-button');
+        startBtn.innerText = 'Start';
+
+        const stopBtn = document.createElement('button');
+        stopBtn.classList.add('start-button');
+        stopBtn.innerText = 'Start';
+
+        // startBtn.addEventListener('click', this.startCar, { capture: true })
+
+        containerBtn.append(startBtn, stopBtn, selectButton, buttonDeleteCars)
         //event
         selectButton.addEventListener('click', () => {
           this.selectedCar = car;
           this.highlightChooseCar(lot);
-        })
+        });
         buttonDeleteCars.addEventListener('click', () => {
           this.selectedCar = car;
           this.deleteCar();
-      });
+        });
 
-        lot.append(nameCar, colorCar, selectButton, buttonDeleteCars)
+        lot.append(nameCar, colorCar, carDistance, containerBtn);
 
-        this.containerGarage ? this.containerGarage.appendChild(lot) : false;
-      })
+        if (this.containerGarage) {
+          this.containerGarage.appendChild(lot);
+        }
     });
   }
+  } catch (error) {
+    console.error('Ошибка:', error);
+  }
+}
 
   //Update method
   public async updateCar(){
@@ -248,7 +299,6 @@ export class ViewHtml {
     }
   }
 
-
   //Delete method
   public async deleteCar(){
     if (this.selectedCar) {
@@ -261,6 +311,20 @@ export class ViewHtml {
     }
   }
 }
+
+  // public async startCar(e: Event){
+  //   const car = e.target;
+  //   const distance = car.querySelector('.distance')
+
+  //   let distanceWidth = 0;
+  //   let int = setInterval(() => {
+  //     if (distanceWidth >= 50) clearInterval(int);
+  //     distanceWidth++;
+
+  //   }, 10)
+  // }
+
+
 
 //pagination
 public createPagination() {
@@ -294,7 +358,7 @@ public async nextPage() {
   try {
     const limit = 7;
     const list = await Garage.getCars(this.page + 1, limit);
-    if (list.length > 0) {
+    if (Array.isArray(list) && list.length > 0) {
       this.page++;
       this.carList();
       this.updatePageNumber();
@@ -321,7 +385,7 @@ public async previousPage(){
       if (this.page === 1) {
         this.btnPrevious?.setAttribute('disabled', 'true');
       }
-      if (list.length as number === limit) {
+      if (Array.isArray(list) && list.length as number === limit) {
         this.btnNext?.removeAttribute('disabled');
       }
     }

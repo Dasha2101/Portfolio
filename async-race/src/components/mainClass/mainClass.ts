@@ -1,11 +1,14 @@
 import { ViewHtml } from "../viewHtml/view";
+import { GenerateCar } from "../generateCar/generateFunc/index";
 class ConnectMain {
   parent: HTMLElement;
   viewHtml: ViewHtml;
+  generateCar: GenerateCar
 
   constructor(parent: HTMLElement){
     this.parent = parent;
-    this.viewHtml = new ViewHtml(this.clearMainContent.bind(this))
+    this.generateCar = new GenerateCar()
+    this.viewHtml = new ViewHtml(this.clearMainContent.bind(this), this.generateCar)
 
     this.init()
   }
