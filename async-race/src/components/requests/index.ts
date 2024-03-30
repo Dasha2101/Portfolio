@@ -65,4 +65,21 @@ export default class Garage {
     const json = await data.json();
     return json;
   }
+
+  static async startCar(): Promise<[]> {
+    const data = await fetch(this.garage_url + `/engine?id=1&status=started`, {
+      method: 'PATCH',
+    });
+    const json = await data.json();
+    return json;
+  }
+
+  static async stopCar(): Promise<[]> {
+    const data = await fetch(this.garage_url + `/engine?id=1&status=stopped`, {
+      method: 'PATCH',
+    });
+    const json = await data.json();
+    return json;
+
+  }
 }
