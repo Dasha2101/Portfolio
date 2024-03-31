@@ -66,29 +66,23 @@ export default class Garage {
     return json;
   }
 
-  static async startCar(id: number): Promise<Response> {
-    const data = await fetch(this.garage_url + `/engine?id=${id}&status=started`, {
-      method: 'PATCH',
-    });
-    if (data.status === 200) {
-      // const json = await data.json();
-      // return json;
-      return data;
-    } else {
-      throw new Error(`Failed to start car. Status: ${data.status}`);
+static async startStopCar(id: number, action: 'start' | 'stop'): Promise<Response> {
+  const status = (action === 'start') ? 'started' : 'stopped';
+  const data = await fetch(`${this.garage_url}/engine?id=${id}&status=${status}`, {
+    method: 'PATCH',
+  });
+
+  if (data.status === 200) {
+    return data;
+  } else {
+    throw new Error(`Failed to ${action} car. Status: ${data.status}`);
   }
 }
 
-  static async stopCar(id: number): Promise<Response> {
-    const data = await fetch(this.garage_url + `/engine?id=${id}&status=stopped`, {
-      method: 'PATCH',
-    });
-    if (data.status === 200) {
-      // const json = await data.json();
-      // return json;
-      return data;
-    } else {
-      throw new Error(`Failed to start car. Status: ${data.status}`);
-  }
-  }
+
+static driveMode(id: number) {
+  return fetch(`${this.garage_url}/engine?id=${id}&status=drive`, {
+    method: 'PATCH',
+  });
+}
 }

@@ -19,7 +19,10 @@ export class ViewHtml {
   btnNext: HTMLButtonElement | null;
   btnPrevious: HTMLButtonElement | null;
   carGenerator: GenerateCar;
-  interval: NodeJS.Timeout | null;
+  intervals:  NodeJS.Timeout[];
+  startBtn: HTMLButtonElement | null;
+  stopBtn: HTMLButtonElement | null ;
+  data: Car[];
 
   constructor(clearMainContent: () => void, carGenerator: GenerateCar) {
     this.mainPage = null;
@@ -37,7 +40,10 @@ export class ViewHtml {
     this.btnNext = null;
     this.btnPrevious = null;
     this.carGenerator = carGenerator;
-    this.interval = null;
+    this.intervals = [];
+    this.startBtn = null;
+    this.stopBtn = null;
+    this.data = [];
   }
 
   createMainPage(): HTMLElement{
@@ -144,39 +150,7 @@ export class ViewHtml {
   }
 
 
-  public generateButtonFunctional(): void {
-    const containerButtonFunctional = document.createElement('div');
-    containerButtonFunctional.classList.add('conteiner__button-fun');
-    this.conButtonFun = containerButtonFunctional;
 
-    const buttonRace = document.createElement('button');
-    buttonRace.classList.add('button-rave');
-    buttonRace.textContent = 'Race';
-
-    const buttonReset = document.createElement('button');
-    buttonReset.classList.add('button-reset');
-    buttonReset.textContent = 'Reset';
-
-    const buttonGenerateCars = document.createElement('button');
-    buttonGenerateCars.classList.add('button-generate');
-    buttonGenerateCars.textContent = 'Generate Cars';
-
-    //event
-    buttonGenerateCars.addEventListener('click',  async () => {
-      try {
-        const randomCars = this.carGenerator.generateRandomhundredCars();
-        await Promise.all(randomCars.map(async (car: Car) => {
-          await Garage.createCars(car.name, car.color);
-        }));
-        await this.carList();
-      } catch (error) {
-        console.error('Ошибка:', error);
-      }
-    });
-    this.conButtonFun.append(buttonRace, buttonReset, buttonGenerateCars);
-    this.mainContent?.append(this.conButtonFun);
-
-  }
 
   //Get method
   public async carList() {
@@ -185,6 +159,7 @@ export class ViewHtml {
       const data = await Garage.getCars(this.page, limit);
       this.containerGarage ? this.containerGarage.innerHTML = '' : false;
       if (Array.isArray(data)) {
+        this.data = data;
         data.forEach((car: Car) => {
         const lot = document.createElement('div');
         lot.classList.add('car');
@@ -229,12 +204,16 @@ export class ViewHtml {
         startBtn.classList.add('start-button');
         startBtn.innerText = 'Start';
         startBtn.setAttribute('data-id', car.id.toString());
+        this.startBtn = startBtn
+        // this.startBtn.setAttribute('disabled', '');
 
         const stopBtn = document.createElement('button');
-        stopBtn.classList.add('start-button');
+        stopBtn.classList.add('stop-button');
         stopBtn.innerText = 'Stop';
+        this.stopBtn = stopBtn;
+        // this.stopBtn.setAttribute('disabled', 'true');
 
-        startBtn.addEventListener('click', async () => {
+        this.startBtn.addEventListener('click', async () => {
           try {
             const carId = car.id;
             await this.startCar(carId, false);
@@ -243,7 +222,7 @@ export class ViewHtml {
         }
       });
 
-      stopBtn.addEventListener('click', async () => {
+      this.stopBtn.addEventListener('click', async () => {
         try {
           const carId = car.id;
           await this.stopCar(carId);
@@ -251,11 +230,12 @@ export class ViewHtml {
           console.error('Ошибка при остановке машины:', error);
       }
     });
-        containerBtn.append(startBtn, stopBtn, selectButton, buttonDeleteCars)
+        containerBtn.append(this.startBtn, this.stopBtn, selectButton, buttonDeleteCars)
         //event
         selectButton.addEventListener('click', () => {
           this.selectedCar = car;
           this.highlightChooseCar(lot);
+          selectButton.setAttribute('disabled', 'true');
         });
         buttonDeleteCars.addEventListener('click', () => {
           this.selectedCar = car;
@@ -272,6 +252,56 @@ export class ViewHtml {
   } catch (error) {
     console.error('Ошибка:', error);
   }
+}
+
+
+public generateButtonFunctional(): void {
+  const containerButtonFunctional = document.createElement('div');
+  containerButtonFunctional.classList.add('conteiner__button-fun');
+  this.conButtonFun = containerButtonFunctional;
+
+  const buttonRace = document.createElement('button');
+  buttonRace.classList.add('button-rave');
+  buttonRace.textContent = 'Race';
+
+  const buttonReset = document.createElement('button');
+  buttonReset.classList.add('button-reset');
+  buttonReset.textContent = 'Reset';
+
+  const buttonGenerateCars = document.createElement('button');
+  buttonGenerateCars.classList.add('button-generate');
+  buttonGenerateCars.textContent = 'Generate Cars';
+
+  //event
+  buttonRace.addEventListener('click', async () => {
+    const carIds = this.data.map(car => car.id);
+    for (const carId of carIds) {
+      console.log(carId)
+      await this.startCar(carId)
+    }
+  })
+
+  buttonReset.addEventListener('click', async () => {
+    const carIds = this.data.map(car => car.id);
+    for (const carId of carIds) {
+      await this.stopCar(carId)
+    }
+  })
+
+  buttonGenerateCars.addEventListener('click',  async () => {
+    try {
+      const randomCars = this.carGenerator.generateRandomhundredCars();
+      await Promise.all(randomCars.map(async (car: Car) => {
+        await Garage.createCars(car.name, car.color);
+      }));
+      await this.carList();
+    } catch (error) {
+      console.error('Ошибка:', error);
+    }
+  });
+  this.conButtonFun.append(buttonRace, buttonReset, buttonGenerateCars);
+  this.mainContent?.append(this.conButtonFun);
+
 }
 
   //Update method
@@ -333,34 +363,63 @@ export class ViewHtml {
 public async startCar(carId: number, check: boolean = false){
   console.log(carId)
   try {
-      const response = await Garage.startCar(carId);
-        const { velocity, distance } = await response.json();
-        const carElement = document.getElementById(`car_${carId}`) as HTMLElement;
-        let distanceX = 0;
-        this.interval = setInterval(() => {
-            if (distanceX >= distance) clearInterval(this.interval!);
-            if (check) {
-              this.stopCar(carId);
-              clearInterval(this.interval!);
-            }
-          distanceX += velocity;
-        carElement.style.transform = `translateX(${distanceX}px)`;
-      }, 1000);
+    const response = await Garage.startStopCar(carId, 'start');
+      const { velocity, distance } = await response.json();
+      const visibleWidth = window.innerWidth;
+      console.log('visibleWidth', visibleWidth);
+      const sizeSVG = 120 * 2;
+      const raceVisible = visibleWidth - sizeSVG;
+      const carDistance = document.getElementById(`distance_${carId}`);
+      carDistance && (carDistance.style.maxWidth = raceVisible + 'px');
+      const carVelocity = velocity / distance * raceVisible;
+      let carDriven = 0;
+      const drive = Garage.driveMode(carId);
+      this.intervals[carId] = setInterval(() => {
+        if (carDriven >= raceVisible) {
+          clearInterval(this.intervals[carId])
+          // if (this.startBtn) this.startBtn.disabled = false;
+          // if (this.stopBtn) this.stopBtn.disabled = true;
+        }
+        if (check) {
+          this.stopCar(carId);
+          // clearInterval(this.interval!);
+          // if (this.startBtn) this.startBtn.disabled = false;
+          // console.log(this.startBtn)
+          // if (this.stopBtn) this.stopBtn.disabled = true;
+          // console.log(this.stopBtn)
+        }
+          carDriven += carVelocity * 10;
+          carDistance && (carDistance.style.width = carDriven + 'px');
+          // console.log(carVelocity);
+      // carElement.style.transform = `translateX(${distanceX}px)`;
+    }, 10);
+    drive.then((data) => {
+      clearInterval(this.intervals[carId]);
+      console.log(data);
+    });
   } catch (error) {
-      console.error('Ошибка:', error);
+    console.error('Ошибка:', error);
   }
-
 }
+
 public async stopCar(carId: number) {
   try {
-    if (this.interval) {
-      clearInterval(this.interval);
+    if (this.intervals[carId]) {
+      clearInterval(this.intervals[carId]);
     }
-    const response = await Garage.stopCar(carId);
+    const response = await Garage.startStopCar(carId, 'stop');
     await new Promise(resolve => setTimeout(resolve, 1000));
+
     const carElement = document.getElementById(`car_${carId}`) as HTMLElement;
+    const carDist = document.getElementById(`distance_${carId}`);
+    carDist && (carDist.style.width = '0px');
     carElement.style.transform = 'translateX(0px)';
+
     console.log(`Вернулась на место:`, response);
+    if (this.startBtn) this.startBtn.disabled = false;
+    console.log(this.startBtn)
+    if (this.stopBtn) this.stopBtn.disabled = true;
+    console.log(this.stopBtn)
   } catch (error) {
     console.error('Ошибка:', error);
   }
