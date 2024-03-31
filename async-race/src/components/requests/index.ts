@@ -79,12 +79,16 @@ export default class Garage {
   }
 }
 
-  static async stopCar(): Promise<[]> {
-    const data = await fetch(this.garage_url + `/engine?id=1&status=stopped`, {
+  static async stopCar(id: number): Promise<Response> {
+    const data = await fetch(this.garage_url + `/engine?id=${id}&status=stopped`, {
       method: 'PATCH',
     });
-    const json = await data.json();
-    return json;
-
+    if (data.status === 200) {
+      // const json = await data.json();
+      // return json;
+      return data;
+    } else {
+      throw new Error(`Failed to start car. Status: ${data.status}`);
+  }
   }
 }

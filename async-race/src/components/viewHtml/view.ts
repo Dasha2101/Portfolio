@@ -19,6 +19,7 @@ export class ViewHtml {
   btnNext: HTMLButtonElement | null;
   btnPrevious: HTMLButtonElement | null;
   carGenerator: GenerateCar;
+  interval: NodeJS.Timeout | null;
 
   constructor(clearMainContent: () => void, carGenerator: GenerateCar) {
     this.mainPage = null;
@@ -36,6 +37,7 @@ export class ViewHtml {
     this.btnNext = null;
     this.btnPrevious = null;
     this.carGenerator = carGenerator;
+    this.interval = null;
   }
 
   createMainPage(): HTMLElement{
@@ -235,11 +237,20 @@ export class ViewHtml {
         startBtn.addEventListener('click', async () => {
           try {
             const carId = car.id;
-            await this.startCar(carId);
+            await this.startCar(carId, false);
           } catch (error) {
             console.error('Ошибка при запуске машины:', error);
         }
       });
+
+      stopBtn.addEventListener('click', async () => {
+        try {
+          const carId = car.id;
+          await this.stopCar(carId);
+        } catch (error) {
+          console.error('Ошибка при остановке машины:', error);
+      }
+    });
         containerBtn.append(startBtn, stopBtn, selectButton, buttonDeleteCars)
         //event
         selectButton.addEventListener('click', () => {
@@ -319,24 +330,41 @@ export class ViewHtml {
   }
 }
 
-public async startCar(carId: number){
+public async startCar(carId: number, check: boolean = false){
   console.log(carId)
   try {
       const response = await Garage.startCar(carId);
         const { velocity, distance } = await response.json();
         const carElement = document.getElementById(`car_${carId}`) as HTMLElement;
         let distanceX = 0;
-        const interval = setInterval(() => {
-            if (distanceX >= distance) clearInterval(interval);
-            distanceX += velocity;
-          carElement.style.transform = `translateX(${distanceX}px)`;
-        }, 50);
-    } catch (error) {
-        console.error('Ошибка:', error);
-    }
+        this.interval = setInterval(() => {
+            if (distanceX >= distance) clearInterval(this.interval!);
+            if (check) {
+              this.stopCar(carId);
+              clearInterval(this.interval!);
+            }
+          distanceX += velocity;
+        carElement.style.transform = `translateX(${distanceX}px)`;
+      }, 1000);
+  } catch (error) {
+      console.error('Ошибка:', error);
+  }
+
 }
-
-
+public async stopCar(carId: number) {
+  try {
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
+    const response = await Garage.stopCar(carId);
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    const carElement = document.getElementById(`car_${carId}`) as HTMLElement;
+    carElement.style.transform = 'translateX(0px)';
+    console.log(`Вернулась на место:`, response);
+  } catch (error) {
+    console.error('Ошибка:', error);
+  }
+}
 
 //pagination
 public createPagination() {
