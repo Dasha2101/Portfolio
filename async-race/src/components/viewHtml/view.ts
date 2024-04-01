@@ -275,17 +275,21 @@ public generateButtonFunctional(): void {
   //event
   buttonRace.addEventListener('click', async () => {
     const carIds = this.data.map(car => car.id);
-    for (const carId of carIds) {
-      console.log(carId)
-      await this.startCar(carId)
-    }
+    // for (const carId of carIds) {
+    //   console.log(carId)
+    //   await this.startCar(carId)
+    // }
+    const promises = carIds.map(carIds => this.startCar(carIds));
+    await Promise.all(promises);
   })
 
   buttonReset.addEventListener('click', async () => {
     const carIds = this.data.map(car => car.id);
-    for (const carId of carIds) {
-      await this.stopCar(carId)
-    }
+    // for (const carId of carIds) {
+    //   await this.stopCar(carId)
+    // }
+    const promises = carIds.map(carIds => this.stopCar(carIds));
+    await Promise.all(promises);
   })
 
   buttonGenerateCars.addEventListener('click',  async () => {
