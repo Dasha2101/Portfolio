@@ -31,6 +31,9 @@ class ConnectMain {
     if (this.viewHtml && this.viewHtml.mainContent) {
       this.viewHtml.mainContent.innerHTML = '';
     }
+    if (this.viewHtml && this.viewHtml.changeContent) {
+      this.viewHtml.changeContent.innerHTML = '';
+    }
   }
 }
 

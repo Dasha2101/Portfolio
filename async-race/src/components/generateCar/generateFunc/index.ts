@@ -2,7 +2,7 @@ import data from "../arrayData";
 import { Car } from "../../interface";
 
 export class GenerateCar {
-  data: { carBrands: string[]; carColors: string[]; carModels: string[] };
+  data: { carBrands: string[]; carColors: string[]; carModels: string[]};
 
   constructor() {
     this.data = data
@@ -22,18 +22,19 @@ export class GenerateCar {
 
   generateRandomCar() {
     const brandIndex = this.generateRandomIndex(this.data.carBrands.length);
-    // const markaIndex = this.generateRandomIndex(this.data.carModels.length);
+    const markaIndex = this.generateRandomIndex(this.data.carModels.length);
     const colorIndex = this.generateRandomIndex(this.data.carColors.length);
 
     const nameBrand = this.data.carBrands[brandIndex];
-    // const marka = this.data.carModels[markaIndex];
+    const marka = this.data.carModels[markaIndex];
     const color = this.data.carColors[colorIndex];
     const id = Date.now();
 
+    const name = `${nameBrand} ${marka}`
+
     return {
-      name: nameBrand,
+      name: name,
       color: color,
-      // brand: marka,
       id: id,
   };
   }

@@ -23,11 +23,13 @@ export class ViewHtml {
   startBtn: HTMLButtonElement | null;
   stopBtn: HTMLButtonElement | null ;
   data: Car[];
+  changeContent: HTMLElement | null
   // raceFinish: boolean = false;
 
   constructor(clearMainContent: () => void, carGenerator: GenerateCar) {
     this.mainPage = null;
     this.mainContent = null;
+    this.changeContent = null
     this.buttonGaragePage = null;
     this.buttonWinnerPage = null;
     this.containerCar = null;
@@ -58,10 +60,14 @@ export class ViewHtml {
     mainContent.classList.add('main__content')
     this.mainContent = mainContent;
 
+    const changeContent = document.createElement('div');
+    changeContent.classList.add('change__content');
+    this.changeContent = changeContent;
+
+
     this.generateCar();
     this.changeCar();
     this.generateButtonFunctional();
-    // this.carList();
     this.createPagination();
 
     const totalCar = document.createElement('div');
@@ -71,7 +77,7 @@ export class ViewHtml {
     containerCar.classList.add('container-car');
 
 
-    this.mainPage.append(this.mainContent);
+    this.mainPage.append(this.changeContent, this.mainContent);
     return mainPage;
   }
 
@@ -109,9 +115,30 @@ export class ViewHtml {
     const inputCarCreate = document.createElement('input');
     inputCarCreate.classList.add('input__create-car');
 
+    //saved in ls
+    const savedInputValue = localStorage.getItem('inputCarValue');
+    if (savedInputValue) {
+      inputCarCreate.value = savedInputValue;
+    }
+
+    inputCarCreate.addEventListener('input', () => {
+      localStorage.setItem('inputCarValue', inputCarCreate.value)
+    });
+
     const colorInput = document.createElement('input');
     colorInput.setAttribute('type', 'color');
     colorInput.classList.add('input__create-color');
+
+     //saved in ls
+    const savedColorInput = localStorage.getItem('colorInputValue');
+    if (savedColorInput) {
+      colorInput.value = savedColorInput;
+    }
+
+    colorInput.addEventListener('input', () => {
+      localStorage.setItem('colorInputValue', colorInput.value);
+    });
+
 
     const buttonCreateCar = document.createElement('button');
     buttonCreateCar.classList.add('button__create-car');
@@ -123,7 +150,7 @@ export class ViewHtml {
 
     containerAddCar.append(inputCarCreate, colorInput, buttonCreateCar);
     this.containerCar.append(containerAddCar);
-    this.mainPage?.append(this.containerCar);
+    this.changeContent?.append(this.containerCar);
   }
 
   public changeCar(): void {
@@ -134,9 +161,31 @@ export class ViewHtml {
     const inputCarChange = document.createElement('input');
     inputCarChange.classList.add('input__change-car');
 
+
+    //saved in ls
+    const savedInputValueChange = localStorage.getItem('inputCarValueChange');
+    if (savedInputValueChange) {
+      inputCarChange.value = savedInputValueChange;
+    }
+
+    inputCarChange.addEventListener('input', () => {
+      localStorage.setItem('inputCarValueChange', inputCarChange.value)
+    });
+
     const colorInputChange = document.createElement('input');
     colorInputChange.classList.add('color__change-car')
     colorInputChange.setAttribute('type', 'color');
+
+    //saved in ls
+
+    const savedInputColorChange = localStorage.getItem('inputCarColorChange');
+    if (savedInputColorChange) {
+      colorInputChange.value = savedInputColorChange;
+    }
+
+    colorInputChange.addEventListener('input', () => {
+      localStorage.setItem('inputCarColorChange', colorInputChange.value)
+    });
 
     const buttonChangeCar = document.createElement('button');
     buttonChangeCar.classList.add('button__create-car');
@@ -147,7 +196,7 @@ export class ViewHtml {
   });
 
     this.containerChangeCar.append(inputCarChange, colorInputChange, buttonChangeCar);
-    this.mainPage?.append(this.containerChangeCar);
+    this.changeContent?.append(this.containerChangeCar);
   }
   //Get method
   public async carList() {
@@ -182,8 +231,8 @@ export class ViewHtml {
         const nameCar = document.createElement('div');
         nameCar.textContent = `Name: ${car.name}`;
 
-        const colorCar = document.createElement('div');
-        colorCar.textContent = `Color: ${car.color}`;
+        // const markaCar = document.createElement('div');
+        // markaCar.textContent = `Color: ${car.brand}`;
 
         const carDistance = document.createElement('div');
         const distanceDiv = document.createElement('div');
@@ -219,16 +268,22 @@ export class ViewHtml {
         startBtn.classList.add('start-button');
         startBtn.innerText = 'Start';
         startBtn.setAttribute('data-id', car.id.toString());
-        this.startBtn = startBtn
-        // this.startBtn.setAttribute('disabled', '');
+        startBtn.id = `start-btn_${car.id}`
 
         const stopBtn = document.createElement('button');
         stopBtn.classList.add('stop-button');
         stopBtn.innerText = 'Stop';
-        this.stopBtn = stopBtn;
-        // this.stopBtn.setAttribute('disabled', 'true');
+        stopBtn.id = `stop-btn_${car.id}`
+        stopBtn.disabled = true;
 
-        this.startBtn.addEventListener('click', async () => {
+        startBtn.addEventListener('click', async (event: Event) => {
+          if (event?.target) {
+            const target = event.target as HTMLButtonElement;
+            target.disabled = true
+
+            const stopBtn: HTMLElement | null = document.getElementById(`stop-btn_${car.id}`);
+            if (stopBtn) (stopBtn as HTMLButtonElement).disabled  = false;
+          }
           try {
             const carId = car.id;
             await this.startCar(carId, false);
@@ -237,7 +292,13 @@ export class ViewHtml {
         }
       });
 
-      this.stopBtn.addEventListener('click', async () => {
+        stopBtn.addEventListener('click', async (event: Event) => {
+          if (event?.target) {
+            const target = event.target as HTMLButtonElement;
+            target.disabled = true
+            const startBtn: HTMLElement | null = document.getElementById(`start-btn_${car.id}`);
+            if (startBtn) (startBtn as HTMLButtonElement).disabled  = false;
+          }
         try {
           const carId = car.id;
           await this.stopCar(carId);
@@ -245,7 +306,7 @@ export class ViewHtml {
           console.error('Ошибка при остановке машины:', error);
       }
     });
-        containerBtn.append(this.startBtn, this.stopBtn, selectButton, buttonDeleteCars)
+        containerBtn.append(startBtn, stopBtn, selectButton, buttonDeleteCars)
         //event
         selectButton.addEventListener('click', () => {
           this.selectedCar = car;
@@ -257,13 +318,12 @@ export class ViewHtml {
           this.deleteCar();
         });
 
-        lot.append(nameCar, colorCar, carDistance, containerBtn);
+        lot.append(nameCar,  carDistance, containerBtn);
 
         if (containerCar) containerCar.append(lot);
 
 
-        if (this.mainContent) {
-          if (containerCar)
+        if (this.mainContent && containerCar) {
           this.mainContent.append(containerCar);
         }
     });
@@ -322,7 +382,7 @@ public generateButtonFunctional(): void {
     }
   });
   this.conButtonFun.append(buttonRace, buttonReset, buttonGenerateCars);
-  this.mainPage?.append(this.conButtonFun);
+  this.changeContent?.append(this.conButtonFun);
 
 }
 
@@ -399,23 +459,18 @@ public async startCar(carId: number, check: boolean = false){
       let carDriven = 0;
       const drive = Garage.driveMode(carId);
       this.intervals[carId] = setInterval(() => {
+        const startBtn: HTMLButtonElement | null = document.querySelector('#start-btn');
+        const stopBtn: HTMLButtonElement | null = document.querySelector('#stop-btn')
         if (carDriven >= raceVisible) {
           clearInterval(this.intervals[carId])
-          // if (this.startBtn) this.startBtn.disabled = false;
-          // if (this.stopBtn) this.stopBtn.disabled = true;
+          if (startBtn) startBtn.disabled = true;
+          if (stopBtn) stopBtn.disabled = false;
         }
         if (check) {
           this.stopCar(carId);
-          // clearInterval(this.interval!);
-          // if (this.startBtn) this.startBtn.disabled = false;
-          // console.log(this.startBtn)
-          // if (this.stopBtn) this.stopBtn.disabled = true;
-          // console.log(this.stopBtn)
         }
           carDriven += carVelocity * 10;
           carDistance && (carDistance.style.width = carDriven + 'px');
-          // console.log(carVelocity);
-      // carElement.style.transform = `translateX(${distanceX}px)`;
     }, 10);
     drive.then((data) => {
       clearInterval(this.intervals[carId]);
@@ -439,11 +494,11 @@ public async stopCar(carId: number) {
     carDist && (carDist.style.width = '0px');
     carElement.style.transform = 'translateX(0px)';
 
+    // const startBtn: HTMLButtonElement | null = document.querySelector('#start-btn');
+    // const stopBtn: HTMLButtonElement | null = document.querySelector('#stop-btn')
     console.log(`Вернулась на место:`, response);
-    if (this.startBtn) this.startBtn.disabled = false;
-    console.log(this.startBtn)
-    if (this.stopBtn) this.stopBtn.disabled = true;
-    console.log(this.stopBtn)
+    // if (startBtn) startBtn.disabled = false;
+    // if (stopBtn) stopBtn.disabled = true;
   } catch (error) {
     console.error('Ошибка:', error);
   }
@@ -453,6 +508,13 @@ public async stopCar(carId: number) {
 public createPagination() {
   const containerPagination: HTMLDivElement = document.createElement('div');
   containerPagination.classList.add('pagination');
+
+  const savedPageNumber = localStorage.getItem('pageNumber');
+  if (savedPageNumber) {
+    this.page = parseInt(savedPageNumber);
+  } else {
+    this.page = 1;
+  }
 
   const btnPreviousPage: HTMLButtonElement = document.createElement('button');
   btnPreviousPage.classList.add('button_previous-page');
@@ -474,19 +536,25 @@ public createPagination() {
 
 
   containerPagination.append(this.btnPrevious, pageNum, this.btnNext);
-  this.mainContent?.append(containerPagination);
+  this.changeContent?.append(containerPagination);
 }
 
 public async nextPage() {
+  console.log('Ghb')
   try {
+    console.log('b')
     const limit = 7;
-    const list = await Garage.getCars(this.page + 1, limit);
-    if (Array.isArray(list) && list.length > 0) {
-      this.page++;
+    const nextPage = this.page + 1;
+    // const list = await Garage.getCars(this.page + 1, limit);
+    const { cars } = await Garage.getCars(this.page + 1, limit);
+    if (Array.isArray(cars) && cars.length > 0) {
+      this.page = nextPage;
+      console.log(this.page)
+      localStorage.setItem('pageNumber', this.page.toString())
       this.carList();
       this.updatePageNumber();
       this.btnPrevious?.removeAttribute('disabled');
-      if (list.length < limit) {
+      if (cars.length < limit) {
         this.btnNext?.setAttribute('disabled', 'true');
       }
     } else {
@@ -501,14 +569,15 @@ public async previousPage(){
   try {
     if (this.page > 1) {
       this.page--;
+      localStorage.setItem('pageNumber', this.page.toString());
       this.carList();
       this.updatePageNumber();
       const limit = 7;
-      const list = await Garage.getCars(this.page, limit);
+      const{ cars } = await Garage.getCars(this.page, limit);
       if (this.page === 1) {
         this.btnPrevious?.setAttribute('disabled', 'true');
       }
-      if (Array.isArray(list) && list.length as number === limit) {
+      if (Array.isArray(cars) && cars.length as number === limit) {
         this.btnNext?.removeAttribute('disabled');
       }
     }
