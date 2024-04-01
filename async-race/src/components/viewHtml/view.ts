@@ -2,6 +2,7 @@ import "./view.css";
 import Garage from '../requests/index';
 import {Car} from '../interface/index'
 import { GenerateCar } from "../generateCar/generateFunc";
+// import Winner from "../winners/requestWinner";
 
 export class ViewHtml {
   mainPage: HTMLElement | null;
@@ -9,7 +10,6 @@ export class ViewHtml {
   buttonGaragePage: HTMLButtonElement | null;
   buttonWinnerPage: HTMLButtonElement | null;
   containerCar: HTMLDivElement | null;
-  containerGarage: HTMLDivElement | null;
   containerChangeCar: HTMLDivElement | null;
   conButtonFun: HTMLDivElement | null;
   clearMainContent: () => void;
@@ -23,6 +23,7 @@ export class ViewHtml {
   startBtn: HTMLButtonElement | null;
   stopBtn: HTMLButtonElement | null ;
   data: Car[];
+  // raceFinish: boolean = false;
 
   constructor(clearMainContent: () => void, carGenerator: GenerateCar) {
     this.mainPage = null;
@@ -30,7 +31,6 @@ export class ViewHtml {
     this.buttonGaragePage = null;
     this.buttonWinnerPage = null;
     this.containerCar = null;
-    this.containerGarage = null;
     this.containerChangeCar = null;
     this.conButtonFun = null;
     this.clearMainContent = clearMainContent;
@@ -44,6 +44,7 @@ export class ViewHtml {
     this.startBtn = null;
     this.stopBtn = null;
     this.data = [];
+    this.carList();
   }
 
   createMainPage(): HTMLElement{
@@ -60,9 +61,15 @@ export class ViewHtml {
     this.generateCar();
     this.changeCar();
     this.generateButtonFunctional();
-    this.garage();
-    this.carList();
+    // this.carList();
     this.createPagination();
+
+    const totalCar = document.createElement('div');
+    totalCar.classList.add('totalCar');
+
+    const containerCar = document.createElement('div');
+    containerCar.classList.add('container-car');
+
 
     this.mainPage.append(this.mainContent);
     return mainPage;
@@ -116,7 +123,7 @@ export class ViewHtml {
 
     containerAddCar.append(inputCarCreate, colorInput, buttonCreateCar);
     this.containerCar.append(containerAddCar);
-    this.mainContent?.append(this.containerCar);
+    this.mainPage?.append(this.containerCar);
   }
 
   public changeCar(): void {
@@ -140,27 +147,35 @@ export class ViewHtml {
   });
 
     this.containerChangeCar.append(inputCarChange, colorInputChange, buttonChangeCar);
-    this.mainContent?.append(this.containerChangeCar);
+    this.mainPage?.append(this.containerChangeCar);
   }
-
-  public async garage() {
-    this.containerGarage = document.createElement('div');
-    this.containerGarage.classList.add('garage-container');
-    this.mainContent?.append(this.containerGarage);
-  }
-
-
-
-
   //Get method
   public async carList() {
     const limit = 7;
     try {
-      const data = await Garage.getCars(this.page, limit);
-      this.containerGarage ? this.containerGarage.innerHTML = '' : false;
-      if (Array.isArray(data)) {
-        this.data = data;
-        data.forEach((car: Car) => {
+      const { totalCount, cars } = await Garage.getCars(this.page, limit);
+
+      let totalCountCar: HTMLElement | null = document.querySelector('.totalCar');
+      let containerCar:  HTMLElement | null = document.querySelector('.container-car')
+
+      if (totalCountCar) {
+        totalCountCar.remove();
+      }
+      totalCountCar = document.createElement('div');
+      totalCountCar.classList.add('totalCar');
+      totalCountCar.textContent = `Total Cars ${totalCount}`
+      this.mainContent?.prepend(totalCountCar);
+
+      if (containerCar) {
+        containerCar.remove();
+      }
+
+      containerCar = document.createElement('div');
+      containerCar.classList.add('container-car');
+
+      if (Array.isArray(cars)) {
+        this.data = cars;
+        cars.forEach((car: Car) => {
         const lot = document.createElement('div');
         lot.classList.add('car');
 
@@ -244,8 +259,12 @@ export class ViewHtml {
 
         lot.append(nameCar, colorCar, carDistance, containerBtn);
 
-        if (this.containerGarage) {
-          this.containerGarage.appendChild(lot);
+        if (containerCar) containerCar.append(lot);
+
+
+        if (this.mainContent) {
+          if (containerCar)
+          this.mainContent.append(containerCar);
         }
     });
   }
@@ -275,19 +294,18 @@ public generateButtonFunctional(): void {
   //event
   buttonRace.addEventListener('click', async () => {
     const carIds = this.data.map(car => car.id);
-    // for (const carId of carIds) {
-    //   console.log(carId)
-    //   await this.startCar(carId)
-    // }
     const promises = carIds.map(carIds => this.startCar(carIds));
     await Promise.all(promises);
+
+    // if (!this.raceFinish)
+    // const winner = await this.getWinner();
+    // if (winner) {
+    //   this.modalWin(winner)
+    // }
   })
 
   buttonReset.addEventListener('click', async () => {
     const carIds = this.data.map(car => car.id);
-    // for (const carId of carIds) {
-    //   await this.stopCar(carId)
-    // }
     const promises = carIds.map(carIds => this.stopCar(carIds));
     await Promise.all(promises);
   })
@@ -304,7 +322,7 @@ public generateButtonFunctional(): void {
     }
   });
   this.conButtonFun.append(buttonRace, buttonReset, buttonGenerateCars);
-  this.mainContent?.append(this.conButtonFun);
+  this.mainPage?.append(this.conButtonFun);
 
 }
 
@@ -364,6 +382,8 @@ public generateButtonFunctional(): void {
   }
 }
 
+
+//anim car (start and stop)
 public async startCar(carId: number, check: boolean = false){
   console.log(carId)
   try {
@@ -454,7 +474,7 @@ public createPagination() {
 
 
   containerPagination.append(this.btnPrevious, pageNum, this.btnNext);
-  this.mainContent?.appendChild(containerPagination);
+  this.mainContent?.append(containerPagination);
 }
 
 public async nextPage() {
@@ -517,12 +537,59 @@ highlightChooseCar(lot: HTMLDivElement){
 }
 
 
+//modalwin with winners
+// public async getWinner(){
+//   try {
+//     const raceFinish = await this.checkRaceFinish();
+//     if (!raceFinish) {
+//       return null;
+//     }
+//     const winners = await Winner.getWinners('time', 'ASC');
+//     if (winners.length > 0) {
+//       return winners[0];
+//     } else {
+//       return null;
+//     }
+//   } catch (error) {
+//     console.error('Ошибка при получении победителя:', error);
+//   }
+// }
+
+// checkRaceFinish(){
+
+// }
+
+modalWin(winner: { id: number, wins: number, time: number }){
+  const containerModalWin: HTMLElement = document.createElement('div');
+  containerModalWin.classList.add('show-modal');
+
+  const closeButton: HTMLButtonElement = document.createElement('button');
+  closeButton.classList.add('mod__close-button');
+
+  const titleWin: HTMLElement = document.createElement('h2');
+  titleWin.textContent = 'Race winner';
+
+  const idCar: HTMLElement = document.createElement('p');
+  idCar.textContent = `ID: ${winner.id}`;
+
+  const numberWin: HTMLElement = document.createElement('p');
+  numberWin.textContent = `Number of wins: ${winner.wins}`;
+
+  const time: HTMLElement = document.createElement('p');
+  time.textContent = `Time: ${winner.time} sec`;
+
+  containerModalWin.append(titleWin, idCar, numberWin, time, closeButton);
+  this.mainContent?.append(containerModalWin);
+
+  closeButton.onclick = () => {
+    containerModalWin.style.display = 'none'
+  }
+}
   public garagePage(): void {
     this.clearMainContent();
     this.generateCar();
     this.changeCar();
     this.generateButtonFunctional();
-    this.garage();
     this.carList();
     this.createPagination();
   }

@@ -1,8 +1,9 @@
+import { Car } from "../interface";
 export default class Garage {
 
   static garage_url = 'http://localhost:3000';
 
-  static async getCars(page?: number, limit?: number): Promise<[] | number> {
+  static async getCars(page?: number, limit?: number): Promise<{ totalCount: number, cars: Car[]}> {
       const data = await fetch(this.garage_url + `/garage?_page=${page}&_limit=${limit}`, {
         method: 'GET'
       });
@@ -11,11 +12,12 @@ export default class Garage {
 
       const json = await data.json();
 
-      if (!limit) {
-        return totalCount;
-      } else {
-        return json;
-      }
+      // if (!limit) {
+      //   return totalCount;
+      // } else {
+      //   return json;
+      // }
+      return {totalCount, cars: json}
   }
 
   static async getCar(id: number): Promise<[]> {
@@ -85,4 +87,28 @@ static driveMode(id: number) {
     method: 'PATCH',
   });
 }
+
+
+static async getWinners(sort: 'id' | 'wins' | 'time', order: 'ASC' | 'DESC' , page?: number, limit?: number): Promise<{ id: number, wins: number, time: number }[]>{
+  const data = await fetch(`${this.garage_url}/winners?_page=${page}&_limit=${limit}&_sort=${sort}&_order=${order}`, {
+    method: 'GET'
+  });
+
+  const totalCountHeader = data.headers.get('X-Total-Count');
+  const totalCount = totalCountHeader ? parseInt(totalCountHeader) : 0;
+
+  console.log(totalCount);
+  const json = await data.json();
+  return json;
+}
+
+
+static async getWinner(id: number): Promise<[]> {
+  const data = await fetch(`${this.garage_url}/winner/${id}` , {
+    method: 'GET',
+  });
+  const json = await data.json();
+  return json;
+}
+
 }
