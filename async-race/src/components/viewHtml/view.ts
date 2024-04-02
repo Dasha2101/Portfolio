@@ -354,14 +354,27 @@ public generateButtonFunctional(): void {
   //event
   buttonRace.addEventListener('click', async () => {
     const carIds = this.data.map(car => car.id);
-    const promises = carIds.map(carIds => this.startCar(carIds));
-    await Promise.all(promises);
+    const promises = carIds.map(carId => this.startCar(carId));
+    Promise.all(promises).then(data => {
+        const finishedCars = data.filter(res => res && res.state === 'finished');
+        if (finishedCars.length > 0) {
+          finishedCars.sort((carA, carB ) => {
+            if (carA && carA.time && carB && carB.time)  {
+              return carA.time - carB.time;
+          }
+          return 0;
+      });
+            const winningCar = finishedCars[0];
+            if (winningCar) {
+              const winnerId = winningCar.carId;
+              winningCar.wins += 1;
+              this.modalWin({ id: winnerId, wins: winningCar.wins, time: winningCar.time })
+          }
+        }
+    }).catch(error => {
+        console.error('Error occurred during the race:', error);
+    });
 
-    // if (!this.raceFinish)
-    // const winner = await this.getWinner();
-    // if (winner) {
-    //   this.modalWin(winner)
-    // }
   })
 
   buttonReset.addEventListener('click', async () => {
@@ -472,12 +485,18 @@ public async startCar(carId: number, check: boolean = false){
           carDriven += carVelocity * 10;
           carDistance && (carDistance.style.width = carDriven + 'px');
     }, 10);
-    drive.then((data) => {
-      clearInterval(this.intervals[carId]);
-      console.log(data);
-    });
+    const startTime = Date.now();
+    const data = await drive;
+    clearInterval(this.intervals[carId]);
+    const endTime = Date.now();
+    console.log(endTime - startTime);
+    if (data.status == 'ok') {
+      return { state: 'finished', carId: carId, time: endTime - startTime, wins: 0};
+    }
   } catch (error) {
     console.error('Ошибка:', error);
+    clearInterval(this.intervals[carId]);
+    return { state: 'broken', carId: carId, time: 0, wins: 0};
   }
 }
 
@@ -494,11 +513,8 @@ public async stopCar(carId: number) {
     carDist && (carDist.style.width = '0px');
     carElement.style.transform = 'translateX(0px)';
 
-    // const startBtn: HTMLButtonElement | null = document.querySelector('#start-btn');
-    // const stopBtn: HTMLButtonElement | null = document.querySelector('#stop-btn')
     console.log(`Вернулась на место:`, response);
-    // if (startBtn) startBtn.disabled = false;
-    // if (stopBtn) stopBtn.disabled = true;
+
   } catch (error) {
     console.error('Ошибка:', error);
   }
@@ -605,35 +621,23 @@ highlightChooseCar(lot: HTMLDivElement){
   lot.classList.add('selected')
 }
 
-
-//modalwin with winners
-// public async getWinner(){
-//   try {
-//     const raceFinish = await this.checkRaceFinish();
-//     if (!raceFinish) {
-//       return null;
-//     }
-//     const winners = await Winner.getWinners('time', 'ASC');
-//     if (winners.length > 0) {
-//       return winners[0];
-//     } else {
-//       return null;
-//     }
-//   } catch (error) {
-//     console.error('Ошибка при получении победителя:', error);
-//   }
-// }
-
-// checkRaceFinish(){
-
-// }
-
 modalWin(winner: { id: number, wins: number, time: number }){
   const containerModalWin: HTMLElement = document.createElement('div');
   containerModalWin.classList.add('show-modal');
 
+  const overlay: HTMLElement = document.createElement('div');
+  overlay.classList.add('overlay');
+  this.mainContent?.appendChild(overlay);
+  overlay.style.display = 'block';
+
+  overlay.addEventListener('click', () => {
+    containerModalWin.style.display = 'none';
+    overlay.style.display = 'none';
+  });
+
   const closeButton: HTMLButtonElement = document.createElement('button');
   closeButton.classList.add('mod__close-button');
+  closeButton.textContent = 'Exit'
 
   const titleWin: HTMLElement = document.createElement('h2');
   titleWin.textContent = 'Race winner';
@@ -644,14 +648,16 @@ modalWin(winner: { id: number, wins: number, time: number }){
   const numberWin: HTMLElement = document.createElement('p');
   numberWin.textContent = `Number of wins: ${winner.wins}`;
 
+  const timeInSeconds = (winner.time / 1000).toFixed(2);
   const time: HTMLElement = document.createElement('p');
-  time.textContent = `Time: ${winner.time} sec`;
+  time.textContent = `Time: ${timeInSeconds} sec`;
 
   containerModalWin.append(titleWin, idCar, numberWin, time, closeButton);
   this.mainContent?.append(containerModalWin);
 
   closeButton.onclick = () => {
-    containerModalWin.style.display = 'none'
+    containerModalWin.style.display = 'none';
+    overlay.style.display = 'none';
   }
 }
   public garagePage(): void {

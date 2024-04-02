@@ -11,12 +11,6 @@ export default class Garage {
       const totalCount = totalCountHeader ? parseInt(totalCountHeader) : 0;
 
       const json = await data.json();
-
-      // if (!limit) {
-      //   return totalCount;
-      // } else {
-      //   return json;
-      // }
       return {totalCount, cars: json}
   }
 
@@ -81,34 +75,15 @@ static async startStopCar(id: number, action: 'start' | 'stop'): Promise<Respons
   }
 }
 
-
 static driveMode(id: number) {
   return fetch(`${this.garage_url}/engine?id=${id}&status=drive`, {
     method: 'PATCH',
+  }).then((data) => {
+    if (data && data.ok) {
+      return {status: 'ok', carId: id};
+    }
+    throw new Error('Something went wrong.');
   });
 }
-
-
-// static async getWinners(sort: 'id' | 'wins' | 'time', order: 'ASC' | 'DESC' , page?: number, limit?: number): Promise<{ id: number, wins: number, time: number }[]>{
-//   const data = await fetch(`${this.garage_url}/winners?_page=${page}&_limit=${limit}&_sort=${sort}&_order=${order}`, {
-//     method: 'GET'
-//   });
-
-//   const totalCountHeader = data.headers.get('X-Total-Count');
-//   const totalCount = totalCountHeader ? parseInt(totalCountHeader) : 0;
-
-//   console.log(totalCount);
-//   const json = await data.json();
-//   return json;
-// }
-
-
-// static async getWinner(id: number): Promise<[]> {
-//   const data = await fetch(`${this.garage_url}/winner/${id}` , {
-//     method: 'GET',
-//   });
-//   const json = await data.json();
-//   return json;
-// }
 
 }

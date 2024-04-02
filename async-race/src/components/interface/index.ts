@@ -7,6 +7,7 @@ export interface Car {
 
 export interface CarData {
   totalCount: number;
+  wins: number;
   cars: Car[];
 }
 
