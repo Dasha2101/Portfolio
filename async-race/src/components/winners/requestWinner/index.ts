@@ -1,4 +1,4 @@
-export default class Winner {
+export default class WinTable {
 
   static winner_url = 'http://localhost:3000';
 
@@ -25,9 +25,13 @@ static async getWinner(id: number): Promise<[]> {
   return json;
 }
 
-static async createWinner(): Promise<[]> {
-  const data = await fetch(`${this.winner_url}/winner`, {
-    method: 'POST'
+static async createWinner(winnerData: { id: number; wins: number; time: number; }): Promise<[]> {
+  const data = await fetch(`${this.winner_url}/winners/`, {
+    method: 'POST',
+    body: JSON.stringify(winnerData),
+    headers: {
+      'Content-Type': 'application/json'
+    }
   });
   const json = await data.json();
   return json;

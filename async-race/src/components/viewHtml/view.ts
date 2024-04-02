@@ -2,7 +2,8 @@ import "./view.css";
 import Garage from '../requests/index';
 import {Car} from '../interface/index'
 import { GenerateCar } from "../generateCar/generateFunc";
-// import Winner from "../winners/requestWinner";
+import WinTable from "../winners/requestWinner";
+import { Winner } from "../winners/winnerPage";
 
 export class ViewHtml {
   mainPage: HTMLElement | null;
@@ -19,6 +20,7 @@ export class ViewHtml {
   btnNext: HTMLButtonElement | null;
   btnPrevious: HTMLButtonElement | null;
   carGenerator: GenerateCar;
+  winnerTable: Winner;
   intervals:  NodeJS.Timeout[];
   startBtn: HTMLButtonElement | null;
   stopBtn: HTMLButtonElement | null ;
@@ -26,7 +28,7 @@ export class ViewHtml {
   changeContent: HTMLElement | null
   // raceFinish: boolean = false;
 
-  constructor(clearMainContent: () => void, carGenerator: GenerateCar) {
+  constructor(clearMainContent: () => void, carGenerator: GenerateCar, winnerTable: Winner) {
     this.mainPage = null;
     this.mainContent = null;
     this.changeContent = null
@@ -42,6 +44,7 @@ export class ViewHtml {
     this.btnNext = null;
     this.btnPrevious = null;
     this.carGenerator = carGenerator;
+    this.winnerTable = winnerTable;
     this.intervals = [];
     this.startBtn = null;
     this.stopBtn = null;
@@ -355,27 +358,34 @@ public generateButtonFunctional(): void {
   buttonRace.addEventListener('click', async () => {
     const carIds = this.data.map(car => car.id);
     const promises = carIds.map(carId => this.startCar(carId));
-    Promise.all(promises).then(data => {
-        const finishedCars = data.filter(res => res && res.state === 'finished');
-        if (finishedCars.length > 0) {
-          finishedCars.sort((carA, carB ) => {
-            if (carA && carA.time && carB && carB.time)  {
-              return carA.time - carB.time;
-          }
-          return 0;
-      });
-            const winningCar = finishedCars[0];
-            if (winningCar) {
-              const winnerId = winningCar.carId;
-              winningCar.wins += 1;
-              this.modalWin({ id: winnerId, wins: winningCar.wins, time: winningCar.time })
-          }
+    try {
+      const data = await Promise.all(promises);
+      const finishedCars = data.filter(res => res && res.state === 'finished');
+      if (finishedCars.length > 0) {
+        finishedCars.sort((carA, carB ) => {
+        if (carA && carA.time && carB && carB.time)  {
+          return carA.time - carB.time;
         }
-    }).catch(error => {
+          return 0;
+        });
+        const winningCar = finishedCars[0];
+        if (winningCar) {
+          const winnerData = {
+            id: winningCar.carId,
+            wins: winningCar.wins,
+            time: winningCar.time
+          };
+          const winnerDataResponse = await WinTable.createWinner(winnerData);
+          console.log(winnerDataResponse);
+          winningCar.wins += 1;
+          this.modalWin({ id: winnerData.id, wins: winningCar.wins, time: winnerData.time });
+        }
+        }
+    } catch (error) {
         console.error('Error occurred during the race:', error);
-    });
+    }
+});
 
-  })
 
   buttonReset.addEventListener('click', async () => {
     const carIds = this.data.map(car => car.id);
@@ -669,8 +679,15 @@ modalWin(winner: { id: number, wins: number, time: number }){
     this.createPagination();
   }
 
-  public winnerPage(): void {
-    this.clearMainContent()
+  public async winnerPage() {
+    this.clearMainContent();
+    try {
+        const content = await this.winnerTable.createWinnerPage();
+        if (content !== undefined) {
+            if (this.mainContent) this.mainContent.append(content);
+        } 
+    } catch (error) {
+        console.error('Error:', error);
+    }
   }
 }
-
