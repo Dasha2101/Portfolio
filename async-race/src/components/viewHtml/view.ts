@@ -620,7 +620,7 @@ public async nextPage() {
     const { cars } = await Garage.getCars(this.page, limit);
       if (cars.length > 0) {
       this.page = nextPage;
-      localStorage.setItem('pageNumber', this.page.toString())
+      localStorage.setItem('pageNumberGarage', this.page.toString())
       this.carList();
       this.updatePageNumber();
       this.btnPrevious?.removeAttribute('disabled');
@@ -639,7 +639,7 @@ public async previousPage(){
   try {
     if (this.page > 1) {
       this.page--;
-      localStorage.setItem('pageNumber', this.page.toString());
+      localStorage.setItem('pageNumberGarage', this.page.toString());
       this.carList();
       this.updatePageNumber();
       const limit = 7;
@@ -728,6 +728,7 @@ modalWin(winner: { id: number, wins: number, time: number }){
     this.clearMainContent();
     this.createWinnerPage();
     this.paginationWin()
+
   }
 
   public async createWinnerPage () {
@@ -792,7 +793,7 @@ modalWin(winner: { id: number, wins: number, time: number }){
   }
 
   public async paginationWin(){
-    // const limit = 10;
+    const limit = 10;
     const containerForContent = document.createElement('div');
     containerForContent.classList.add('container-content')
     // const numberPage = document.createElement('p');
@@ -815,8 +816,9 @@ modalWin(winner: { id: number, wins: number, time: number }){
     buttonNextWin.classList.add('button-fun');
     buttonNextWin.textContent = 'Next';
 
-    // const { winners } =  await WinTable.getWinners('id', 'ASC', this.pageWin, limit);
-    // buttonNextWin.disabled = winners.length <= limit
+    const { winners } =  await WinTable.getWinners('id', 'ASC', this.pageWin, limit);
+    buttonNextWin.disabled = winners.length + 1 <= limit
+    console.log('winner', winners.length)
 
     this.btnNextWin = buttonNextWin;
 
@@ -841,11 +843,11 @@ modalWin(winner: { id: number, wins: number, time: number }){
       if (winners.length > 0) {
         this.pageWin = nextPage;
         localStorage.setItem('pageNumberWin', this.pageWin.toString())
-        this.winnerPage()
         this.updatePageNumberWin();
-        this.btnPreviousWin?.removeAttribute('disabled');
+        this.winnerPage()
+        this.btnNextWin?.setAttribute('disabled', 'true');
         if (winners.length < limit) {
-          console.log(winners.length)
+          console.log('winner', winners)
         }
       } else {
         this.btnNextWin?.setAttribute('disabled', 'true');
@@ -860,8 +862,8 @@ modalWin(winner: { id: number, wins: number, time: number }){
       if (this.pageWin > 1) {
         this.pageWin--;
         localStorage.setItem('pageNumberWin', this.pageWin.toString());
-        this.winnerPage();
         this.updatePageNumberWin();
+        this.winnerPage();
         // document.dispatchEvent(this.updateContentEvent);
         const limit = 7;
         const{ winners } = await WinTable.getWinners('id', 'ASC', this.pageWin, limit);
@@ -880,7 +882,6 @@ modalWin(winner: { id: number, wins: number, time: number }){
     }
   }
 
-  
 updatePageNumberWin(){
   if (this.pageNumberWin) {
     this.pageNumberWin.textContent = `Page ${this.pageWin}`;
