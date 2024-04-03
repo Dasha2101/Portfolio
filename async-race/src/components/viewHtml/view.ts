@@ -52,6 +52,7 @@ export class ViewHtml {
     this.winnerContainer = null;
     this.data = [];
     this.carList();
+    this.createPagination();
   }
 
   createMainPage(): HTMLElement{
@@ -73,7 +74,6 @@ export class ViewHtml {
     this.generateCar();
     this.changeCar();
     this.generateButtonFunctional();
-    this.createPagination();
 
     const totalCar = document.createElement('div');
     totalCar.classList.add('totalCar');
@@ -92,11 +92,11 @@ export class ViewHtml {
     header.classList.add('header-content');
 
     const buttonGaragePage = document.createElement('button');
-    buttonGaragePage.classList.add('header__button-garage');
+    buttonGaragePage.classList.add('header__button');
     buttonGaragePage.textContent = 'Garage';
 
     const buttonWinnerPage = document.createElement('button');
-    buttonWinnerPage.classList.add('header__button-winner')
+    buttonWinnerPage.classList.add('header__button')
     buttonWinnerPage.textContent = 'Winner';
 
     buttonGaragePage.addEventListener("click", this.garagePage.bind(this))
@@ -260,9 +260,11 @@ export class ViewHtml {
 
         const idCar = document.createElement('div');
         idCar.textContent = `ID: ${car.id}`;
+        idCar.classList.add('text')
 
         const nameCar = document.createElement('div');
         nameCar.textContent = `Name: ${car.name}`;
+        nameCar.classList.add('text')
 
         // const markaCar = document.createElement('div');
         // markaCar.textContent = `Color: ${car.brand}`;
@@ -290,21 +292,21 @@ export class ViewHtml {
         containerBtn.classList.add('garage__container-btn');
 
         const selectButton = document.createElement('button');
-        selectButton.classList.add('select-button');
+        selectButton.classList.add('button-car');
         selectButton.textContent = 'Update';
 
         const buttonDeleteCars = document.createElement('button');
-        buttonDeleteCars.classList.add('button-delete');
+        buttonDeleteCars.classList.add('button-car');
         buttonDeleteCars.textContent = 'Delete Cars';
 
         const startBtn = document.createElement('button');
-        startBtn.classList.add('start-button');
+        startBtn.classList.add('button-car');
         startBtn.innerText = 'Start';
         startBtn.setAttribute('data-id', car.id.toString());
         startBtn.id = `start-btn_${car.id}`
 
         const stopBtn = document.createElement('button');
-        stopBtn.classList.add('stop-button');
+        stopBtn.classList.add('button-car');
         stopBtn.innerText = 'Stop';
         stopBtn.id = `stop-btn_${car.id}`
         stopBtn.disabled = true;
@@ -373,15 +375,15 @@ public generateButtonFunctional(): void {
   this.conButtonFun = containerButtonFunctional;
 
   const buttonRace = document.createElement('button');
-  buttonRace.classList.add('button-rave');
+  buttonRace.classList.add('button-fun');
   buttonRace.textContent = 'Race';
 
   const buttonReset = document.createElement('button');
-  buttonReset.classList.add('button-reset');
+  buttonReset.classList.add('button-fun');
   buttonReset.textContent = 'Reset';
 
   const buttonGenerateCars = document.createElement('button');
-  buttonGenerateCars.classList.add('button-generate');
+  buttonGenerateCars.classList.add('button-fun');
   buttonGenerateCars.textContent = 'Generate Cars';
 
   //event
@@ -591,13 +593,13 @@ public async createPagination() {
   }
 
   const btnPreviousPage: HTMLButtonElement = document.createElement('button');
-  btnPreviousPage.classList.add('button_previous-page');
+  btnPreviousPage.classList.add('button-page');
   btnPreviousPage.disabled = this.page === 1;
   btnPreviousPage.textContent = 'Previous page';
   this.btnPrevious = btnPreviousPage;
 
   const btnNextPage: HTMLButtonElement = document.createElement('button');
-  btnNextPage.classList.add('button_next-page');
+  btnNextPage.classList.add('button-page');
   btnNextPage.textContent = 'Next Page';
   const { cars } = await Garage.getCars();
   
@@ -808,18 +810,19 @@ modalWin(winner: { id: number, wins: number, time: number }){
   public async paginationWin(){
     const containerForContent = document.createElement('div');
     containerForContent.classList.add('container-content')
-    const numberPage = document.createElement('div');
+    const numberPage = document.createElement('p');
     numberPage.textContent = `Page ${this.page}`
+    
 
     const buttonPrevious = document.createElement('button');
-    buttonPrevious.classList.add('button-pagination');
+    buttonPrevious.classList.add('button-fun');
     buttonPrevious.textContent = 'Previous';
     this.btnPrevious = buttonPrevious
     if (this.page === 1) {
       this.btnPrevious?.setAttribute('disabled', 'true');
   }
     const buttonNext = document.createElement('button');
-    buttonNext.classList.add('button-pagination');
+    buttonNext.classList.add('button-fun');
     buttonNext.textContent = 'Next';
     this.btnNext = buttonNext;
 
