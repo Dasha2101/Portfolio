@@ -114,120 +114,104 @@ export class ViewHtml {
 //     return this.mainContent;
 // }
 
-  public generateCar(): void {
-    const containerCar = document.createElement('div');
-    containerCar.classList.add('conteiner__create-car');
-    this.containerCar = containerCar
+public generateCar(): void {
+  const containerCar = document.createElement('div');
+  containerCar.classList.add('conteiner__create-car');
+  this.containerCar = containerCar
 
-    const containerAddCar = document.createElement('div');
-    containerAddCar.classList.add('conteiner__add-car');
+  const containerAddCar = document.createElement('div');
+  containerAddCar.classList.add('conteiner__add-car');
 
-    const inputCarCreate = document.createElement('input');
-    inputCarCreate.classList.add('input__create-car');
+  const inputCarCreate = document.createElement('input');
+  inputCarCreate.classList.add('input__create-car');
 
-    //saved in ls
-    const savedInputValue = localStorage.getItem('inputCarValue');
-    if (savedInputValue) {
-      inputCarCreate.value = savedInputValue;
-    }
-
-    inputCarCreate.addEventListener('input', () => {
-      localStorage.setItem('inputCarValue', inputCarCreate.value)
-    });
-
-    const inputEventHandler = () => {
-      localStorage.setItem('inputCarValue', inputCarCreate.value)
-      
-    };
-    inputCarCreate.addEventListener('input', inputEventHandler);
-
-    const colorInput = document.createElement('input');
-    colorInput.setAttribute('type', 'color');
-    colorInput.classList.add('input__create-color');
-
-     //saved in ls
-    const savedColorInput = localStorage.getItem('colorInputValue');
-    if (savedColorInput) {
-      colorInput.value = savedColorInput;
-    }
-
-    colorInput.addEventListener('input', () => {
-      localStorage.setItem('colorInputValue', colorInput.value);
-    });
-
-
-    const buttonCreateCar = document.createElement('button');
-    buttonCreateCar.classList.add('button__create-car');
-    buttonCreateCar.textContent = 'Create';
-
-    buttonCreateCar.addEventListener('click', () => {
-      inputCarCreate.removeEventListener('input', inputEventHandler);
-      localStorage.removeItem('inputCarValue');
-      inputCarCreate.value = '';
-      this.createCar();
-  });
-
-    const namePage = document.createElement('h1');
-    namePage.textContent = 'Garage';
-
-    containerAddCar.append(inputCarCreate, colorInput, buttonCreateCar);
-    this.containerCar.append(containerAddCar);
-    this.changeContent?.append(namePage, this.containerCar);
+  //saved in ls
+  const savedInputValue = localStorage.getItem('inputCarValue');
+  if (savedInputValue) {
+    inputCarCreate.value = savedInputValue;
   }
 
-  public changeCar(): void {
-    const containerChangeCar = document.createElement('div');
-    containerChangeCar.classList.add('conteiner__change-car');
-    this.containerChangeCar = containerChangeCar;
-
-    const inputCarChange = document.createElement('input');
-    inputCarChange.classList.add('input__change-car');
-
-
-    //saved in ls
-    const savedInputValueChange = localStorage.getItem('inputCarValueChange');
-    if (savedInputValueChange) {
-      inputCarChange.value = savedInputValueChange;
-    }
-
-    inputCarChange.addEventListener('input', () => {
-      localStorage.setItem('inputCarValueChange', inputCarChange.value)
-    });
-
-    const inputEventHandler = () => {
-      localStorage.setItem('inputCarValue', inputCarChange.value)
-    };
-    inputCarChange.addEventListener('input', inputEventHandler);
-
-    const colorInputChange = document.createElement('input');
-    colorInputChange.classList.add('color__change-car')
-    colorInputChange.setAttribute('type', 'color');
-
-    //saved in ls
-
-    const savedInputColorChange = localStorage.getItem('inputCarColorChange');
-    if (savedInputColorChange) {
-      colorInputChange.value = savedInputColorChange;
-    }
-
-    colorInputChange.addEventListener('input', () => {
-      localStorage.setItem('inputCarColorChange', colorInputChange.value)
-    });
-
-    const buttonChangeCar = document.createElement('button');
-    buttonChangeCar.classList.add('button__create-car');
-    buttonChangeCar.textContent = 'Change';
-
-    buttonChangeCar.addEventListener('click', () => {
-      inputCarChange.removeEventListener('input', inputEventHandler);
-      localStorage.removeItem('inputCarValue');
-      inputCarChange.value = '';
-      this.updateCar();
+  inputCarCreate.addEventListener('input', () => {
+    localStorage.setItem('inputCarValue', inputCarCreate.value)
   });
 
-    this.containerChangeCar.append(inputCarChange, colorInputChange, buttonChangeCar);
-    this.changeContent?.append(this.containerChangeCar);
+  const colorInput = document.createElement('input');
+  colorInput.setAttribute('type', 'color');
+  colorInput.classList.add('input__create-color');
+
+   //saved in ls
+  const savedColorInput = localStorage.getItem('colorInputValue');
+  if (savedColorInput) {
+    colorInput.value = savedColorInput;
   }
+
+  colorInput.addEventListener('input', () => {
+    localStorage.setItem('colorInputValue', colorInput.value);
+  });
+
+
+  const buttonCreateCar = document.createElement('button');
+  buttonCreateCar.classList.add('button__create-car');
+  buttonCreateCar.textContent = 'Create';
+
+  buttonCreateCar.addEventListener('click', () => {
+    this.createCar();
+    inputCarCreate.value = ''
+});
+
+  const namePage = document.createElement('h1');
+  namePage.textContent = 'Garage';
+
+  containerAddCar.append(inputCarCreate, colorInput, buttonCreateCar);
+  this.containerCar.append(containerAddCar);
+  this.changeContent?.append(namePage, this.containerCar);
+}
+public changeCar(): void {
+  const containerChangeCar = document.createElement('div');
+  containerChangeCar.classList.add('conteiner__change-car');
+  this.containerChangeCar = containerChangeCar;
+
+  const inputCarChange = document.createElement('input');
+  inputCarChange.classList.add('input__change-car');
+
+
+  //saved in ls
+  const savedInputValueChange = localStorage.getItem('inputCarValueChange');
+  if (savedInputValueChange) {
+    inputCarChange.value = savedInputValueChange;
+  }
+
+  inputCarChange.addEventListener('input', () => {
+    localStorage.setItem('inputCarValueChange', inputCarChange.value)
+  });
+
+  const colorInputChange = document.createElement('input');
+  colorInputChange.classList.add('color__change-car')
+  colorInputChange.setAttribute('type', 'color');
+
+  //saved in ls
+
+  const savedInputColorChange = localStorage.getItem('inputCarColorChange');
+  if (savedInputColorChange) {
+    colorInputChange.value = savedInputColorChange;
+  }
+
+  colorInputChange.addEventListener('input', () => {
+    localStorage.setItem('inputCarColorChange', colorInputChange.value)
+  });
+
+  const buttonChangeCar = document.createElement('button');
+  buttonChangeCar.classList.add('button__create-car');
+  buttonChangeCar.textContent = 'Change';
+
+  buttonChangeCar.addEventListener('click', () => {
+    this.updateCar();
+    inputCarChange.value = ''
+});
+
+  this.containerChangeCar.append(inputCarChange, colorInputChange, buttonChangeCar);
+  this.changeContent?.append(this.containerChangeCar);
+}
   //Get method
   public async carList() {
     const limit = 7;
