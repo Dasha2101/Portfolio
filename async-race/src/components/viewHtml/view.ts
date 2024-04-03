@@ -15,10 +15,14 @@ export class ViewHtml {
   conButtonFun: HTMLDivElement | null;
   clearMainContent: () => void;
   page: number = 0;
+  pageWin: number = 0;
   selectedCar: Car | null;
   pageNumber: HTMLSpanElement | null;
+  pageNumberWin: HTMLSpanElement | null;
   btnNext: HTMLButtonElement | null;
   btnPrevious: HTMLButtonElement | null;
+  btnNextWin: HTMLButtonElement | null;
+  btnPreviousWin: HTMLButtonElement | null;
   carGenerator: GenerateCar;
   // winnerTable: Winner;
   intervals:  NodeJS.Timeout[];
@@ -42,8 +46,11 @@ export class ViewHtml {
     this.createMainPage();
     this.selectedCar = null;
     this.pageNumber = null;
+    this.pageNumberWin = null;
     this.btnNext = null;
     this.btnPrevious = null;
+    this.btnNextWin = null;
+    this.btnPreviousWin = null;
     this.carGenerator = carGenerator;
     // this.winnerTable = winnerTable;
     this.intervals = [];
@@ -569,7 +576,7 @@ public async createPagination() {
   const containerPagination: HTMLDivElement = document.createElement('div');
   containerPagination.classList.add('pagination');
 
-  const savedPageNumber = localStorage.getItem('pageNumber');
+  const savedPageNumber = localStorage.getItem('pageNumberGarage');
   if (savedPageNumber) {
     this.page = parseInt(savedPageNumber);
   } else {
@@ -607,16 +614,12 @@ public async createPagination() {
 }
 
 public async nextPage() {
-  console.log('Ghb')
   try {
-    console.log('b')
     const limit = 7;
     const nextPage = this.page + 1;
-    // const list = await Garage.getCars(this.page + 1, limit);
     const { cars } = await Garage.getCars(this.page, limit);
       if (cars.length > 0) {
       this.page = nextPage;
-      console.log(this.page)
       localStorage.setItem('pageNumber', this.page.toString())
       this.carList();
       this.updatePageNumber();
@@ -738,7 +741,7 @@ modalWin(winner: { id: number, wins: number, time: number }){
     namePage.textContent = 'Winners';
 
     //table
-    const { winners, totalCount } = await WinTable.getWinners('id', 'ASC', this.page, limit);
+    const { winners, totalCount } = await WinTable.getWinners('id', 'ASC', this.pageWin, limit);
 
     let totalCountWin: HTMLElement | null = document.querySelector('.totalWin');
 
@@ -789,54 +792,63 @@ modalWin(winner: { id: number, wins: number, time: number }){
   }
 
   public async paginationWin(){
+    // const limit = 10;
     const containerForContent = document.createElement('div');
     containerForContent.classList.add('container-content')
-    const numberPage = document.createElement('p');
-    numberPage.textContent = `Page ${this.page}`
-    
+    // const numberPage = document.createElement('p');
+    // numberPage.textContent = `Page ${this.pageWin}`
 
-    const buttonPrevious = document.createElement('button');
-    buttonPrevious.classList.add('button-fun');
-    buttonPrevious.textContent = 'Previous';
-    this.btnPrevious = buttonPrevious
-    if (this.page === 1) {
-      this.btnPrevious?.setAttribute('disabled', 'true');
-  }
-    const buttonNext = document.createElement('button');
-    buttonNext.classList.add('button-fun');
-    buttonNext.textContent = 'Next';
-    this.btnNext = buttonNext;
+    const savedPageNumberWin = localStorage.getItem('pageNumberWin');
+    if (savedPageNumberWin) {
+      this.pageWin = parseInt(savedPageNumberWin);
+    } else {
+      this.pageWin = 1;
+    }
+    const buttonPreviousWin = document.createElement('button');
+    buttonPreviousWin.classList.add('button-fun');
+    buttonPreviousWin.textContent = 'Previous';
+    if (this.pageWin === 1) {
+      buttonPreviousWin?.setAttribute('disabled', 'true');
+    }
+    this.btnPreviousWin = buttonPreviousWin
+    const buttonNextWin = document.createElement('button');
+    buttonNextWin.classList.add('button-fun');
+    buttonNextWin.textContent = 'Next';
 
-    containerForContent.append(buttonPrevious, numberPage, buttonNext);
-    this.winnerContainer?.append(containerForContent)
-    if (this.winnerContainer) this.mainContent?.append(this.winnerContainer)
+    // const { winners } =  await WinTable.getWinners('id', 'ASC', this.pageWin, limit);
+    // buttonNextWin.disabled = winners.length <= limit
 
+    this.btnNextWin = buttonNextWin;
+
+    const pageNum: HTMLSpanElement = document.createElement('span');
+    pageNum.textContent = `Page ${this.pageWin}`;
+    this.pageNumberWin = pageNum
     //event
-    this.btnNext.addEventListener('click', () => this.nextPageWin());
-    this.btnPrevious.addEventListener('click', () => this.previousPageWin());
+    this.btnNextWin.addEventListener('click', () => this.nextPageWin());
+    this.btnPreviousWin.addEventListener('click', () => this.previousPageWin());
+  
+      containerForContent.append(this.btnPreviousWin, pageNum, this.btnNextWin);
+      this.winnerContainer?.append(containerForContent)
+      if (this.winnerContainer) this.mainContent?.append(this.winnerContainer)
 
   }
 
   public async nextPageWin() {
-    console.log('1')
     try {
-      console.log('2')
       const limit = 10;
-      const nextPage = this.page + 1;
-      const { winners } = await WinTable.getWinners('id', 'ASC', nextPage, limit);
-      // console.log(winners)
-      if (Array.isArray(winners) && winners.length > 0) {
-        this.page = nextPage;
-        localStorage.setItem('pageNumber', this.page.toString())
-        console.log('3')
+      const nextPage = this.pageWin + 1;
+      const { winners } = await WinTable.getWinners('id', 'ASC', this.pageWin, limit);
+      if (winners.length > 0) {
+        this.pageWin = nextPage;
+        localStorage.setItem('pageNumberWin', this.pageWin.toString())
         this.winnerPage()
-        this.updatePageNumber();
-        this.btnPrevious?.removeAttribute('disabled');
+        this.updatePageNumberWin();
+        this.btnPreviousWin?.removeAttribute('disabled');
         if (winners.length < limit) {
-          this.btnNext?.setAttribute('disabled', 'true');
+          console.log(winners.length)
         }
       } else {
-        this.btnNext?.setAttribute('disabled', 'true');
+        this.btnNextWin?.setAttribute('disabled', 'true');
       }
     } catch (error) {
       console.error('Ошибка:', error);
@@ -844,32 +856,35 @@ modalWin(winner: { id: number, wins: number, time: number }){
   }
 
   public async previousPageWin(){
-    console.log('1')
     try {
-      console.log('2')
-      if (this.page > 1) {
-        this.page--;
-        localStorage.setItem('pageNumber', this.page.toString());
-        await this.createWinnerPage();
-        this.updatePageNumber();
-        this.winnerPage()
+      if (this.pageWin > 1) {
+        this.pageWin--;
+        localStorage.setItem('pageNumberWin', this.pageWin.toString());
+        this.winnerPage();
+        this.updatePageNumberWin();
         // document.dispatchEvent(this.updateContentEvent);
-        console.log('3')
         const limit = 7;
-        const{ winners } = await WinTable.getWinners('id', 'ASC', this.page, limit);
-        if (this.page === 1) {
-          this.btnPrevious?.setAttribute('disabled', 'true');
+        const{ winners } = await WinTable.getWinners('id', 'ASC', this.pageWin, limit);
+        if (this.pageWin === 1) {
+          this.btnPreviousWin?.setAttribute('disabled', 'true');
         }
         if (Array.isArray(winners) && winners.length as number === limit) {
-          this.btnNext?.removeAttribute('disabled');
+          this.btnNextWin?.removeAttribute('disabled');
         }
       }
-        if (this.page === 1) {
-          this.btnPrevious?.setAttribute('disabled', 'true');
+        if (this.pageWin === 1) {
+          this.btnPreviousWin?.setAttribute('disabled', 'true');
         }
     } catch (error) {
       console.error('Ошибка:', error);
     }
   }
+
+  
+updatePageNumberWin(){
+  if (this.pageNumberWin) {
+    this.pageNumberWin.textContent = `Page ${this.pageWin}`;
+  }
+}
 
 }
