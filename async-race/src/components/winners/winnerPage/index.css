@@ -16,4 +16,8 @@ td {
   text-align: left;
 }
 
-/* d */
+.container-content{
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}

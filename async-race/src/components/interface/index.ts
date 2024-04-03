@@ -11,3 +11,8 @@ export interface CarData {
   cars: Car[];
 }
 
+export interface WinnerData {
+  id: number;
+  wins: number;
+  time: number;
+}

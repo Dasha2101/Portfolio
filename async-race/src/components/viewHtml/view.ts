@@ -3,7 +3,7 @@ import Garage from '../requests/index';
 import {Car} from '../interface/index'
 import { GenerateCar } from "../generateCar/generateFunc";
 import WinTable from "../winners/requestWinner";
-import { Winner } from "../winners/winnerPage";
+// import { Winner } from "../winners/winnerPage";
 
 export class ViewHtml {
   mainPage: HTMLElement | null;
@@ -14,21 +14,22 @@ export class ViewHtml {
   containerChangeCar: HTMLDivElement | null;
   conButtonFun: HTMLDivElement | null;
   clearMainContent: () => void;
-  page: number = 1;
+  page: number = 0;
   selectedCar: Car | null;
   pageNumber: HTMLSpanElement | null;
   btnNext: HTMLButtonElement | null;
   btnPrevious: HTMLButtonElement | null;
   carGenerator: GenerateCar;
-  winnerTable: Winner;
+  // winnerTable: Winner;
   intervals:  NodeJS.Timeout[];
   startBtn: HTMLButtonElement | null;
   stopBtn: HTMLButtonElement | null ;
   data: Car[];
   changeContent: HTMLElement | null
-  // raceFinish: boolean = false;
+  winnerContainer: HTMLElement | null;
+  raceFinish: boolean = false;
 
-  constructor(clearMainContent: () => void, carGenerator: GenerateCar, winnerTable: Winner) {
+  constructor(clearMainContent: () => void, carGenerator: GenerateCar) {
     this.mainPage = null;
     this.mainContent = null;
     this.changeContent = null
@@ -44,10 +45,11 @@ export class ViewHtml {
     this.btnNext = null;
     this.btnPrevious = null;
     this.carGenerator = carGenerator;
-    this.winnerTable = winnerTable;
+    // this.winnerTable = winnerTable;
     this.intervals = [];
     this.startBtn = null;
     this.stopBtn = null;
+    this.winnerContainer = null;
     this.data = [];
     this.carList();
   }
@@ -76,10 +78,11 @@ export class ViewHtml {
     const totalCar = document.createElement('div');
     totalCar.classList.add('totalCar');
 
+    const totalCountWin = document.createElement('div');
+    totalCountWin.classList.add('totalWin');
+
     const containerCar = document.createElement('div');
     containerCar.classList.add('container-car');
-
-
     this.mainPage.append(this.changeContent, this.mainContent);
     return mainPage;
   }
@@ -107,6 +110,10 @@ export class ViewHtml {
 
   }
 
+//   public getMainContent(): HTMLElement | null {
+//     return this.mainContent;
+// }
+
   public generateCar(): void {
     const containerCar = document.createElement('div');
     containerCar.classList.add('conteiner__create-car');
@@ -128,6 +135,12 @@ export class ViewHtml {
       localStorage.setItem('inputCarValue', inputCarCreate.value)
     });
 
+    const inputEventHandler = () => {
+      localStorage.setItem('inputCarValue', inputCarCreate.value)
+      
+    };
+    inputCarCreate.addEventListener('input', inputEventHandler);
+
     const colorInput = document.createElement('input');
     colorInput.setAttribute('type', 'color');
     colorInput.classList.add('input__create-color');
@@ -148,12 +161,18 @@ export class ViewHtml {
     buttonCreateCar.textContent = 'Create';
 
     buttonCreateCar.addEventListener('click', () => {
+      inputCarCreate.removeEventListener('input', inputEventHandler);
+      localStorage.removeItem('inputCarValue');
+      inputCarCreate.value = '';
       this.createCar();
   });
 
+    const namePage = document.createElement('h1');
+    namePage.textContent = 'Garage';
+
     containerAddCar.append(inputCarCreate, colorInput, buttonCreateCar);
     this.containerCar.append(containerAddCar);
-    this.changeContent?.append(this.containerCar);
+    this.changeContent?.append(namePage, this.containerCar);
   }
 
   public changeCar(): void {
@@ -175,6 +194,11 @@ export class ViewHtml {
       localStorage.setItem('inputCarValueChange', inputCarChange.value)
     });
 
+    const inputEventHandler = () => {
+      localStorage.setItem('inputCarValue', inputCarChange.value)
+    };
+    inputCarChange.addEventListener('input', inputEventHandler);
+
     const colorInputChange = document.createElement('input');
     colorInputChange.classList.add('color__change-car')
     colorInputChange.setAttribute('type', 'color');
@@ -195,6 +219,9 @@ export class ViewHtml {
     buttonChangeCar.textContent = 'Change';
 
     buttonChangeCar.addEventListener('click', () => {
+      inputCarChange.removeEventListener('input', inputEventHandler);
+      localStorage.removeItem('inputCarValue');
+      inputCarChange.value = '';
       this.updateCar();
   });
 
@@ -230,6 +257,9 @@ export class ViewHtml {
         cars.forEach((car: Car) => {
         const lot = document.createElement('div');
         lot.classList.add('car');
+
+        const idCar = document.createElement('div');
+        idCar.textContent = `ID: ${car.id}`;
 
         const nameCar = document.createElement('div');
         nameCar.textContent = `Name: ${car.name}`;
@@ -321,7 +351,7 @@ export class ViewHtml {
           this.deleteCar();
         });
 
-        lot.append(nameCar,  carDistance, containerBtn);
+        lot.append(idCar, nameCar,  carDistance, containerBtn);
 
         if (containerCar) containerCar.append(lot);
 
@@ -356,9 +386,11 @@ public generateButtonFunctional(): void {
 
   //event
   buttonRace.addEventListener('click', async () => {
-    const carIds = this.data.map(car => car.id);
-    const promises = carIds.map(carId => this.startCar(carId));
+    // this.data = [];
     try {
+      const carIds = this.data.map(car => car.id);
+      const promises = carIds.map(carId => this.startCar(carId));
+
       const data = await Promise.all(promises);
       const finishedCars = data.filter(res => res && res.state === 'finished');
       if (finishedCars.length > 0) {
@@ -372,18 +404,26 @@ public generateButtonFunctional(): void {
         if (winningCar) {
           const winnerData = {
             id: winningCar.carId,
-            wins: winningCar.wins,
+            wins: winningCar.wins + 1,
             time: winningCar.time
           };
-          const winnerDataResponse = await WinTable.createWinner(winnerData);
-          console.log(winnerDataResponse);
-          winningCar.wins += 1;
-          this.modalWin({ id: winnerData.id, wins: winningCar.wins, time: winnerData.time });
+
+          const existingWinner = await WinTable.getWinner(winningCar.carId);
+          if (existingWinner && existingWinner?.id) {
+            existingWinner.wins += 1;
+            existingWinner.time = Math.min(winnerData.time, existingWinner.time);
+            winnerData.wins = existingWinner.wins
+            await WinTable.updateWinner(existingWinner.id,  winnerData);
+        } else {
+            await WinTable.createWinner(winnerData);
         }
-        }
-    } catch (error) {
-        console.error('Error occurred during the race:', error);
+
+        this.modalWin({ id: winnerData.id, wins: winnerData.wins, time: winnerData.time });
     }
+}
+} catch (error) {
+console.error('Error occurred during the race:', error);
+}
 });
 
 
@@ -408,6 +448,8 @@ public generateButtonFunctional(): void {
   this.changeContent?.append(this.conButtonFun);
 
 }
+
+  
 
   //Update method
   public async updateCar(){
@@ -458,6 +500,10 @@ public generateButtonFunctional(): void {
     try {
       const response = await Garage.deleteCars(this.selectedCar.id);
       console.log(`Удалена:`, response);
+      const winner =  await WinTable.getWinner(this.selectedCar.id);
+      if (winner) {
+        await WinTable.deleteWinner(winner.id);
+      }
       this.carList();
     } catch (error) {
       console.error('Ошибка:', error);
@@ -473,7 +519,6 @@ public async startCar(carId: number, check: boolean = false){
     const response = await Garage.startStopCar(carId, 'start');
       const { velocity, distance } = await response.json();
       const visibleWidth = window.innerWidth;
-      console.log('visibleWidth', visibleWidth);
       const sizeSVG = 120 * 2;
       const raceVisible = visibleWidth - sizeSVG;
       const carDistance = document.getElementById(`distance_${carId}`);
@@ -502,6 +547,8 @@ public async startCar(carId: number, check: boolean = false){
     console.log(endTime - startTime);
     if (data.status == 'ok') {
       return { state: 'finished', carId: carId, time: endTime - startTime, wins: 0};
+    }  else {
+      throw new Error('Failed to start the car: ' + response.statusText);
     }
   } catch (error) {
     console.error('Ошибка:', error);
@@ -531,7 +578,8 @@ public async stopCar(carId: number) {
 }
 
 //pagination
-public createPagination() {
+public async createPagination() {
+  const limit = 7
   const containerPagination: HTMLDivElement = document.createElement('div');
   containerPagination.classList.add('pagination');
 
@@ -551,11 +599,18 @@ public createPagination() {
   const btnNextPage: HTMLButtonElement = document.createElement('button');
   btnNextPage.classList.add('button_next-page');
   btnNextPage.textContent = 'Next Page';
+  const { cars } = await Garage.getCars();
+  
+  btnNextPage.disabled = cars.length <= limit
+  console.log(cars.length)
+
   this.btnNext = btnNextPage;
+  // this.btnNext.setAttribute('disabled', 'true');
 
   const pageNum: HTMLSpanElement = document.createElement('span');
   pageNum.textContent = `Page ${this.page}`;
   this.pageNumber = pageNum;
+  // this.btnPrevious.setAttribute('disabled', 'true');
   //event
   btnNextPage.addEventListener('click', () => this.nextPage());
   this.btnPrevious.addEventListener('click', () => this.previousPage());
@@ -572,19 +627,22 @@ public async nextPage() {
     const limit = 7;
     const nextPage = this.page + 1;
     // const list = await Garage.getCars(this.page + 1, limit);
-    const { cars } = await Garage.getCars(this.page + 1, limit);
-    if (Array.isArray(cars) && cars.length > 0) {
+    const { cars } = await Garage.getCars(this.page, limit);
+      if (cars.length > 0) {
       this.page = nextPage;
       console.log(this.page)
       localStorage.setItem('pageNumber', this.page.toString())
       this.carList();
       this.updatePageNumber();
       this.btnPrevious?.removeAttribute('disabled');
-      if (cars.length < limit) {
+      console.log('Number of cars:', cars.length);
+console.log('Limit:', limit);
+      if (cars.length <= limit) {
+        console.log(cars.length)
         this.btnNext?.setAttribute('disabled', 'true');
       }
     } else {
-      this.btnNext?.setAttribute('disabled', 'true');
+      this.btnNext?.removeAttribute('disabled');
     }
   } catch (error) {
     console.error('Ошибка:', error);
@@ -614,6 +672,7 @@ public async previousPage(){
     console.error('Ошибка:', error);
   }
 }
+
 
 updatePageNumber(){
   if (this.pageNumber) {
@@ -681,13 +740,152 @@ modalWin(winner: { id: number, wins: number, time: number }){
 
   public async winnerPage() {
     this.clearMainContent();
+    this.createWinnerPage();
+    this.paginationWin()
+  }
+
+  public async createWinnerPage () {
+    const limit = 10;
     try {
-        const content = await this.winnerTable.createWinnerPage();
-        if (content !== undefined) {
-            if (this.mainContent) this.mainContent.append(content);
-        } 
+    const winnerContainer: HTMLElement = document.createElement('div');
+    winnerContainer.classList.add('winner-container');
+
+    this.winnerContainer = winnerContainer
+    const namePage = document.createElement('h1');
+    namePage.textContent = 'Winners';
+
+    //table
+    const { winners, totalCount } = await WinTable.getWinners('id', 'ASC', this.page, limit);
+
+    let totalCountWin: HTMLElement | null = document.querySelector('.totalWin');
+
+    if (totalCountWin) {
+      totalCountWin.remove();
+    }
+    totalCountWin = document.createElement('div');
+    totalCountWin.classList.add('totalCar');
+    totalCountWin.textContent = `Total Winner ${totalCount}`
+    this.winnerContainer.prepend(totalCountWin);
+
+    if (winners && winners.length > 0) {
+      const table: HTMLTableElement = document.createElement('table');
+      const thead: HTMLTableSectionElement = document.createElement('thead');
+      const tbody: HTMLTableSectionElement = document.createElement('tbody');
+
+      const headers = ['ID', 'WINS', 'TIME (sec)'];
+      const headerRow: HTMLTableRowElement = document.createElement('tr');
+      headers.forEach(headerText => {
+        const th: HTMLElement = document.createElement('th');
+        th.textContent = headerText;
+        headerRow.append(th);
+      });
+      thead.append(headerRow);
+      table.append(thead);
+
+      winners.forEach(winner => {
+      const row: HTMLTableRowElement = document.createElement('tr');
+      const timeInSeconds = (winner.time / 1000).toFixed(2);
+      row.innerHTML = `
+          <td>${winner.id}</td>
+          <td>${winner.wins}</td>
+          <td>${timeInSeconds}</td>
+      `;
+      tbody.append(row);
+      });
+
+      table.append(tbody);
+      this.winnerContainer.append(namePage, table);
+      this.mainContent?.append(winnerContainer);
+
+      } else {
+        this.winnerContainer.textContent = 'Нет данных';
+      }
     } catch (error) {
-        console.error('Error:', error);
+      console.error('Error:', error);
     }
   }
+
+  public async paginationWin(){
+    const containerForContent = document.createElement('div');
+    containerForContent.classList.add('container-content')
+    const numberPage = document.createElement('div');
+    numberPage.textContent = `Page ${this.page}`
+
+    const buttonPrevious = document.createElement('button');
+    buttonPrevious.classList.add('button-pagination');
+    buttonPrevious.textContent = 'Previous';
+    this.btnPrevious = buttonPrevious
+    if (this.page === 1) {
+      this.btnPrevious?.setAttribute('disabled', 'true');
+  }
+    const buttonNext = document.createElement('button');
+    buttonNext.classList.add('button-pagination');
+    buttonNext.textContent = 'Next';
+    this.btnNext = buttonNext;
+
+    containerForContent.append(buttonPrevious, numberPage, buttonNext);
+    this.winnerContainer?.append(containerForContent)
+    if (this.winnerContainer) this.mainContent?.append(this.winnerContainer)
+
+    //event
+    this.btnNext.addEventListener('click', () => this.nextPageWin());
+    this.btnPrevious.addEventListener('click', () => this.previousPageWin());
+
+  }
+
+  public async nextPageWin() {
+    console.log('1')
+    try {
+      console.log('2')
+      const limit = 10;
+      const nextPage = this.page + 1;
+      const { winners } = await WinTable.getWinners('id', 'ASC', nextPage, limit);
+      // console.log(winners)
+      if (Array.isArray(winners) && winners.length > 0) {
+        this.page = nextPage;
+        localStorage.setItem('pageNumber', this.page.toString())
+        console.log('3')
+        this.winnerPage()
+        this.updatePageNumber();
+        this.btnPrevious?.removeAttribute('disabled');
+        if (winners.length < limit) {
+          this.btnNext?.setAttribute('disabled', 'true');
+        }
+      } else {
+        this.btnNext?.setAttribute('disabled', 'true');
+      }
+    } catch (error) {
+      console.error('Ошибка:', error);
+    }
+  }
+
+  public async previousPageWin(){
+    console.log('1')
+    try {
+      console.log('2')
+      if (this.page > 1) {
+        this.page--;
+        localStorage.setItem('pageNumber', this.page.toString());
+        await this.createWinnerPage();
+        this.updatePageNumber();
+        this.winnerPage()
+        // document.dispatchEvent(this.updateContentEvent);
+        console.log('3')
+        const limit = 7;
+        const{ winners } = await WinTable.getWinners('id', 'ASC', this.page, limit);
+        if (this.page === 1) {
+          this.btnPrevious?.setAttribute('disabled', 'true');
+        }
+        if (Array.isArray(winners) && winners.length as number === limit) {
+          this.btnNext?.removeAttribute('disabled');
+        }
+      }
+        if (this.page === 1) {
+          this.btnPrevious?.setAttribute('disabled', 'true');
+        }
+    } catch (error) {
+      console.error('Ошибка:', error);
+    }
+  }
+
 }
