@@ -617,18 +617,18 @@ public async nextPage() {
   try {
     const limit = 7;
     const nextPage = this.page + 1;
-    const { cars } = await Garage.getCars(this.page, limit);
+    const { cars, totalCount } = await Garage.getCars(this.page, limit);
       if (cars.length > 0) {
       this.page = nextPage;
       localStorage.setItem('pageNumberGarage', this.page.toString())
       this.carList();
       this.updatePageNumber();
       this.btnPrevious?.removeAttribute('disabled');
-      if (cars.length <= limit) {
-        console.log(cars.length)
+      if (cars.length < limit || (totalCount && (nextPage * limit) >= totalCount)) {
+        this.btnNext?.setAttribute('disabled', 'true');
       }
     } else {
-      this.btnNext?.removeAttribute('disabled');
+      this.btnNext?.setAttribute('disabled', 'true');
     }
   } catch (error) {
     console.error('Ошибка:', error);
@@ -839,18 +839,18 @@ modalWin(winner: { id: number, wins: number, time: number }){
     try {
       const limit = 10;
       const nextPage = this.pageWin + 1;
-      const { winners } = await WinTable.getWinners('id', 'ASC', this.pageWin, limit);
+      const { winners, totalCount } = await WinTable.getWinners('id', 'ASC', this.pageWin, limit);
       if (winners.length > 0) {
         this.pageWin = nextPage;
         localStorage.setItem('pageNumberWin', this.pageWin.toString())
         this.updatePageNumberWin();
         this.winnerPage()
         this.btnNextWin?.setAttribute('disabled', 'true');
-        if (winners.length < limit) {
-          console.log('winner', winners)
+        if (winners.length < limit || (totalCount && (nextPage * limit) >= totalCount)) {
+          this.btnNext?.setAttribute('disabled', 'true');
         }
       } else {
-        this.btnNextWin?.setAttribute('disabled', 'true');
+        this.btnNext?.setAttribute('disabled', 'true');
       }
     } catch (error) {
       console.error('Ошибка:', error);
