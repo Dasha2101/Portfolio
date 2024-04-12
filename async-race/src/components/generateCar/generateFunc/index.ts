@@ -2,14 +2,12 @@ import data from "../arrayData";
 import { Car } from "../../interface";
 
 export class GenerateCar {
-  data: { carBrands: string[]; carColors: string[]; carModels: string[]};
+  data: { carBrands: string[]; carColors: string[]; carModels: string[] };
 
   constructor() {
     this.data = data
-
     this.init();
   }
-
 
   init() {
     this.generateRandomCar()
@@ -21,14 +19,14 @@ export class GenerateCar {
   }
 
   generateRandomCar() {
-    const brandIndex = this.generateRandomIndex(this.data.carBrands.length);
-    const markaIndex = this.generateRandomIndex(this.data.carModels.length);
-    const colorIndex = this.generateRandomIndex(this.data.carColors.length);
+    const brandIndex: number = this.generateRandomIndex(this.data.carBrands.length);
+    const markaIndex: number = this.generateRandomIndex(this.data.carModels.length);
+    const colorIndex: number = this.generateRandomIndex(this.data.carColors.length);
 
-    const nameBrand = this.data.carBrands[brandIndex];
-    const marka = this.data.carModels[markaIndex];
-    const color = this.data.carColors[colorIndex];
-    const id = Date.now();
+    const nameBrand: string = this.data.carBrands[brandIndex];
+    const marka: string = this.data.carModels[markaIndex];
+    const color: string = this.data.carColors[colorIndex];
+    const id: number = Date.now();
 
     const name = `${nameBrand} ${marka}`
 
@@ -36,7 +34,7 @@ export class GenerateCar {
       name: name,
       color: color,
       id: id,
-  };
+    };
   }
 
   generateRandomhundredCars() {
