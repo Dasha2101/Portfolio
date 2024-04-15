@@ -9,10 +9,8 @@
     "preview": "vite preview",
     "prepare": "husky",
     "pre-commit": "npx prettier --write .",
-    "pre-push": "eslint --fix . --config .eslintrc",
-    "lint": "eslint --ext .ts src",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d ./dist -e rss-puzzle"
+    "pre-push": "eslint --fix",
+    "lint": "eslint --ext .ts src"
   },
   "devDependencies": {
     "eslint-config-prettier": "^9.1.0",
