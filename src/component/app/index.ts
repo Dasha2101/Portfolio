@@ -1,5 +1,4 @@
-import Authorization from "../authorization";
-
+import Authorization from '../authorization';
 
 class App {
   appContainer: HTMLDivElement | null;
@@ -11,7 +10,7 @@ class App {
 
     this.Authorization = new Authorization();
 
-    this.appContainer = null
+    this.appContainer = null;
     this.formContainer = null;
 
     this.init();
@@ -30,7 +29,7 @@ class App {
 
     this.formContainer = this.Authorization.showHtml();
 
-    if (this.formContainer) this.appContainer?.append(mainTitle, this.formContainer)
+    if (this.formContainer) this.appContainer?.append(mainTitle, this.formContainer);
     if (this.appContainer) this.parent.append(this.appContainer);
   }
 }

@@ -19,7 +19,9 @@ body {
   background-clip: padding-box;
   border: 1px solid #ced4da;
   border-radius: 0.25rem;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition:
+    border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
   box-sizing: border-box;
 }
 
@@ -31,7 +33,7 @@ body {
 
   width: 300px;
   padding: 20px;
-  margin: 0 auto; 
+  margin: 0 auto;
   border: 2px solid #000000;
 }
 
@@ -46,7 +48,10 @@ body {
   border-radius: 10px;
   text-decoration: none;
   cursor: pointer;
-  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  transition:
+    background-color 0.3s,
+    color 0.3s,
+    border-color 0.3s;
 }
 
 .button-sub:hover {
@@ -55,7 +60,7 @@ body {
   color: #ced4da;
 }
 
-.main-title{
+.main-title {
   font-size: 28px;
   font-weight: bold;
   font-family: inherit;
