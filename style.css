@@ -60,6 +60,13 @@ body {
   color: #ced4da;
 }
 
+.button-sub:disabled {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  color: #adb5bd;
+  cursor: not-allowed;
+}
+
 .main-title {
   font-size: 28px;
   font-weight: bold;
@@ -68,4 +75,8 @@ body {
   color: #333333;
   margin-bottom: 20px;
   text-align: center;
+}
+
+.invalid{
+  border: 2px solid #de0404; 
 }
