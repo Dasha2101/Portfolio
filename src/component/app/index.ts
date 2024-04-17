@@ -13,7 +13,7 @@ class App {
     this.parent = parent;
 
     this.Authorization = new Authorization(this.navigateTo.bind(this));
-    this.Chut = new Chut;
+    this.Chut = new Chut();
 
     this.chutContainer = null;
     this.appContainer = null;
@@ -34,8 +34,8 @@ class App {
     mainTitle.classList.add('main-title');
     mainTitle.textContent = 'Fun Chut';
 
-    const formContainer= this.Authorization.showHtml()
-    this.formContainer = formContainer
+    const formContainer = this.Authorization.showHtml();
+    this.formContainer = formContainer;
 
     const chutContainer = this.Chut.showHTML();
     this.chutContainer = chutContainer;
@@ -47,7 +47,8 @@ class App {
   public renderComponent() {
     if (this.appContainer) {
       this.appContainer.innerHTML = '';
-    } if (this.currentComponent === 'authorization') {
+    }
+    if (this.currentComponent === 'authorization') {
       if (this.formContainer) this.appContainer?.append(this.formContainer);
     } else if (this.currentComponent === 'chut') {
       if (this.chutContainer) this.appContainer?.append(this.chutContainer);
@@ -58,8 +59,6 @@ class App {
     this.currentComponent = component;
     this.renderComponent();
   }
-
-
 }
 
 export default App;

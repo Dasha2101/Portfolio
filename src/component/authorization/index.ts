@@ -7,9 +7,7 @@ class Authorization {
   submitButton: HTMLButtonElement | null;
   navigateTo: (component: string) => void;
 
-
-
-  constructor(navigateTo: (component: string) => void)  {
+  constructor(navigateTo: (component: string) => void) {
     this.navigateTo = navigateTo;
     this.formContainer = null;
     this.inputName = null;
@@ -47,52 +45,57 @@ class Authorization {
     buttonSubmit.classList.add('button-sub');
     this.submitButton = buttonSubmit;
     this.submitButton.disabled = true;
-    this.submitButton.addEventListener("click", () => this.handleSubmit());
-
+    this.submitButton.addEventListener('click', () => this.handleSubmit());
 
     //error name/surname
     const nameErrorMessage = document.createElement('p');
     nameErrorMessage.classList.add('error-massage');
-    nameErrorMessage.textContent = "Please enter correct data for first name";
-    nameErrorMessage.style.display = "none";
+    nameErrorMessage.textContent = 'Please enter correct data for first name';
+    nameErrorMessage.style.display = 'none';
     this.nameErrorMessage = nameErrorMessage;
 
     const surnameErrorMessage = document.createElement('p');
     surnameErrorMessage.classList.add('error-massage');
-    surnameErrorMessage.textContent = "Please enter correct data for surname";
-    surnameErrorMessage.style.display = "none";
+    surnameErrorMessage.textContent = 'Please enter correct data for surname';
+    surnameErrorMessage.style.display = 'none';
     this.surnameErrorMessage = surnameErrorMessage;
 
     //event
-    this.inputName.addEventListener("input", () => {
+    this.inputName.addEventListener('input', () => {
       this.validateInput(this.inputName, this.nameErrorMessage);
     });
-    this.inputName.addEventListener("blur", () => {
+    this.inputName.addEventListener('blur', () => {
       this.validateInput(this.inputName, this.nameErrorMessage);
     });
 
-    this.inputName.addEventListener("keypress", (e) => {
-      if (e.key === "Enter") {
-        this.validateInput(this.inputName, this.nameErrorMessage);
-        this.handleSubmit()
-      }
-    });
-
-    this.inputSurname.addEventListener("keypress", (e) => {
-      if (e.key === "Enter") {
+    this.inputName.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
         this.validateInput(this.inputName, this.nameErrorMessage);
         this.handleSubmit();
       }
     });
 
-    this.inputSurname.addEventListener("input", () => {
+    this.inputSurname.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        this.validateInput(this.inputName, this.nameErrorMessage);
+        this.handleSubmit();
+      }
+    });
+
+    this.inputSurname.addEventListener('input', () => {
       this.validateInput(this.inputSurname, this.surnameErrorMessage);
     });
-    this.inputSurname.addEventListener("blur", () => {
+    this.inputSurname.addEventListener('blur', () => {
       this.validateInput(this.inputSurname, this.surnameErrorMessage);
     });
 
-    this.formContainer?.append(this.inputName, this.nameErrorMessage, this.inputSurname, this.surnameErrorMessage, this.submitButton);
+    this.formContainer?.append(
+      this.inputName,
+      this.nameErrorMessage,
+      this.inputSurname,
+      this.surnameErrorMessage,
+      this.submitButton
+    );
   }
 
   isValidName(name: string) {
@@ -102,7 +105,6 @@ class Authorization {
   isValidSurname(surname: string) {
     return /^[A-Z][a-zA-Z-]{3,}$/.test(surname);
   }
-
 
   validateInput(input: HTMLInputElement | null, errorMessage: HTMLElement | null) {
     if (!input || !errorMessage) return;
@@ -117,16 +119,16 @@ class Authorization {
     }
 
     if (!inputValue) {
-      input.classList.add("invalid");
-      errorMessage.textContent = "Field cannot be empty";
-      errorMessage.style.display = "block";
+      input.classList.add('invalid');
+      errorMessage.textContent = 'Field cannot be empty';
+      errorMessage.style.display = 'block';
     } else if (!isValid) {
-      input.classList.add("invalid");
-      errorMessage.textContent = "Please enter correct data";
-      errorMessage.style.display = "block";
+      input.classList.add('invalid');
+      errorMessage.textContent = 'Please enter correct data';
+      errorMessage.style.display = 'block';
     } else {
-      input.classList.remove("invalid");
-      errorMessage.style.display = "none";
+      input.classList.remove('invalid');
+      errorMessage.style.display = 'none';
     }
     this.validateForm();
   }
@@ -145,13 +147,13 @@ class Authorization {
   async handleSubmit() {
     const firstName = (this.inputName as HTMLInputElement).value.trim();
     const surName = (this.inputSurname as HTMLInputElement).value.trim();
-    const userData = {firstName, surName}
+    const userData = { firstName, surName };
 
-    await this.saveUserData(userData)
+    await this.saveUserData(userData);
     this.checkUserAuthenticated(userData);
   }
 
-  saveUserData(userData: {firstName: string; surName: string}) {
+  saveUserData(userData: { firstName: string; surName: string }) {
     let existingData: { firstName: string; surName: string }[] = [];
 
     const dataJSON = localStorage.getItem('userData');
@@ -164,15 +166,16 @@ class Authorization {
     }
 
     existingData.push(userData);
-    localStorage.setItem("userData", JSON.stringify(existingData));
+    localStorage.setItem('userData', JSON.stringify(existingData));
   }
 
-
-  checkUserAuthenticated(userData: {firstName: string; surName: string}) {
+  checkUserAuthenticated(userData: { firstName: string; surName: string }) {
     const dataJSON: string | null = localStorage.getItem('userData');
     if (dataJSON) {
-      const existData: {firstName: string; surName: string }[] = JSON.parse(dataJSON);
-      const isAuthenticated = existData.some(data => data.firstName === userData.firstName && data.surName === userData.surName);
+      const existData: { firstName: string; surName: string }[] = JSON.parse(dataJSON);
+      const isAuthenticated = existData.some(
+        (data) => data.firstName === userData.firstName && data.surName === userData.surName
+      );
 
       if (isAuthenticated) {
         this.navigateTo('chut');
@@ -182,7 +185,7 @@ class Authorization {
     } else {
       this.navigateTo('authorization');
     }
-    return false
+    return false;
   }
 
   showHtml() {
