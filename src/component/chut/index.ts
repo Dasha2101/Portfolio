@@ -1,4 +1,4 @@
-import Chat from "../../serves/chut";
+import Chat from '../../serves/chut';
 
 interface User {
   login: string;
@@ -6,7 +6,7 @@ interface User {
 
 class Chut {
   chutContainer: HTMLDivElement | null;
-  userListContainer: HTMLDivElement
+  userListContainer: HTMLDivElement;
   chat: Chat;
   navigateTo: (component: string) => void;
   userListUpdateInterval: NodeJS.Timeout;
@@ -27,10 +27,9 @@ class Chut {
     this.chutContainer = chutContainer;
     await this.generateHedaerChut();
     await this.generateChut();
-    this.generateFooter()
+    this.generateFooter();
     console.log('chut');
-
-}
+  }
 
   async generateHedaerChut() {
     const headerChut = document.createElement('header');
@@ -46,11 +45,11 @@ class Chut {
     buttonExit.addEventListener('click', () => {
       const userDataJSON = sessionStorage.getItem('userData');
       if (userDataJSON) {
-          const userData = JSON.parse(userDataJSON);
-          this.chat.logOut(userData.login, userData.password);
-          this.navigateTo('authorization');
+        const userData = JSON.parse(userDataJSON);
+        this.chat.logOut(userData.login, userData.password);
+        this.navigateTo('authorization');
       }
-    })
+    });
 
     const userWelcome = document.createElement('p');
     userWelcome.classList.add('user-welcome');
@@ -63,7 +62,6 @@ class Chut {
         userWelcome.textContent = `Welcome, ${userData.login}!`;
       }
     }
-
 
     headerChut.append(buttonExit, chutTitle, userWelcome);
 
@@ -89,20 +87,20 @@ class Chut {
 
       userList?.forEach((user: User) => {
         if (user.login !== userData.login) {
-            const divElement = document.createElement('div');
-            const bElement = document.createElement('b');
-            bElement.textContent = user.login;
-            divElement.appendChild(bElement);
-            this.userListContainer.append(divElement);
+          const divElement = document.createElement('div');
+          const bElement = document.createElement('b');
+          bElement.textContent = user.login;
+          divElement.appendChild(bElement);
+          this.userListContainer.append(divElement);
         }
-    });
-    userListInactive?.forEach((user: User) => {
+      });
+      userListInactive?.forEach((user: User) => {
         if (user.login !== userData.login) {
-            const divElement = document.createElement('div');
-            divElement.textContent = user.login;
-            this.userListContainer.append(divElement);
+          const divElement = document.createElement('div');
+          divElement.textContent = user.login;
+          this.userListContainer.append(divElement);
         }
-    });
+      });
     }
   }
 
@@ -135,7 +133,7 @@ class Chut {
     if (this.chutContainer) this.chutContainer.innerHTML = '';
     await this.generateHedaerChut();
     await this.generateChut();
-    this.generateFooter()
+    this.generateFooter();
     return this.chutContainer;
   }
 }

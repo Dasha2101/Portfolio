@@ -36,21 +36,20 @@ export default class Chat {
         sessionStorage.removeItem('userData');
         break;
     }
-
   }
 
   heartbeat() {
     this.heartbeatHandler = setInterval(() => {
       const message_a = {
-        id: "string",
-        type: "USER_ACTIVE",
-        payload: null
-      }
+        id: 'string',
+        type: 'USER_ACTIVE',
+        payload: null,
+      };
       const message_ia = {
-        id: "string",
-        type: "USER_INACTIVE",
-        payload: null
-      }
+        id: 'string',
+        type: 'USER_INACTIVE',
+        payload: null,
+      };
       if (this.ws) this.ws.send(JSON.stringify(message_a));
       if (this.ws) this.ws.send(JSON.stringify(message_ia));
     }, 100);
@@ -58,31 +57,31 @@ export default class Chat {
 
   authorization(username: string, password: string) {
     const message = {
-      "id": "1234",
-      "type": "USER_LOGIN",
-      "payload": {
-        "user": {
-          "login": username,
-          "password": password
-        }
-      }
+      id: '1234',
+      type: 'USER_LOGIN',
+      payload: {
+        user: {
+          login: username,
+          password: password,
+        },
+      },
     };
-   if (this.ws) this.ws.send(JSON.stringify(message));
-   console.log('THIS IS ', message)
+    if (this.ws) this.ws.send(JSON.stringify(message));
+    console.log('THIS IS ', message);
   }
 
   logOut(username: string, password: string) {
     const message = {
-      'id': '1234',
-      'type': "USER_LOGOUT",
-      'payload': {
-        'user': {
-          'login': username,
-          'password': password,
-        }
-      }
+      id: '1234',
+      type: 'USER_LOGOUT',
+      payload: {
+        user: {
+          login: username,
+          password: password,
+        },
+      },
     };
-    if (this.ws) this.ws.send(JSON.stringify(message))
-      sessionStorage.removeItem('userData');
+    if (this.ws) this.ws.send(JSON.stringify(message));
+    sessionStorage.removeItem('userData');
   }
 }

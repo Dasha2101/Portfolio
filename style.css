@@ -81,13 +81,12 @@ body {
   border: 2px solid #de0404;
 }
 
-
-.chut-container{
+.chut-container {
   border: 2px solid black;
   padding: 20px;
 }
 
-.chut-content{
+.chut-content {
   height: 500px;
 }
 
@@ -95,7 +94,7 @@ body {
   border: 2px solid black;
   padding: 10px;
   display: flex;
-  align-items:  center;
+  align-items: center;
   justify-content: space-evenly;
 }
 
@@ -103,10 +102,10 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
 }
 
-a, p {
+a,
+p {
   font-family: Arial, sans-serif;
   font-size: 16px;
   line-height: 1.5;
@@ -121,7 +120,7 @@ a {
 }
 
 a:hover {
-  text-decoration: underline
+  text-decoration: underline;
 }
 
 img {
@@ -129,7 +128,7 @@ img {
   height: 65px;
 }
 
-.conteiner__title{
+.conteiner__title {
   display: flex;
   flex-direction: column;
 }

@@ -1,7 +1,6 @@
 import Authorization from '../authorization';
 import Chut from '../chut';
 
-
 class App {
   appContainer: HTMLDivElement | null;
   formContainer: HTMLDivElement | null;
@@ -12,7 +11,6 @@ class App {
   chutContainer: HTMLDivElement | null;
   constructor(parent: HTMLElement) {
     this.parent = parent;
-
 
     this.Authorization = new Authorization(this.navigateTo.bind(this));
     this.Chut = new Chut(this.navigateTo.bind(this));

@@ -1,4 +1,4 @@
-import Chat from "../../serves/chut";
+import Chat from '../../serves/chut';
 
 class Authorization {
   formContainer: HTMLDivElement | null;
@@ -137,8 +137,7 @@ class Authorization {
       if (input === this.inputSurname) {
         const maskedPassword = '*'.repeat(inputValue.length);
         input.value = maskedPassword;
-    }
-
+      }
     }
     this.validateForm();
   }
@@ -154,10 +153,9 @@ class Authorization {
     }
   }
 
-
   saveUserData(userData: { login: string; password: string }) {
     if (typeof sessionStorage !== 'undefined') {
-      sessionStorage.setItem('userData', JSON.stringify(userData))
+      sessionStorage.setItem('userData', JSON.stringify(userData));
     }
   }
 
@@ -166,16 +164,15 @@ class Authorization {
     const password = (this.inputSurname as HTMLInputElement).value.trim();
 
     this.chat.authorization(login, password);
-    this.saveUserData({login, password})
-    this.checkUserAuthenticated({login, password})
-
+    this.saveUserData({ login, password });
+    this.checkUserAuthenticated({ login, password });
   }
 
   checkUserAuthenticated(userData: { login: string; password: string }) {
     const dataJSON: string | null = sessionStorage.getItem('userData');
     // this.chat.authorization(userData.login, userData.isLogined);
     if (dataJSON) {
-      const existingData: { [key: string]: string }  = JSON.parse(dataJSON);
+      const existingData: { [key: string]: string } = JSON.parse(dataJSON);
       const isAuthenticated = existingData.login === userData.login && existingData.password === userData.password;
       if (isAuthenticated) {
         this.navigateTo('chut');
