@@ -1,3 +1,5 @@
+import Chat from "../../serves/chut";
+
 class Authorization {
   formContainer: HTMLDivElement | null;
   inputName: HTMLInputElement | null;
@@ -6,6 +8,7 @@ class Authorization {
   surnameErrorMessage: HTMLElement | null;
   submitButton: HTMLButtonElement | null;
   navigateTo: (component: string) => void;
+  chat: Chat;
 
   constructor(navigateTo: (component: string) => void) {
     this.navigateTo = navigateTo;
@@ -14,30 +17,32 @@ class Authorization {
     this.inputSurname = null;
     this.nameErrorMessage = null;
     this.surnameErrorMessage = null;
+    this.chat = new Chat();
     this.submitButton = null;
 
     this.init();
   }
 
-  init() {
+  async init() {
     const formContainer: HTMLDivElement = document.createElement('div');
     formContainer.classList.add('form-container');
     this.formContainer = formContainer;
-    this.createRegField();
+    await this.createRegField();
+    console.log('regi');
   }
 
-  createRegField() {
+  async createRegField() {
     const inputName: HTMLInputElement = document.createElement('input');
     inputName.type = 'text';
-    inputName.placeholder = 'Please enter your name';
+    inputName.placeholder = 'Please enter your login';
     inputName.classList.add('form-input');
     this.inputName = inputName;
 
-    const surName: HTMLInputElement = document.createElement('input');
-    surName.type = 'text';
-    surName.placeholder = 'Please enter your surname';
-    surName.classList.add('form-input');
-    this.inputSurname = surName;
+    const password: HTMLInputElement = document.createElement('input');
+    password.type = 'password';
+    password.placeholder = 'Please enter your password';
+    password.classList.add('form-input');
+    this.inputSurname = password;
 
     const buttonSubmit: HTMLButtonElement = document.createElement('button');
     buttonSubmit.type = 'submit';
@@ -50,13 +55,13 @@ class Authorization {
     //error name/surname
     const nameErrorMessage = document.createElement('p');
     nameErrorMessage.classList.add('error-massage');
-    nameErrorMessage.textContent = 'Please enter correct data for first name';
+    nameErrorMessage.textContent = 'Please enter correct data for login';
     nameErrorMessage.style.display = 'none';
     this.nameErrorMessage = nameErrorMessage;
 
     const surnameErrorMessage = document.createElement('p');
     surnameErrorMessage.classList.add('error-massage');
-    surnameErrorMessage.textContent = 'Please enter correct data for surname';
+    surnameErrorMessage.textContent = 'Please enter correct data for password';
     surnameErrorMessage.style.display = 'none';
     this.surnameErrorMessage = surnameErrorMessage;
 
@@ -77,7 +82,7 @@ class Authorization {
 
     this.inputSurname.addEventListener('keypress', (e) => {
       if (e.key === 'Enter') {
-        this.validateInput(this.inputName, this.nameErrorMessage);
+        this.validateInput(this.inputSurname, this.nameErrorMessage);
         this.handleSubmit();
       }
     });
@@ -103,7 +108,7 @@ class Authorization {
   }
 
   isValidSurname(surname: string) {
-    return /^[A-Z][a-zA-Z-]{3,}$/.test(surname);
+    return /^[a-zA-Z0-9!@#$%^&*()_+]{3,}$/.test(surname);
   }
 
   validateInput(input: HTMLInputElement | null, errorMessage: HTMLElement | null) {
@@ -129,6 +134,11 @@ class Authorization {
     } else {
       input.classList.remove('invalid');
       errorMessage.style.display = 'none';
+      if (input === this.inputSurname) {
+        const maskedPassword = '*'.repeat(inputValue.length);
+        input.value = maskedPassword;
+    }
+
     }
     this.validateForm();
   }
@@ -144,39 +154,29 @@ class Authorization {
     }
   }
 
+
+  saveUserData(userData: { login: string; password: string }) {
+    if (typeof sessionStorage !== 'undefined') {
+      sessionStorage.setItem('userData', JSON.stringify(userData))
+    }
+  }
+
   async handleSubmit() {
-    const firstName = (this.inputName as HTMLInputElement).value.trim();
-    const surName = (this.inputSurname as HTMLInputElement).value.trim();
-    const userData = { firstName, surName };
+    const login = (this.inputName as HTMLInputElement).value.trim();
+    const password = (this.inputSurname as HTMLInputElement).value.trim();
 
-    await this.saveUserData(userData);
-    this.checkUserAuthenticated(userData);
+    this.chat.authorization(login, password);
+    this.saveUserData({login, password})
+    this.checkUserAuthenticated({login, password})
+
   }
 
-  saveUserData(userData: { firstName: string; surName: string }) {
-    let existingData: { firstName: string; surName: string }[] = [];
-
-    const dataJSON = localStorage.getItem('userData');
+  checkUserAuthenticated(userData: { login: string; password: string }) {
+    const dataJSON: string | null = sessionStorage.getItem('userData');
+    // this.chat.authorization(userData.login, userData.isLogined);
     if (dataJSON) {
-      existingData = JSON.parse(dataJSON);
-    }
-
-    if (!Array.isArray(existingData)) {
-      existingData = [];
-    }
-
-    existingData.push(userData);
-    localStorage.setItem('userData', JSON.stringify(existingData));
-  }
-
-  checkUserAuthenticated(userData: { firstName: string; surName: string }) {
-    const dataJSON: string | null = localStorage.getItem('userData');
-    if (dataJSON) {
-      const existData: { firstName: string; surName: string }[] = JSON.parse(dataJSON);
-      const isAuthenticated = existData.some(
-        (data) => data.firstName === userData.firstName && data.surName === userData.surName
-      );
-
+      const existingData: { [key: string]: string }  = JSON.parse(dataJSON);
+      const isAuthenticated = existingData.login === userData.login && existingData.password === userData.password;
       if (isAuthenticated) {
         this.navigateTo('chut');
       } else {
