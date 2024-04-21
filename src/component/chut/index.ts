@@ -59,7 +59,7 @@ class Chut {
     const aboutInfo = document.createElement('button');
     aboutInfo.classList.add('about-info');
     aboutInfo.textContent = 'Information about';
-    aboutInfo.addEventListener('click', this.modalWin.bind(this))
+    aboutInfo.addEventListener('click', this.modalWin.bind(this));
 
     const userWelcome = document.createElement('p');
     userWelcome.classList.add('user-welcome');
@@ -95,11 +95,12 @@ class Chut {
     nameApp.textContent = 'Fun Chut';
 
     const title = document.createElement('p');
-    title.textContent = 'What could be better than chatting with friends using a chat app? But what if the owner of the service deletes your messages? Or, conversely, they can store your chat history without your consent!'
+    title.textContent =
+      'What could be better than chatting with friends using a chat app? But what if the owner of the service deletes your messages? Or, conversely, they can store your chat history without your consent!';
 
     const authorApp = document.createElement('a');
-    authorApp.href = "https://github.com/Dasha2101";
-    authorApp.textContent = "My GitHub";
+    authorApp.href = 'https://github.com/Dasha2101';
+    authorApp.textContent = 'My GitHub';
 
     const exitButton = document.createElement('button');
     exitButton.classList.add('mod__close-button');
@@ -109,7 +110,7 @@ class Chut {
     exitButton.onclick = () => {
       modalWin.style.display = 'none';
       overlay.style.display = 'none';
-    }
+    };
   }
   generateChut() {
     const chutContent = document.createElement('div');
@@ -119,20 +120,19 @@ class Chut {
     searchContainer.classList.add('search-container');
 
     const searchInput = document.createElement('input');
-    searchInput.classList.add('searchInput')
-    searchInput.placeholder = 'Find user'
+    searchInput.classList.add('searchInput');
+    searchInput.placeholder = 'Find user';
     searchInput.addEventListener('input', () => {
       const search = searchInput.value.toLowerCase();
       this.filterUser(search);
     });
 
     searchContainer.append(searchInput);
-    chutContent.append(searchContainer)
+    chutContent.append(searchContainer);
 
     chutContent.append(this.userListContainer);
     this.chutContainer?.append(chutContent);
     this.updateUserList();
-
   }
 
   filterUser(search: string) {
@@ -150,7 +150,7 @@ class Chut {
         }
       }
     });
-    this.updateUserList()
+    this.updateUserList();
   }
   updateUserList() {
     const userListJSON = sessionStorage.getItem('userList');
@@ -176,7 +176,7 @@ class Chut {
           this.userListContainer.append(divElement);
         }
       });
-      this.userListContainer.style.overflowY = 'auto'; 
+      this.userListContainer.style.overflowY = 'auto';
       this.userListContainer.style.maxHeight = '200px';
     }
   }

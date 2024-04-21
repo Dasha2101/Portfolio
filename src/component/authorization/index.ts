@@ -55,7 +55,7 @@ class Authorization {
     const infoBtn = document.createElement('button');
     infoBtn.classList.add('info__btn');
     infoBtn.textContent = 'Information about';
-    infoBtn.addEventListener('click', this.modalWin.bind(this))
+    infoBtn.addEventListener('click', this.modalWin.bind(this));
 
     //error name/surname
     const nameErrorMessage = document.createElement('p');
@@ -130,7 +130,6 @@ class Authorization {
     }
 
     if (!inputValue) {
-
       input.classList.add('invalid');
       errorMessage.textContent = 'Field cannot be empty';
       const windowError = this.chat.handleError('incorrect data');
@@ -188,7 +187,7 @@ class Authorization {
       const existingData: { [key: string]: string } = JSON.parse(dataJSON);
       const activeData: { [key: string]: string } = JSON.parse(activeJSON);
       if (existingData.login === activeData.login) {
-        const sms = this.chat.handleError("a user with this login is already authorized");
+        const sms = this.chat.handleError('a user with this login is already authorized');
         if (sms) this.formContainer?.append(sms);
         return false;
       }
@@ -203,7 +202,6 @@ class Authorization {
     }
     return false;
   }
-
 
   modalWin() {
     const modalWin = document.createElement('div');
@@ -223,21 +221,22 @@ class Authorization {
     nameApp.textContent = 'Fun Chut';
 
     const title = document.createElement('p');
-    title.textContent = 'What could be better than chatting with friends using a chat app? But what if the owner of the service deletes your messages? Or, conversely, they can store your chat history without your consent!'
+    title.textContent =
+      'What could be better than chatting with friends using a chat app? But what if the owner of the service deletes your messages? Or, conversely, they can store your chat history without your consent!';
 
     const authorApp = document.createElement('a');
-    authorApp.href = "https://github.com/Dasha2101";
-    authorApp.textContent = "My GitHub";
+    authorApp.href = 'https://github.com/Dasha2101';
+    authorApp.textContent = 'My GitHub';
 
     const exitButton = document.createElement('button');
     exitButton.classList.add('mod__close-button');
-    exitButton.textContent = 'Exit'
+    exitButton.textContent = 'Exit';
     modalWin.append(nameApp, title, authorApp, exitButton);
     this.formContainer?.append(modalWin);
     exitButton.onclick = () => {
       modalWin.style.display = 'none';
       overlay.style.display = 'none';
-    }
+    };
   }
   showHtml() {
     return this.formContainer;

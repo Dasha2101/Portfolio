@@ -39,10 +39,9 @@ export default class Chat {
         this.handleError(data.payload.errorMessage);
         break;
     }
-  }
+  };
 
   handleClose(event: CloseEvent) {
-
     const errorMessage = document.createElement('div');
     errorMessage.classList.add('show-modal');
     errorMessage.textContent = 'The connection is closed. Code: ' + event.code;
@@ -52,7 +51,6 @@ export default class Chat {
       errorMessage.remove();
       this.reconnect();
     }, 5000);
-
   }
 
   reconnect() {
@@ -135,20 +133,20 @@ export default class Chat {
     const errorMessageElement = document.createElement('div');
     errorMessageElement.classList.add('error-message');
     switch (errorMessage) {
-      case "there is no user with this login":
-        errorMessageElement.textContent = "Пользователь с указанным логином не найден.";
+      case 'there is no user with this login':
+        errorMessageElement.textContent = 'Пользователь с указанным логином не найден.';
         break;
-      case "incorrect data":
-        errorMessageElement.textContent = "Incorrect data";
+      case 'incorrect data':
+        errorMessageElement.textContent = 'Incorrect data';
         break;
-      case "the user was not authorized":
-        errorMessageElement.textContent = "User was not authorized";
+      case 'the user was not authorized':
+        errorMessageElement.textContent = 'User was not authorized';
         break;
-      case "a user with this login is already authorized":
-        errorMessageElement.textContent = "user with this login is already authorized";
+      case 'a user with this login is already authorized':
+        errorMessageElement.textContent = 'user with this login is already authorized';
         break;
       default:
-        errorMessageElement.textContent = "Произошла ошибка аутентификации: " + errorMessage;
+        errorMessageElement.textContent = 'Произошла ошибка аутентификации: ' + errorMessage;
         break;
     }
     errorMessageElement.style.display = 'block';
@@ -160,4 +158,3 @@ export default class Chat {
     return errorMessageElement;
   }
 }
-
