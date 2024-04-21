@@ -52,6 +52,11 @@ class Authorization {
     this.submitButton.disabled = true;
     this.submitButton.addEventListener('click', () => this.handleSubmit());
 
+    const infoBtn = document.createElement('button');
+    infoBtn.classList.add('info__btn');
+    infoBtn.textContent = 'Information about';
+    infoBtn.addEventListener('click', this.modalWin.bind(this))
+
     //error name/surname
     const nameErrorMessage = document.createElement('p');
     nameErrorMessage.classList.add('error-massage');
@@ -99,7 +104,8 @@ class Authorization {
       this.nameErrorMessage,
       this.inputSurname,
       this.surnameErrorMessage,
-      this.submitButton
+      this.submitButton,
+      infoBtn
     );
   }
 
@@ -124,12 +130,19 @@ class Authorization {
     }
 
     if (!inputValue) {
+
       input.classList.add('invalid');
       errorMessage.textContent = 'Field cannot be empty';
+      const windowError = this.chat.handleError('incorrect data');
+      if (windowError) document.body.append(windowError);
       errorMessage.style.display = 'block';
     } else if (!isValid) {
       input.classList.add('invalid');
+      const windowError = this.chat.handleError('incorrect data');
+      if (windowError) document.body.append(windowError);
+
       errorMessage.textContent = 'Please enter correct data';
+
       errorMessage.style.display = 'block';
     } else {
       input.classList.remove('invalid');
@@ -170,9 +183,15 @@ class Authorization {
 
   checkUserAuthenticated(userData: { login: string; password: string }) {
     const dataJSON: string | null = sessionStorage.getItem('userData');
-    // this.chat.authorization(userData.login, userData.isLogined);
-    if (dataJSON) {
+    const activeJSON: string | null = sessionStorage.getItem('userList');
+    if (dataJSON && activeJSON) {
       const existingData: { [key: string]: string } = JSON.parse(dataJSON);
+      const activeData: { [key: string]: string } = JSON.parse(activeJSON);
+      if (existingData.login === activeData.login) {
+        const sms = this.chat.handleError("a user with this login is already authorized");
+        if (sms) this.formContainer?.append(sms);
+        return false;
+      }
       const isAuthenticated = existingData.login === userData.login && existingData.password === userData.password;
       if (isAuthenticated) {
         this.navigateTo('chut');
@@ -185,6 +204,41 @@ class Authorization {
     return false;
   }
 
+
+  modalWin() {
+    const modalWin = document.createElement('div');
+    modalWin.classList.add('show-modal');
+
+    const overlay: HTMLElement = document.createElement('div');
+    overlay.classList.add('overlay');
+    this.formContainer?.appendChild(overlay);
+    overlay.style.display = 'block';
+
+    overlay.addEventListener('click', () => {
+      modalWin.style.display = 'none';
+      overlay.style.display = 'none';
+    });
+
+    const nameApp = document.createElement('h2');
+    nameApp.textContent = 'Fun Chut';
+
+    const title = document.createElement('p');
+    title.textContent = 'What could be better than chatting with friends using a chat app? But what if the owner of the service deletes your messages? Or, conversely, they can store your chat history without your consent!'
+
+    const authorApp = document.createElement('a');
+    authorApp.href = "https://github.com/Dasha2101";
+    authorApp.textContent = "My GitHub";
+
+    const exitButton = document.createElement('button');
+    exitButton.classList.add('mod__close-button');
+    exitButton.textContent = 'Exit'
+    modalWin.append(nameApp, title, authorApp, exitButton);
+    this.formContainer?.append(modalWin);
+    exitButton.onclick = () => {
+      modalWin.style.display = 'none';
+      overlay.style.display = 'none';
+    }
+  }
   showHtml() {
     return this.formContainer;
   }
