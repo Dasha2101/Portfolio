@@ -35,11 +35,28 @@ export default class Chat {
         this.usersActive = data.payload.user;
         sessionStorage.removeItem('userData');
         break;
+      case 'MSG_SEND':
+      const { to, text } = data.payload.message;
+      this.saveSentMessage(to, text);
+      break;
       case 'ERROR':
         this.handleError(data.payload.errorMessage);
         break;
     }
   };
+
+  saveSentMessage(to: string, text: string) {
+  const messages = sessionStorage.getItem('sentMessages');
+  const newMessage = { to, text };
+  if (messages) {
+    const parsedMessages = JSON.parse(messages);
+    parsedMessages.push(newMessage);
+    sessionStorage.setItem('sentMessages', JSON.stringify(parsedMessages));
+  } else {
+    sessionStorage.setItem('sentMessages', JSON.stringify([newMessage]));
+  }
+}
+
 
   handleClose(event: CloseEvent) {
     const errorMessage = document.createElement('div');
@@ -121,6 +138,21 @@ export default class Chat {
     };
     if (this.ws) this.ws.send(JSON.stringify(message));
     sessionStorage.removeItem('userData');
+  }
+
+  sendMessage(to: string, text: string) {
+    const message = {
+      id: '1234',
+      type: 'MSG_SEND',
+      payload: {
+        message: {
+          to: to,
+          text: text,
+        },
+      },
+    };
+    if (this.ws) this.ws.send(JSON.stringify(message));
+    console.log(to, text)
   }
 
   errorMessageShown: boolean = false;

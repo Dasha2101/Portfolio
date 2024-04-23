@@ -4,6 +4,11 @@ interface User {
   login: string;
 }
 
+interface Message {
+  to: string;
+  text: string;
+}
+
 class Chut {
   chutContainer: HTMLDivElement | null;
   userListContainer: HTMLDivElement;
@@ -12,6 +17,8 @@ class Chut {
   // originalUserList: User[] = [];
   navigateTo: (component: string) => void;
   userListUpdateInterval: NodeJS.Timeout;
+  userListActiveCache: String;
+  userListInactiveCache: String;
 
   constructor(navigateTo: (component: string) => void) {
     this.chutContainer = null;
@@ -20,6 +27,10 @@ class Chut {
 
     this.findContainer = document.createElement('div');
     this.findContainer.classList.add('find-container');
+
+    this.userListActiveCache = '';
+    this.userListInactiveCache = '';
+
     this.chat = new Chat();
     this.navigateTo = navigateTo;
     this.userListUpdateInterval = setInterval(() => this.updateUserList(), 100);
@@ -133,29 +144,87 @@ class Chut {
     chutContent.append(this.userListContainer);
     this.chutContainer?.append(chutContent);
     this.updateUserList();
+
+    // Generate messages screen
+    const messageScreen = document.createElement('div');
+    messageScreen.dataset.user = '';
+    messageScreen.style.minWidth = '300px';
+    messageScreen.style.minHeight = '200px';
+    chutContent.append(messageScreen);
+
+    const messageContent = document.createElement('div');
+    messageContent.classList.add('message-content');
+    messageScreen.append(messageContent);
+
+    const inputElem = document.createElement('input');
+    inputElem.placeholder = 'Enter message...';
+    messageScreen.append(inputElem);
+
+    const sendButton = document.createElement('button');
+    sendButton.textContent = 'Send';
+    messageScreen.append(sendButton);
+
+    sendButton.addEventListener('click', () => {
+      const user = messageScreen.dataset.user;
+      const text = inputElem.value.trim();
+      if (user && text !== '') {
+        this.chat.sendMessage(user, text);
+        inputElem.value = '';
+      }
+    });
+
+
+    inputElem.addEventListener('keyup', (e) => {
+      console.log('work')
+      if (e.code === 'Enter') {
+        sendButton.click();
+      }
+    });
+
+    this.displaySavedMessages(messageContent);
+
   }
+
+  displaySavedMessages(messageContent: HTMLElement) {
+    console.log('Kik')
+    const messages = sessionStorage.getItem('sentMessages');
+    if (messages) {
+      const parsedMessages: Message[] = JSON.parse(messages);
+      parsedMessages.forEach(message => {
+        const messageDiv = document.createElement('div');
+        messageDiv.textContent = `${message.to}: ${message.text}`;
+        messageContent.append(messageDiv);
+      });
+    }
+  }
+
+
 
   filterUser(search: string) {
     const filter = search.toLowerCase();
-    const userList = JSON.parse(sessionStorage.getItem('userList') || '[]');
+    const userList = this.userListContainer.querySelectorAll('div');
 
-    userList.forEach((user: User) => {
-      const userElement = this.userListContainer.querySelector(`.user-element[data-login="${user.login}"]`);
-      if (userElement) {
-        const userName = user.login.toLowerCase();
+    userList.forEach((user: HTMLDivElement) => {
+        const userName = user.dataset.login?.toLowerCase() ?? '';
         if (userName.includes(filter)) {
-          (userElement as HTMLElement).style.display = '';
+          user.style.display = 'block';
         } else {
-          (userElement as HTMLElement).style.display = 'none';
+          user.style.display = 'none';
         }
-      }
     });
-    this.updateUserList();
+    // this.updateUserList();
   }
+
   updateUserList() {
     const userListJSON = sessionStorage.getItem('userList');
     const userListInactiveJSON = sessionStorage.getItem('userListInactive');
     const userDataJSON = sessionStorage.getItem('userData');
+
+    if (userListJSON === this.userListActiveCache && userListInactiveJSON === this.userListInactiveCache)
+      return;
+
+    this.userListActiveCache = userListJSON ?? '';
+    this.userListInactiveCache = userListInactiveJSON ?? '';
 
     if (userListJSON && userDataJSON && userListInactiveJSON) {
       const userList = JSON.parse(userListJSON);
@@ -178,6 +247,10 @@ class Chut {
       });
       this.userListContainer.style.overflowY = 'auto';
       this.userListContainer.style.maxHeight = '200px';
+    }
+    const searchInput = document.querySelector('.searchInput') as HTMLInputElement;
+    if (searchInput && searchInput.value) {
+      this.filterUser(searchInput.value);
     }
   }
 
