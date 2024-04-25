@@ -108,7 +108,7 @@ export default class Chat {
         this.ws.send(JSON.stringify(message_a));
         this.ws.send(JSON.stringify(message_ia));
       } else {
-        console.error("WebSocket connection is not open.");
+        console.error('WebSocket connection is not open.');
       }
     }, 100);
   }
@@ -125,9 +125,10 @@ export default class Chat {
         },
       },
     };
-    if (this.ws) this.ws.send(JSON.stringify(message));
-    else {
-      console.error("WebSocket connection is not open.");
+    if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+    this.ws.send(JSON.stringify(message));
+    } else {
+      console.error('WebSocket connection is not open.');
     }
   }
 
@@ -142,9 +143,11 @@ export default class Chat {
         },
       },
     };
-    if (this.ws) this.ws.send(JSON.stringify(message));
+    if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+       this.ws.send(JSON.stringify(message));
+    }
     else {
-      console.error("WebSocket connection is not open.");
+      console.error('WebSocket connection is not open.');
     }
     sessionStorage.removeItem('userData');
   }
@@ -160,9 +163,11 @@ export default class Chat {
         },
       },
     };
-    if (this.ws) this.ws.send(JSON.stringify(message));
+    if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+       this.ws.send(JSON.stringify(message));
+    }
     else {
-      console.error("WebSocket connection is not open.");
+      console.error('WebSocket connection is not open.');
     }
     console.log(to, text);
   }
