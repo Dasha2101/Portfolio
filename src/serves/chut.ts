@@ -104,8 +104,12 @@ export default class Chat {
       // const message_er = {
 
       // }
-      if (this.ws) this.ws.send(JSON.stringify(message_a));
-      if (this.ws) this.ws.send(JSON.stringify(message_ia));
+      if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+        this.ws.send(JSON.stringify(message_a));
+        this.ws.send(JSON.stringify(message_ia));
+      } else {
+        console.error("WebSocket connection is not open.");
+      }
     }, 100);
   }
 
@@ -122,6 +126,9 @@ export default class Chat {
       },
     };
     if (this.ws) this.ws.send(JSON.stringify(message));
+    else {
+      console.error("WebSocket connection is not open.");
+    }
   }
 
   logOut(username: string, password: string) {
@@ -136,6 +143,9 @@ export default class Chat {
       },
     };
     if (this.ws) this.ws.send(JSON.stringify(message));
+    else {
+      console.error("WebSocket connection is not open.");
+    }
     sessionStorage.removeItem('userData');
   }
 
@@ -151,6 +161,9 @@ export default class Chat {
       },
     };
     if (this.ws) this.ws.send(JSON.stringify(message));
+    else {
+      console.error("WebSocket connection is not open.");
+    }
     console.log(to, text);
   }
 
