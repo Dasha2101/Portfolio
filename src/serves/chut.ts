@@ -45,18 +45,17 @@ export default class Chat {
     }
   };
 
-//   saveSentMessage(to: string, text: string) {
-//   const messages = sessionStorage.getItem('sentMessages');
-//   const newMessage = { to, text };
-//   if (messages) {
-//     const parsedMessages = JSON.parse(messages);
-//     parsedMessages.push(newMessage);
-//     sessionStorage.setItem('sentMessages', JSON.stringify(parsedMessages));
-//   } else {
-//     sessionStorage.setItem('sentMessages', JSON.stringify([newMessage]));
-//   }
-// }
-
+  //   saveSentMessage(to: string, text: string) {
+  //   const messages = sessionStorage.getItem('sentMessages');
+  //   const newMessage = { to, text };
+  //   if (messages) {
+  //     const parsedMessages = JSON.parse(messages);
+  //     parsedMessages.push(newMessage);
+  //     sessionStorage.setItem('sentMessages', JSON.stringify(parsedMessages));
+  //   } else {
+  //     sessionStorage.setItem('sentMessages', JSON.stringify([newMessage]));
+  //   }
+  // }
 
   handleClose = (event: CloseEvent) => {
     const errorMessage = document.createElement('div');
@@ -68,7 +67,7 @@ export default class Chat {
       errorMessage.remove();
       this.reconnect();
     }, 5000);
-  }
+  };
 
   reconnect() {
     setTimeout(() => {
@@ -123,7 +122,6 @@ export default class Chat {
       },
     };
     if (this.ws) this.ws.send(JSON.stringify(message));
-
   }
 
   logOut(username: string, password: string) {
@@ -153,7 +151,7 @@ export default class Chat {
       },
     };
     if (this.ws) this.ws.send(JSON.stringify(message));
-    console.log(to, text)
+    console.log(to, text);
   }
 
   errorMessageShown: boolean = false;

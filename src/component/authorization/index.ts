@@ -20,8 +20,6 @@ class Authorization {
     this.chat = new Chat();
     this.submitButton = null;
 
-    
-
     this.init();
   }
 
@@ -142,7 +140,8 @@ class Authorization {
       const windowError = this.chat.handleError('incorrect data');
       if (windowError) document.body.append(windowError);
 
-      errorMessage.textContent = 'login (capital letter/at least three characters but no more than 7) and password (only number/least three characters)';
+      errorMessage.textContent =
+        'login (capital letter/at least three characters but no more than 7) and password (only number/least three characters)';
 
       errorMessage.style.display = 'block';
     } else {
@@ -180,30 +179,29 @@ class Authorization {
     const password = (this.inputSurname as HTMLInputElement).value.trim();
 
     this.chat.authorization(login, password);
-    this.saveUserData({login, password})
+    this.saveUserData({ login, password });
     let existingNewUserData: { [key: string]: string } = {};
     const existingNewUserDataJSON: string | null = sessionStorage.getItem('userNewData');
     sessionStorage.setItem('currentPage', window.location.href);
     if (existingNewUserDataJSON) {
-        existingNewUserData = JSON.parse(existingNewUserDataJSON);
+      existingNewUserData = JSON.parse(existingNewUserDataJSON);
     }
     if (login in existingNewUserData) {
-        const savedPassword = existingNewUserData[login];
-        if (savedPassword === password) {
-            this.navigateTo('chut');
-            return;
-        } else {
-            const errorMessage = this.chat.handleError('Incorrect login or password');
-            if (errorMessage) this.formContainer?.append(errorMessage);
-            return;
-        }
+      const savedPassword = existingNewUserData[login];
+      if (savedPassword === password) {
+        this.navigateTo('chut');
+        return;
+      } else {
+        const errorMessage = this.chat.handleError('Incorrect login or password');
+        if (errorMessage) this.formContainer?.append(errorMessage);
+        return;
+      }
     }
 
     existingNewUserData[login] = password;
     sessionStorage.setItem('userNewData', JSON.stringify(existingNewUserData));
     this.navigateTo('chut');
-}
-
+  }
 
   // checkUserAuthenticated(userNewData: { login: string; password: string }) {
   //   const dataJSON: string | null = sessionStorage.getItem('userNewData');

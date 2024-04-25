@@ -164,7 +164,7 @@ class Chut {
     messageScreen.append(inputElem);
 
     const sendButton = document.createElement('button');
-    sendButton.classList.add('send')
+    sendButton.classList.add('send');
     sendButton.textContent = 'Send';
     messageScreen.append(sendButton);
 
@@ -177,24 +177,22 @@ class Chut {
       }
     });
 
-
     inputElem.addEventListener('keyup', (e) => {
-      console.log('work')
+      console.log('work');
       if (e.code === 'Enter') {
         sendButton.click();
       }
     });
 
     this.displaySavedMessages(messageContent);
-
   }
 
   displaySavedMessages(messageContent: HTMLElement) {
-    console.log('Kik')
+    console.log('Kik');
     const messages = sessionStorage.getItem('sentMessages');
     if (messages) {
       const parsedMessages: Message[] = JSON.parse(messages);
-      parsedMessages.forEach(message => {
+      parsedMessages.forEach((message) => {
         const messageDiv = document.createElement('div');
         messageDiv.textContent = `${message.to}: ${message.text}`;
         messageContent.append(messageDiv);
@@ -202,19 +200,17 @@ class Chut {
     }
   }
 
-
-
   filterUser(search: string) {
     const filter = search.toLowerCase();
     const userList = this.userListContainer.querySelectorAll('div');
 
     userList.forEach((user: HTMLDivElement) => {
-        const userName = user.dataset.login?.toLowerCase() ?? '';
-        if (userName.includes(filter)) {
-          user.style.display = 'block';
-        } else {
-          user.style.display = 'none';
-        }
+      const userName = user.dataset.login?.toLowerCase() ?? '';
+      if (userName.includes(filter)) {
+        user.style.display = 'block';
+      } else {
+        user.style.display = 'none';
+      }
     });
     // this.updateUserList();
   }
@@ -224,8 +220,7 @@ class Chut {
     const userListInactiveJSON = sessionStorage.getItem('userListInactive');
     const userDataJSON = sessionStorage.getItem('userData');
 
-    if (userListJSON === this.userListActiveCache && userListInactiveJSON === this.userListInactiveCache)
-      return;
+    if (userListJSON === this.userListActiveCache && userListInactiveJSON === this.userListInactiveCache) return;
 
     this.userListActiveCache = userListJSON ?? '';
     this.userListInactiveCache = userListInactiveJSON ?? '';
@@ -274,7 +269,7 @@ class Chut {
     footerChut.classList.add('footer__chut');
 
     const img = document.createElement('img');
-    img.src = './src/icon/images.png';
+    img.src = './assets/images.png';
 
     const nameAuthor = document.createElement('p');
     nameAuthor.textContent = 'Author: dasha2101';
