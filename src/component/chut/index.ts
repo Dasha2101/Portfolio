@@ -253,14 +253,25 @@ class Chut {
     }
   }
 
-  createUserElement(login: string, color: string) {
+  createUserElement(login: string, indicator: string) {
     const divElement = document.createElement('div');
     divElement.classList.add('user-element');
     divElement.setAttribute('data-login', login);
+    // const spanElement = document.createElement('span');
+    // spanElement.textContent = login;
+    // spanElement.style.color = color;
+    // divElement.append(spanElement);
+    // return divElement;
+    const indicatorCircle = document.createElement('span');
+    indicatorCircle.classList.add('indicator-circle');
+    indicatorCircle.style.backgroundColor = indicator;
+    divElement.appendChild(indicatorCircle);
+  
+
     const spanElement = document.createElement('span');
     spanElement.textContent = login;
-    spanElement.style.color = color;
-    divElement.append(spanElement);
+    divElement.appendChild(spanElement);
+  
     return divElement;
   }
 

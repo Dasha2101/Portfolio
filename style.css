@@ -191,6 +191,14 @@ img {
   display: none;
 }
 
+.indicator-circle {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
 @media screen and (max-width: 768px) {
   .chut__header,
   .footer__chut {
