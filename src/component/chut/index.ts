@@ -17,8 +17,8 @@ class Chut {
   // originalUserList: User[] = [];
   navigateTo: (component: string) => void;
   userListUpdateInterval: NodeJS.Timeout;
-  userListActiveCache: String;
-  userListInactiveCache: String;
+  userListActiveCache: string;
+  userListInactiveCache: string;
 
   constructor(navigateTo: (component: string) => void) {
     this.chutContainer = null;
@@ -62,6 +62,9 @@ class Chut {
       const userDataJSON = sessionStorage.getItem('userData');
       if (userDataJSON) {
         const userData = JSON.parse(userDataJSON);
+        sessionStorage.removeItem('userData');
+        sessionStorage.removeItem('userList');
+        sessionStorage.removeItem('userListInactive');
         this.chat.logOut(userData.login, userData.password);
         this.navigateTo('authorization');
       }
@@ -161,6 +164,7 @@ class Chut {
     messageScreen.append(inputElem);
 
     const sendButton = document.createElement('button');
+    sendButton.classList.add('send')
     sendButton.textContent = 'Send';
     messageScreen.append(sendButton);
 

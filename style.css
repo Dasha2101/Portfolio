@@ -36,6 +36,7 @@ body {
   margin: 0 auto;
   border: 2px solid #000000;
 }
+.send
 .about-info,
 .mod__close-button,
 .info__btn,
@@ -57,6 +58,8 @@ body {
     border-color 0.3s;
 }
 
+
+.send:hover
 .about-info:hover,
 .mod__close-button:hover,
 .info__btn:hover .button-exit:hover,

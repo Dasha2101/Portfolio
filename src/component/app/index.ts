@@ -18,7 +18,7 @@ class App {
     this.chutContainer = null;
     this.appContainer = null;
     this.formContainer = null;
-    this.currentComponent = 'authorization';
+    this.currentComponent = sessionStorage.getItem('page') || 'authorization';
 
     this.init();
   }

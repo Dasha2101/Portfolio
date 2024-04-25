@@ -20,6 +20,8 @@ class Authorization {
     this.chat = new Chat();
     this.submitButton = null;
 
+    
+
     this.init();
   }
 
@@ -110,11 +112,11 @@ class Authorization {
   }
 
   isValidName(name: string) {
-    return /^[A-Z][a-zA-Z-]{2,}$/.test(name);
+    return /^[A-Z][a-zA-Z-]{1,6}$/.test(name);
   }
 
   isValidSurname(surname: string) {
-    return /^[a-zA-Z0-9!@#$%^&*()_+]{3,}$/.test(surname);
+    return /^\d{3,}$/.test(surname);
   }
 
   validateInput(input: HTMLInputElement | null, errorMessage: HTMLElement | null) {
@@ -140,16 +142,12 @@ class Authorization {
       const windowError = this.chat.handleError('incorrect data');
       if (windowError) document.body.append(windowError);
 
-      errorMessage.textContent = 'Please enter correct data';
+      errorMessage.textContent = 'login (capital letter/at least three characters but no more than 7) and password (only number/least three characters)';
 
       errorMessage.style.display = 'block';
     } else {
       input.classList.remove('invalid');
       errorMessage.style.display = 'none';
-      if (input === this.inputSurname) {
-        const maskedPassword = '*'.repeat(inputValue.length);
-        input.value = maskedPassword;
-      }
     }
     this.validateForm();
   }
@@ -165,6 +163,12 @@ class Authorization {
     }
   }
 
+  saveNewUserData(userNewData: { login: string; password: string }) {
+    if (typeof sessionStorage !== 'undefined') {
+      sessionStorage.setItem('userNewData', JSON.stringify(userNewData));
+    }
+  }
+
   saveUserData(userData: { login: string; password: string }) {
     if (typeof sessionStorage !== 'undefined') {
       sessionStorage.setItem('userData', JSON.stringify(userData));
@@ -176,32 +180,48 @@ class Authorization {
     const password = (this.inputSurname as HTMLInputElement).value.trim();
 
     this.chat.authorization(login, password);
-    this.saveUserData({ login, password });
-    this.checkUserAuthenticated({ login, password });
-  }
-
-  checkUserAuthenticated(userData: { login: string; password: string }) {
-    const dataJSON: string | null = sessionStorage.getItem('userData');
-    const activeJSON: string | null = sessionStorage.getItem('userList');
-    if (dataJSON && activeJSON) {
-      const existingData: { [key: string]: string } = JSON.parse(dataJSON);
-      const activeData: { [key: string]: string } = JSON.parse(activeJSON);
-      if (existingData.login === activeData.login) {
-        const sms = this.chat.handleError('a user with this login is already authorized');
-        if (sms) this.formContainer?.append(sms);
-        return false;
-      }
-      const isAuthenticated = existingData.login === userData.login && existingData.password === userData.password;
-      if (isAuthenticated) {
-        this.navigateTo('chut');
-      } else {
-        this.navigateTo('authorization');
-      }
-    } else {
-      this.navigateTo('authorization');
+    this.saveUserData({login, password})
+    let existingNewUserData: { [key: string]: string } = {};
+    const existingNewUserDataJSON: string | null = sessionStorage.getItem('userNewData');
+    sessionStorage.setItem('currentPage', window.location.href);
+    if (existingNewUserDataJSON) {
+        existingNewUserData = JSON.parse(existingNewUserDataJSON);
     }
-    return false;
-  }
+    if (login in existingNewUserData) {
+        const savedPassword = existingNewUserData[login];
+        if (savedPassword === password) {
+            this.navigateTo('chut');
+            return;
+        } else {
+            const errorMessage = this.chat.handleError('Incorrect login or password');
+            if (errorMessage) this.formContainer?.append(errorMessage);
+            return;
+        }
+    }
+
+    existingNewUserData[login] = password;
+    sessionStorage.setItem('userNewData', JSON.stringify(existingNewUserData));
+    this.navigateTo('chut');
+}
+
+
+  // checkUserAuthenticated(userNewData: { login: string; password: string }) {
+  //   const dataJSON: string | null = sessionStorage.getItem('userNewData');
+  //   if (dataJSON) {
+  //     const existingData: { login: string; password: string } = JSON.parse(dataJSON);
+  //     if (existingData.login === userNewData.login && existingData.password === userNewData.password) {
+  //       return true;
+  //     } else {
+  //       const errorMessage = this.chat.handleError('Incorrect login or password');
+  //       if (errorMessage) this.formContainer?.append(errorMessage);
+  //       return false;
+  //     }
+  //   } else {
+  //     const errorMessage = this.chat.handleError('No user data found');
+  //   if (errorMessage) this.formContainer?.append(errorMessage);
+  //   return false;
+  //   }
+  // }
 
   modalWin() {
     const modalWin = document.createElement('div');

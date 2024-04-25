@@ -35,30 +35,30 @@ export default class Chat {
         this.usersActive = data.payload.user;
         sessionStorage.removeItem('userData');
         break;
-      case 'MSG_SEND':
-      const { to, text } = data.payload.message;
-      this.saveSentMessage(to, text);
-      break;
+      // case 'MSG_SEND':
+      // const { to, text } = data.payload.message;
+      // this.saveSentMessage(to, text);
+      // break;
       case 'ERROR':
         this.handleError(data.payload.errorMessage);
         break;
     }
   };
 
-  saveSentMessage(to: string, text: string) {
-  const messages = sessionStorage.getItem('sentMessages');
-  const newMessage = { to, text };
-  if (messages) {
-    const parsedMessages = JSON.parse(messages);
-    parsedMessages.push(newMessage);
-    sessionStorage.setItem('sentMessages', JSON.stringify(parsedMessages));
-  } else {
-    sessionStorage.setItem('sentMessages', JSON.stringify([newMessage]));
-  }
-}
+//   saveSentMessage(to: string, text: string) {
+//   const messages = sessionStorage.getItem('sentMessages');
+//   const newMessage = { to, text };
+//   if (messages) {
+//     const parsedMessages = JSON.parse(messages);
+//     parsedMessages.push(newMessage);
+//     sessionStorage.setItem('sentMessages', JSON.stringify(parsedMessages));
+//   } else {
+//     sessionStorage.setItem('sentMessages', JSON.stringify([newMessage]));
+//   }
+// }
 
 
-  handleClose(event: CloseEvent) {
+  handleClose = (event: CloseEvent) => {
     const errorMessage = document.createElement('div');
     errorMessage.classList.add('show-modal');
     errorMessage.textContent = 'The connection is closed. Code: ' + event.code;
@@ -79,7 +79,7 @@ export default class Chat {
 
       this.ws = new WebSocket(this.url);
       this.ws.onmessage = this.messageHandler;
-      this.ws.onclose = this.handleClose;
+      this.ws.onclose = this.handleClose.bind(this);
       this.heartbeat();
 
       const userDataJSON = sessionStorage.getItem('userData');
@@ -118,11 +118,12 @@ export default class Chat {
         user: {
           login: username,
           password: password,
+          isLogined: true,
         },
       },
     };
     if (this.ws) this.ws.send(JSON.stringify(message));
-    console.log('THIS IS ', message);
+
   }
 
   logOut(username: string, password: string) {
@@ -165,11 +166,11 @@ export default class Chat {
     const errorMessageElement = document.createElement('div');
     errorMessageElement.classList.add('error-message');
     switch (errorMessage) {
-      case 'there is no user with this login':
+      case 'No user data found':
         errorMessageElement.textContent = 'Пользователь с указанным логином не найден.';
         break;
       case 'incorrect data':
-        errorMessageElement.textContent = 'Incorrect data';
+        errorMessageElement.textContent = 'Incorrect login or password';
         break;
       case 'the user was not authorized':
         errorMessageElement.textContent = 'User was not authorized';
