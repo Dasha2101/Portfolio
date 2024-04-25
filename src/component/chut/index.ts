@@ -269,7 +269,7 @@ class Chut {
     footerChut.classList.add('footer__chut');
 
     const img = document.createElement('img');
-    img.src = '../icon/images.png';
+    img.src = './icon/images.png';
 
     const nameAuthor = document.createElement('p');
     nameAuthor.textContent = 'Author: dasha2101';
