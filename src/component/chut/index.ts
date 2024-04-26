@@ -1,20 +1,12 @@
 import Chat from '../../serves/chut';
-
-interface User {
-  login: string;
-}
-
-interface Message {
-  to: string;
-  text: string;
-}
+import { User } from '../../interface';
+import { Message } from '../../interface';
 
 class Chut {
   chutContainer: HTMLDivElement | null;
   userListContainer: HTMLDivElement;
   findContainer: HTMLDivElement;
   chat: Chat;
-  // originalUserList: User[] = [];
   navigateTo: (component: string) => void;
   userListUpdateInterval: NodeJS.Timeout;
   userListActiveCache: string;
@@ -38,24 +30,24 @@ class Chut {
   }
 
   async init() {
-    const chutContainer = document.createElement('div');
+    const chutContainer: HTMLDivElement = document.createElement('div');
     chutContainer.classList.add('chut-container');
     this.chutContainer = chutContainer;
+
     await this.generateHedaerChut();
     await this.generateChut();
     this.generateFooter();
-    console.log('chut');
   }
 
   async generateHedaerChut() {
-    const headerChut = document.createElement('header');
+    const headerChut: HTMLElement = document.createElement('header');
     headerChut.classList.add('chut__header');
 
-    const chutTitle = document.createElement('h1');
+    const chutTitle: HTMLElement = document.createElement('h1');
     chutTitle.innerText = 'Fun Chut';
     this.chutContainer?.append(chutTitle);
 
-    const buttonExit = document.createElement('button');
+    const buttonExit: HTMLButtonElement = document.createElement('button');
     buttonExit.classList.add('button-exit');
     buttonExit.textContent = 'Logout';
     buttonExit.addEventListener('click', () => {
@@ -70,45 +62,42 @@ class Chut {
       }
     });
 
-    const aboutInfo = document.createElement('button');
+    const aboutInfo: HTMLButtonElement = document.createElement('button');
     aboutInfo.classList.add('about-info');
     aboutInfo.textContent = 'Information about';
     aboutInfo.addEventListener('click', this.modalWin.bind(this));
 
-    const userWelcome = document.createElement('p');
+    const userWelcome: HTMLElement = document.createElement('p');
     userWelcome.classList.add('user-welcome');
 
     const userDataJSON = sessionStorage.getItem('userData');
     if (userDataJSON) {
-      console.log(userDataJSON);
       const userData = JSON.parse(userDataJSON);
       if (userData) {
         userWelcome.textContent = `Welcome, ${userData.login}!`;
       }
     }
-
     headerChut.append(buttonExit, aboutInfo, chutTitle, userWelcome);
     this.chutContainer?.append(headerChut);
   }
 
   modalWin() {
-    const modalWin = document.createElement('div');
+    const modalWin: HTMLDivElement = document.createElement('div');
     modalWin.classList.add('show-modal');
 
     const overlay: HTMLElement = document.createElement('div');
     overlay.classList.add('overlay');
     this.chutContainer?.appendChild(overlay);
     overlay.style.display = 'block';
-
     overlay.addEventListener('click', () => {
       modalWin.style.display = 'none';
       overlay.style.display = 'none';
     });
 
-    const nameApp = document.createElement('h2');
+    const nameApp: HTMLElement = document.createElement('h2');
     nameApp.textContent = 'Fun Chut';
 
-    const title = document.createElement('p');
+    const title: HTMLElement = document.createElement('p');
     title.textContent =
       'What could be better than chatting with friends using a chat app? But what if the owner of the service deletes your messages? Or, conversely, they can store your chat history without your consent!';
 
@@ -116,7 +105,7 @@ class Chut {
     authorApp.href = 'https://github.com/Dasha2101';
     authorApp.textContent = 'My GitHub';
 
-    const exitButton = document.createElement('button');
+    const exitButton: HTMLButtonElement = document.createElement('button');
     exitButton.classList.add('mod__close-button');
     exitButton.textContent = 'Exit';
     modalWin.append(nameApp, title, authorApp, exitButton);
@@ -126,21 +115,21 @@ class Chut {
       overlay.style.display = 'none';
     };
   }
+
   generateChut() {
-    const chutContent = document.createElement('div');
+    const chutContent: HTMLDivElement = document.createElement('div');
     chutContent.classList.add('chut-content');
 
-    const searchContainer = document.createElement('div');
+    const searchContainer: HTMLDivElement = document.createElement('div');
     searchContainer.classList.add('search-container');
 
-    const searchInput = document.createElement('input');
+    const searchInput: HTMLInputElement = document.createElement('input');
     searchInput.classList.add('searchInput');
     searchInput.placeholder = 'Find user';
     searchInput.addEventListener('input', () => {
       const search = searchInput.value.toLowerCase();
       this.filterUser(search);
     });
-
     searchContainer.append(searchInput);
     chutContent.append(searchContainer);
 
@@ -148,22 +137,21 @@ class Chut {
     this.chutContainer?.append(chutContent);
     this.updateUserList();
 
-    // Generate messages screen
-    const messageScreen = document.createElement('div');
+    const messageScreen: HTMLDivElement = document.createElement('div');
     messageScreen.dataset.user = '';
     messageScreen.style.minWidth = '300px';
     messageScreen.style.minHeight = '200px';
     chutContent.append(messageScreen);
 
-    const messageContent = document.createElement('div');
+    const messageContent: HTMLDivElement = document.createElement('div');
     messageContent.classList.add('message-content');
     messageScreen.append(messageContent);
 
-    const inputElem = document.createElement('input');
+    const inputElem: HTMLInputElement = document.createElement('input');
     inputElem.placeholder = 'Enter message...';
     messageScreen.append(inputElem);
 
-    const sendButton = document.createElement('button');
+    const sendButton: HTMLButtonElement = document.createElement('button');
     sendButton.classList.add('send');
     sendButton.textContent = 'Send';
     messageScreen.append(sendButton);
@@ -178,17 +166,14 @@ class Chut {
     });
 
     inputElem.addEventListener('keyup', (e) => {
-      console.log('work');
       if (e.code === 'Enter') {
         sendButton.click();
       }
     });
-
     this.displaySavedMessages(messageContent);
   }
 
   displaySavedMessages(messageContent: HTMLElement) {
-    console.log('Kik');
     const messages = sessionStorage.getItem('sentMessages');
     if (messages) {
       const parsedMessages: Message[] = JSON.parse(messages);
@@ -212,7 +197,6 @@ class Chut {
         user.style.display = 'none';
       }
     });
-    // this.updateUserList();
   }
 
   updateUserList() {
@@ -221,7 +205,6 @@ class Chut {
     const userDataJSON = sessionStorage.getItem('userData');
 
     if (userListJSON === this.userListActiveCache && userListInactiveJSON === this.userListInactiveCache) return;
-
     this.userListActiveCache = userListJSON ?? '';
     this.userListInactiveCache = userListInactiveJSON ?? '';
 
@@ -254,47 +237,42 @@ class Chut {
   }
 
   createUserElement(login: string, indicator: string) {
-    const divElement = document.createElement('div');
+    const divElement: HTMLDivElement = document.createElement('div');
     divElement.classList.add('user-element');
     divElement.setAttribute('data-login', login);
-    // const spanElement = document.createElement('span');
-    // spanElement.textContent = login;
-    // spanElement.style.color = color;
-    // divElement.append(spanElement);
-    // return divElement;
-    const indicatorCircle = document.createElement('span');
+
+    const indicatorCircle: HTMLSpanElement = document.createElement('span');
     indicatorCircle.classList.add('indicator-circle');
     indicatorCircle.style.backgroundColor = indicator;
     divElement.appendChild(indicatorCircle);
-  
 
-    const spanElement = document.createElement('span');
+    const spanElement: HTMLSpanElement = document.createElement('span');
     spanElement.textContent = login;
     divElement.appendChild(spanElement);
-  
+
     return divElement;
   }
 
   generateFooter() {
-    const footerChut = document.createElement('footer');
+    const footerChut: HTMLElement = document.createElement('footer');
     footerChut.classList.add('footer__chut');
 
-    const img = document.createElement('img');
+    const img: HTMLImageElement = document.createElement('img');
     img.src = './icon/images.png';
 
-    const nameAuthor = document.createElement('p');
+    const nameAuthor: HTMLElement = document.createElement('p');
     nameAuthor.textContent = 'Author: dasha2101';
 
     const link = document.createElement('a');
     link.href = 'https://github.com/Dasha2101';
     link.textContent = 'GitHub';
 
-    const title = document.createElement('p');
-    title.textContent = ' 2024';
+    const titleYear: HTMLElement = document.createElement('p');
+    titleYear.textContent = '2024';
 
-    const containerTitle = document.createElement('div');
+    const containerTitle: HTMLDivElement = document.createElement('div');
     containerTitle.classList.add('conteiner__title');
-    containerTitle.append(nameAuthor, title);
+    containerTitle.append(nameAuthor, titleYear);
 
     footerChut.append(img, containerTitle, link);
 
@@ -310,3 +288,4 @@ class Chut {
 }
 
 export default Chut;
+

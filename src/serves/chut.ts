@@ -35,30 +35,14 @@ export default class Chat {
         this.usersActive = data.payload.user;
         sessionStorage.removeItem('userData');
         break;
-      // case 'MSG_SEND':
-      // const { to, text } = data.payload.message;
-      // this.saveSentMessage(to, text);
-      // break;
       case 'ERROR':
         this.handleError(data.payload.errorMessage);
         break;
     }
   };
 
-  //   saveSentMessage(to: string, text: string) {
-  //   const messages = sessionStorage.getItem('sentMessages');
-  //   const newMessage = { to, text };
-  //   if (messages) {
-  //     const parsedMessages = JSON.parse(messages);
-  //     parsedMessages.push(newMessage);
-  //     sessionStorage.setItem('sentMessages', JSON.stringify(parsedMessages));
-  //   } else {
-  //     sessionStorage.setItem('sentMessages', JSON.stringify([newMessage]));
-  //   }
-  // }
-
   handleClose = (event: CloseEvent) => {
-    const errorMessage = document.createElement('div');
+    const errorMessage: HTMLDivElement = document.createElement('div');
     errorMessage.classList.add('show-modal');
     errorMessage.textContent = 'The connection is closed. Code: ' + event.code;
     document.body.append(errorMessage);
@@ -71,7 +55,7 @@ export default class Chat {
 
   reconnect() {
     setTimeout(() => {
-      const errorMessage = document.createElement('div');
+      const errorMessage: HTMLDivElement = document.createElement('div');
       errorMessage.textContent = 'Attempting to reconnect...';
       errorMessage.classList.add('show-modal');
       document.body.append(errorMessage);
@@ -101,9 +85,6 @@ export default class Chat {
         type: 'USER_INACTIVE',
         payload: null,
       };
-      // const message_er = {
-
-      // }
       if (this.ws && this.ws.readyState === WebSocket.OPEN) {
         this.ws.send(JSON.stringify(message_a));
         this.ws.send(JSON.stringify(message_ia));
@@ -176,8 +157,7 @@ export default class Chat {
     if (this.errorMessageShown) {
       return;
     }
-
-    const errorMessageElement = document.createElement('div');
+    const errorMessageElement: HTMLDivElement = document.createElement('div');
     errorMessageElement.classList.add('error-message');
     switch (errorMessage) {
       case 'No user data found':

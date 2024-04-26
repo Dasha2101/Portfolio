@@ -32,9 +32,6 @@ class App {
   public async start() {
     const formContainer = await this.Authorization.showHtml();
     this.formContainer = formContainer;
-
-    // const chutContainer = await this.Chut.showHTML();
-    // this.chutContainer = chutContainer;
     this.renderComponent();
     if (this.appContainer) this.parent.append(this.appContainer);
   }

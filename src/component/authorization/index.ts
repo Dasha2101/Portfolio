@@ -28,7 +28,6 @@ class Authorization {
     formContainer.classList.add('form-container');
     this.formContainer = formContainer;
     await this.createRegField();
-    console.log('regi');
   }
 
   async createRegField() {
@@ -202,24 +201,6 @@ class Authorization {
     sessionStorage.setItem('userNewData', JSON.stringify(existingNewUserData));
     this.navigateTo('chut');
   }
-
-  // checkUserAuthenticated(userNewData: { login: string; password: string }) {
-  //   const dataJSON: string | null = sessionStorage.getItem('userNewData');
-  //   if (dataJSON) {
-  //     const existingData: { login: string; password: string } = JSON.parse(dataJSON);
-  //     if (existingData.login === userNewData.login && existingData.password === userNewData.password) {
-  //       return true;
-  //     } else {
-  //       const errorMessage = this.chat.handleError('Incorrect login or password');
-  //       if (errorMessage) this.formContainer?.append(errorMessage);
-  //       return false;
-  //     }
-  //   } else {
-  //     const errorMessage = this.chat.handleError('No user data found');
-  //   if (errorMessage) this.formContainer?.append(errorMessage);
-  //   return false;
-  //   }
-  // }
 
   modalWin() {
     const modalWin = document.createElement('div');
