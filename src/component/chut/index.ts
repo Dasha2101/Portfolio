@@ -288,4 +288,3 @@ class Chut {
 }
 
 export default Chut;
-
