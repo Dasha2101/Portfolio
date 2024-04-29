@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>reveal.js</title>
+	<style>
+		.box {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			justify-content: space-between;
+		}
+
+		.box img {
+			width: 530px;
+			height: 450px;
+
+		}
+
+		.text {
+			text-align: center;
+			font-size: 19px;
+			font-family: var(--r-code-font);
+			padding: 5px;
+		}
+
+		.container-cirk {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			gap: 20px;
+		}
+
+		.circle-block {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			text-align: center;
+			font-size: 19px;
+			font-weight: bold;
+			color: #a36bf1;
+			font-family: var(--r-code-font);
+			padding: 5px;
+
+			/* flex-grow: 1; */
+			width: 165px;
+			height: 165px;
+			border-radius: 5px;
+			background-color: #f7b157;
+			border: 2px solid #000;
+		}
+
+		#block_1 {
+			background-color: rgb(65, 222, 222);
+		}
+
+		#block_2 {
+			background-color: rgb(243, 152, 48);
+		}
+
+		#block_3 {
+			background-color: rgb(241, 55, 64);
+		}
+
+		.background {
+			background-size: cover;
+			background-repeat: no-repeat;
+			background-position: center center;
+			padding: 20px;
+		}
+
+		.section-back {
+			background-image: url('./icon/3.png');
+		}
+
+		.consensus {
+			background-image: url('./icon/5.png');
+		}
+
+		#color-back,
+		h4 {
+			background-color: #b0c4de;
+			border-radius: 5px;
+			font-size: 35px;
+		}
+
+		.title-container {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-around;
+			gap: 150px;
+		}
+
+		.container-content {
+			display: flex;
+			flex-direction: row;
+			gap: 170px;
+		}
+
+		.container-content p {
+			font-size: 25px;
+			background-color: #df00d1;
+			border-radius: 5px;
+		}
+
+		.container-content_blocks {
+			display: flex;
+			flex-direction: row;
+			/* gap: 170px; */
+		}
+
+		.container-content_blocks h3 {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+		}
+
+
+		.img_blocks {
+			height: 470px;
+			width: 545px;
+		}
+
+		#box_1 {
+			background-color: rgb(5, 151, 146);
+			color: aliceblue;
+		}
+
+		#box_2 {
+			background-color: rgb(90, 237, 107);
+			color: aliceblue;
+		}
+
+		#box_3 {
+			background-color: rgb(71, 55, 239);
+			color: aliceblue;
+		}
+
+		#box_4 {
+			background-color: rgb(234, 72, 88);
+			color: aliceblue;
+		}
+
+		#box_5 {
+			background-color: rgb(234, 199, 72);
+			color: aliceblue;
+		}
+
+		#box_6 {
+			background-color: rgb(72, 164, 234);
+			color: aliceblue;
+		}
+
+		#box_7 {
+			color: aliceblue;
+		}
+
+		.work_blockchain {
+			background-image: url('./icon/11.png');
+		}
+
+		.important_blockchain p {
+			font-size: 30px;
+		}
+
+		.important_blockchain {
+			background-size: cover;
+			background-repeat: no-repeat;
+			background-position: center center;
+			background-image: url('./icon/12.png');
+		}
+
+		.background_phone {
+			background-size: cover;
+			background-repeat: no-repeat;
+			background-position: center center;
+			background-image: url('./icon/20.png');
+		}
+
+		.background_phone p {
+			background-color: #3f32cb;
+			border-radius: 10px;
+		}
+
+		.main {
+			background-image: url('./icon/21.png');
+		}
+
+		.main p {
+			color: #f7b157;
+		}
+
+		.background_phone h3 {
+			color: #3f32cb;
+		}
+
+		.app {
+			background-image: url('./icon/22.png');
+		}
+
+		.app p {
+			background-color: #234486;
+			border-radius: 5px;
+			font-size: 50px;
+		}
+	</style>
+
+	<link rel="stylesheet" href="my/reset.css">
+	<link rel="stylesheet" href="my/reveal.css">
+	<link rel="stylesheet" href="my/theme/dracula.css">
+	<link rel="stylesheet" href="plugin/highlight/monokai.css">
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section class="main background" data-transition="zomm">
+				<h1>Blockchain technology</h1>
+				<p>created at the basis of decentralized applications</p>
+			</section>
+			<section>
+				<section data-transition="zomm" class="app background">
+					<p>Decentralized applications and services that run on a blockchain or decentralized network instead of
+						classic servers</p>
+				</section>
+				<section data-transition="zomm"
+					data-background-gradient="linear-gradient(108deg, rgba(251,251,251,1) 0%, rgba(247,228,238,1) 98%)">
+					<img src="./icon/23.PNG"
+						style="max-width: 100%; max-height: 100%; display: block; margin: auto; border-radius: 15px;">
+				</section>
+			</section>
+			<section data-transition="zomm"
+				data-background-gradient="linear-gradient(108deg, rgba(251,251,251,1) 0%, rgba(131,22,77,1) 98%)">
+				<h3><b>Blockchain</b> technology</h3>
+				<p>technology that has become the basis for many decentralized applications and cryptocurrencies,
+					revolutionizing the way data is stored and transferred.</p>
+			</section>
+			<section>
+				<section data-transition="zomm"
+					data-background-gradient="linear-gradient(108deg, rgba(251,251,251,1) 0%, rgba(255,201,236,1) 89%)">
+					<div class="box">
+						<h3>Peculiarities</h3>
+						<img src="./icon/24.png" alt="Peculiarities">
+					</div>
+				</section>
+				<section data-transition="zomm"
+					data-background-gradient="linear-gradient(108deg, rgba(251,251,251,1) 0%, rgba(247,228,238,1) 98%)">
+					<img src="./icon/1.PNG"
+						style="max-width: 100%; max-height: 100%; display: block; margin: auto; border-radius: 15px;">
+				</section>
+			</section>
+			<section>
+				<section class="section-back background">
+					<h3>Components</h3>
+					<div class="container-cirk">
+						<div class="circle-block">Consensus</div>
+						<div class="circle-block">Block</div>
+						<div class="circle-block">Chain</div>
+						<div class="circle-block">Decentralization</div>
+						<div class="circle-block">Distributed ledger</div>
+						<div class="circle-block">Smart contracts</div>
+					</div>
+				</section>
+				<section class="consensus background">
+					<h4>Consensus <b>algorithm</b></h4>
+					<p id="color-back">A blockchain consensus algorithm is the process of reaching agreement among network
+						participants regarding the correctness of data and transactions that should be added to the blockchain.
+					<p>
+				</section>
+			</section>
+			<section>
+				<section data-transition="zomm"
+					data-background-gradient="linear-gradient(108deg, rgba(251,251,251,1) 0%, rgba(177,90,227,1) 98%)">
+					<img src="./icon/4.PNG"
+						style="max-width: 100%; max-height: 100%; display: block; margin: auto; border-radius: 15px;">
+				</section>
+				<section data-transition="zomm"
+					data-background-gradient="linear-gradient(108deg, rgba(251,251,251,1) 0%, rgba(227,90,196,1) 98%)">
+					<div class="title-container">
+						<h3>PoW</h3>
+						<h3>PoS</h3>
+					</div>
+					<div class="container-content">
+						<div>
+							<div class="back-color">
+								<img src="./icon/6.png" alt="person">
+								<p>The first one to solve the problem receives a reward</p>
+							</div>
+							<div class="back-color">
+								<img src="./icon/7.png" alt="people">
+								<p>Miners compete with each other</p>
+							</div>
+						</div>
+						<div>
+							<div class="back-color">
+								<img src="./icon/8.png" alt="person">
+								<p>The creator of a new block is selected based on personal wealth</p>
+							</div>
+							<div class="back-color">
+								<img src="./icon/9.png" alt="person">
+								<p>Cryptocurrencies could be thousands of times more energy efficient</p>
+							</div>
+						</div>
+					</div>
+				</section>
+				<section data-transition="zomm"
+					data-background-gradient="linear-gradient(108deg, rgba(251,251,251,1) 0%, rgba(227,90,196,1) 98%)">
+					<h3>Other Consensus Algorithms</h3>
+					<div class="container-content">
+						<div>
+							<h5>Proof of Authority</h5>
+							<p>Suitable for private blockchains or networks with a limited number of participants, where high
+								transaction speeds and low mining costs are important.</p>
+						</div>
+						<div>
+							<h5>Delegated PoS</h5>
+							<p>Preferred for public blockchains where democracy and scalability are important, allowing participants
+								to delegate their votes for choosing stakers.</p>
+						</div>
+					</div>
+				</section>
+			</section>
+			<section data-transition="zomm"
+				data-background-gradient="linear-gradient(108deg, rgba(251,251,251,1) 0%, rgba(37,1,40,1) 98%)">
+				<div class="container-content_blocks">
+					<h3>How does <b>blockchain technology</b> work?</h3>
+					<img class="img_blocks" src="./icon/10.png" alt="blocks">
+				</div>
+			</section>
+			<section class="work_blockchain background">
+				<h3>Transaction algorithm</h3>
+				<div class="container-cirk">
+					<div id="box_1" class="circle-block">Initiating a transaction</div>
+					<div id="box_2" class="circle-block">Transaction signature</div>
+					<div id="box_3" class="circle-block">Balance check</div>
+					<div id="box_4" class="circle-block">Sending a transaction to the network</div>
+					<div id="box_5" class="circle-block">Verification and confirmation</div>
+					<div id="box_6" class="circle-block">Inclusion in a block</div>
+					<div id="box_7" class="circle-block">Completing the transaction</div>
+				</div>
+			<section>
+				<section data-transition="zomm"
+					data-background-gradient="linear-gradient(108deg, rgba(251,251,251,1) 0%, rgba(247,228,238,1) 98%)">
+					<h3><b>Benefits</b> of blockchain technology</h3>
+					<img src="./icon/13.png" alt="benefit">
+				</section>
+				<section data-transition="zomm"
+					data-background-gradient="linear-gradient(108deg, rgba(251,251,251,1) 0%, rgba(255,255,255,1) 98%)">
+					<img src="./icon/14.PNG"
+						style="max-width: 100%; max-height: 100%; display: block; margin: auto; border-radius: 15px;">
+				</section>
+				<section data-transition="zomm"
+					data-background-gradient="linear-gradient(108deg, rgba(251,251,251,1) 0%, rgba(255,255,255,1) 98%)">
+					<img src="./icon/15.PNG"
+						style="max-width: 100%; max-height: 100%; display: block; margin: auto; border-radius: 15px;">
+				</section>
+				<section data-transition="zomm"
+					data-background-gradient="linear-gradient(108deg, rgba(251,251,251,1) 0%, rgba(255,255,255,1) 98%)">
+					<img src="./icon/16.PNG"
+						style="max-width: 100%; max-height: 100%; display: block; margin: auto; border-radius: 15px;">
+				</section>
+			</section>
+			<section class="background_phone">
+				<p>Blockchain technology is an innovative approach to data storage and transmission that provides security,
+					transparency, and decentralization.</p>
+				<p>As new applications are introduced and technology evolves, blockchain continues to improve.</p>
+				<p>The potential for blockchain development is limitless, and we are only just beginning to see its
+					possibilities. Its adoption will continue, and it will play an increasingly significant role in the world of
+					digital innovation.</p>
+			</section>
+		</div>
+	</div>
+
+	<script src="my/reveal.js"></script>
+	<script src="plugin/notes/notes.js"></script>
+	<script src="plugin/markdown/markdown.js"></script>
+	<script src="plugin/highlight/highlight.js"></script>
+	<script>
+		// More info about initialization & config:
+		// - https://revealjs.com/initialization/
+		// - https://revealjs.com/config/
+		Reveal.initialize({
+			hash: true,
+
+			// Learn about plugins: https://revealjs.com/plugins/
+			plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+		});
+	</script>
+</body>
+
+</html>
