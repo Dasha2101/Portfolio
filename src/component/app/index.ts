@@ -30,8 +30,7 @@ class App {
   }
 
   public async start() {
-    const formContainer = await this.Authorization.showHtml();
-    this.formContainer = formContainer;
+    this.formContainer = await this.Authorization.showHtml();
     this.renderComponent();
     if (this.appContainer) this.parent.append(this.appContainer);
   }
@@ -55,8 +54,7 @@ class App {
 
   public async navigateTo(component: string) {
     if (component === 'chut') {
-      const chutContainer = await this.Chut.showHTML();
-      this.chutContainer = chutContainer;
+      this.chutContainer = await this.Chut.showHTML();
     }
     this.currentComponent = component;
     this.renderComponent();
